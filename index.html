@@ -43,6 +43,10 @@ h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
 #budwrap:not(.open) .grand .vnext{font-size:30px}
 #budwrap.open tr.only-open{display:table-row}
 .budbar{display:flex;justify-content:flex-end;margin:0 0 10px}
+.objbar{display:flex;justify-content:flex-end;gap:6px;margin:-34px 0 10px}
+.obj{appearance:none;border:1px solid var(--line);background:transparent;color:var(--ink-faint);font:inherit;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;cursor:pointer}
+.obj:hover{color:var(--ink)}
+.obj.on{color:var(--teal);border-color:var(--teal)}
 #budtoggle{appearance:none;border:1px solid var(--line-strong);background:transparent;
   color:var(--ink-faint);font:inherit;font-size:12.5px;font-weight:600;padding:6px 13px;
   border-radius:999px;cursor:pointer}
@@ -210,12 +214,20 @@ tr.goal th:first-child{box-shadow:inset 3px 0 0 var(--teal)}
 </div>
 
 <h2>¿Qué queremos conseguir?</h2>
-<div class="grand">
+<div class="objbar">
+  <button class="obj on" type="button" data-o="1">Realista</button>
+  <button class="obj" type="button" data-o="2">Bueno</button>
+  <button class="obj" type="button" data-o="3">Excelente</button>
+</div>
+<div class="grand" id="obj">
   <div><span>Videos hasta el 31 de diciembre</span><b class="vtot">11</b></div>
   <div><span>Shorts, reels y tiktoks</span><b class="vtot">33</b></div>
-  <div><span>Meta por video</span><b class="vnext">40.000 vistas</b></div>
-  <div><span>Vistas en el trimestre</span><b class="vnext">~1.000.000</b></div>
-  <div><span>Suscriptores nuevos</span><b class="vnext">~7.000</b></div>
+  <div><span>Meta por video</span><b class="vnext"
+    data-o1="40.000 vistas" data-o2="60.000 vistas" data-o3="100.000 vistas">40.000 vistas</b></div>
+  <div><span>Vistas en el trimestre</span><b class="vnext"
+    data-o1="~1.000.000" data-o2="~1.500.000" data-o3="~2.500.000">~1.000.000</b></div>
+  <div><span>Suscriptores nuevos</span><b class="vnext"
+    data-o1="~7.000" data-o2="~11.000" data-o3="~18.000">~7.000</b></div>
 </div>
 
 <h2>Calendario de posteos</h2>
@@ -330,6 +342,15 @@ tr.goal th:first-child{box-shadow:inset 3px 0 0 var(--teal)}
 <script>
 (function(){
   "use strict";
+  var objs = [].slice.call(document.querySelectorAll(".obj")),
+      cifras = [].slice.call(document.querySelectorAll("#obj [data-o1]"));
+  objs.forEach(function(b){
+    b.addEventListener("click", function(){
+      var n = b.getAttribute("data-o");
+      cifras.forEach(function(c){ c.textContent = c.getAttribute("data-o" + n); });
+      objs.forEach(function(x){ x.classList.toggle("on", x === b); });
+    });
+  });
   var bw = document.getElementById("budwrap"),
       bt = document.getElementById("budtoggle");
   if (bw && bt) bt.addEventListener("click", function(){
