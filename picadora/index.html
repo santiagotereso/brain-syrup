@@ -357,13 +357,15 @@ textarea{resize:vertical;min-height:64px}
       <div class="acts">
         <button class="btn btn--go" id="export">Exportar 9:16</button>
         <button class="btn" id="copycap">Copiar caption</button>
+        <button class="btn" id="dirbtn">Elegir carpeta</button>
       </div>
       <div class="fld">
         <label>Publicaci&oacute;n</label>
         <div class="dests" id="dests"></div>
+        <div class="acts" style="margin-top:6px"><button class="btn btn--sm" id="openall">Abrir las p&aacute;ginas de carga</button></div>
       </div>
     </div>
-    <p class="note"><b>La subida es a mano.</b> Las tres plataformas piden una app aprobada y un servidor con tus tokens. Ac&aacute; export&aacute;s, copi&aacute;s el caption, abr&iacute;s la p&aacute;gina de carga y despu&eacute;s mac&aacute;s cada destino como subido.</p>
+    <p class="note"><b>Es el mismo archivo para las tres.</b> Eleg&iacute; una carpeta y cada short se guarda en su propia subcarpeta, con el video y un caption.txt. Despu&eacute;s abr&iacute;s las p&aacute;ginas de carga, arrastr&aacute;s el archivo y marc&aacute;s cada destino como subido.</p>
   </aside>
 </div>
 
@@ -396,9 +398,9 @@ textarea{resize:vertical;min-height:64px}
   var wave = $("wave"), wctx = wave.getContext("2d");
   var FR = 1 / 30, COLS = 64, ROWS = 36;
   var DEST = [
-    { k: "yt", nm: "YouTube Shorts", url: "https://studio.youtube.com/", lim: 100 },
-    { k: "tt", nm: "TikTok", url: "https://www.tiktok.com/upload", lim: 2200 },
-    { k: "ig", nm: "Instagram Reels", url: "https://www.instagram.com/", lim: 2200 }
+    { k: "yt", nm: "YouTube Shorts", url: "https://www.youtube.com/upload" },
+    { k: "tt", nm: "TikTok", url: "https://www.tiktok.com/tiktokstudio/upload" },
+    { k: "ig", nm: "Instagram Reels", url: "https://www.instagram.com/create/select/" }
   ];
 
   var S = {
@@ -406,7 +408,7 @@ textarea{resize:vertical;min-height:64px}
     shorts: [], sel: 0, seg: 0, key: 0, ov: -1, demo: true,
     mark: { in: 0, out: 12 }, playing: null,
     env: null, samples: null, cuts: [], imgs: [],
-    busy: false, scanning: false, dl: null
+    busy: false, scanning: false, dl: null, dir: null, dirName: ""
   };
 
   /* ---------- utilidades ---------- */
@@ -1180,11 +1182,14 @@ textarea{resize:vertical;min-height:64px}
       return adest.stream.getAudioTracks()[0] || null;
     } catch (e) { return null; }
   }
+  // mp4 primero: TikTok e Instagram no siempre aceptan webm
   function mime(){
-    var list = ["video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm"];
+    var list = ["video/mp4;codecs=avc1.42E01E,mp4a.40.2", "video/mp4",
+                "video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm"];
     for (var i = 0; i < list.length; i++) if (window.MediaRecorder && MediaRecorder.isTypeSupported(list[i])) return list[i];
     return "";
   }
+  function ext(){ return mime().indexOf("video/mp4") === 0 ? "mp4" : "webm"; }
   function seekTo(t){
     return new Promise(function(res){
       var go = function(){ v.removeEventListener("seeked", go); res(); };
@@ -1223,7 +1228,7 @@ textarea{resize:vertical;min-height:64px}
     rec.ondataavailable = function(e){ if (e.data && e.data.size) parts.push(e.data); };
     rec.onstop = function(){
       S.busy = false; $("export").disabled = false; $("prog").style.width = "0";
-      offer(new Blob(parts, { type: "video/webm" }), s);
+      offer(new Blob(parts, { type: type || "video/webm" }), s);
     };
 
     var cur = 0, acc = 0;
@@ -1256,14 +1261,52 @@ textarea{resize:vertical;min-height:64px}
     };
     run();
   }
+  function hoy(){
+    var d = new Date(), p2 = function(n){ return (n < 10 ? "0" : "") + n; };
+    return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate());
+  }
+  function notaTxt(s){
+    var d = DEST.filter(function(D){ return s.dest[D.k]; }).map(function(D){ return D.nm; });
+    var NL = String.fromCharCode(10);
+    return (s.title || "Sin nombre") + NL + NL + (s.cap || "") + NL + NL +
+           "---" + NL + "Destinos: " + (d.join(", ") || "ninguno") + NL +
+           "Duracion: " + secs(progDur()) + NL +
+           "Tramos: " + s.segs.map(function(g){ return tcs(g.in) + "-" + tcs(g.out); }).join("  ") + NL +
+           "Origen: " + (S.file ? S.file.name : "") + NL;
+  }
+  function saveToDir(blob, s, name){
+    var folder = hoy() + "_" + slug(s.title || ("short-" + (S.sel + 1)));
+    return S.dir.getDirectoryHandle(folder, { create: true }).then(function(sub){
+      return sub.getFileHandle(name, { create: true }).then(function(fh){
+        return fh.createWritable().then(function(w){
+          return w.write(blob).then(function(){ return w.close(); });
+        });
+      }).then(function(){
+        return sub.getFileHandle("caption.txt", { create: true }).then(function(fh2){
+          return fh2.createWritable().then(function(w2){
+            return w2.write(new Blob([notaTxt(s)], { type: "text/plain" })).then(function(){ return w2.close(); });
+          });
+        });
+      }).then(function(){ return folder; });
+    });
+  }
   function offer(blob, s){
-    var name = slug(s.title || ("short-" + (S.sel + 1))) + ".webm";
+    var name = slug(s.title || ("short-" + (S.sel + 1))) + "." + ext();
     var mb = (blob.size / 1048576).toFixed(1).replace(".", ",");
     var done = function(){
       if (s.status !== "rdy") s.status = "exp";
       renderClips(); save();
       msg("Guardado " + name + " (" + mb + " MB). Copiá el caption y abrí cada destino.", "ok");
     };
+    if (S.dir) {
+      msg("Guardando en " + S.dirName + "...");
+      saveToDir(blob, s, name).then(function(folder){
+        if (s.status !== "rdy") s.status = "exp";
+        renderClips(); save();
+        msg("Guardado en " + S.dirName + "/" + folder + " (" + mb + " MB), con su caption.txt.", "ok");
+      }, function(){ msg("No pude escribir en la carpeta. Elegila de nuevo.", "err"); });
+      return;
+    }
     if (!S.dl) {
       try {
         var a = document.createElement("a");
@@ -1547,6 +1590,29 @@ textarea{resize:vertical;min-height:64px}
         function(){ msg("No pude copiar. Seleccioná el texto a mano.", "err"); });
     } else msg("Este navegador no deja copiar solo.", "err");
   });
+  $("dirbtn").addEventListener("click", function(){
+    if (!window.showDirectoryPicker) {
+      msg("Este navegador no deja elegir carpeta. Con Chrome o Edge si; en otros se descarga normal.", "err");
+      return;
+    }
+    window.showDirectoryPicker({ mode: "readwrite", id: "picadora" }).then(function(d){
+      S.dir = d; S.dirName = d.name;
+      $("dirbtn").textContent = "Carpeta: " + d.name;
+      msg("Los shorts van a ir a " + d.name + ", cada uno en su subcarpeta.", "ok");
+    }, function(){});
+  });
+  $("openall").addEventListener("click", function(){
+    var s = sh(), n = 0;
+    DEST.forEach(function(D){
+      if (!s.dest[D.k]) return;
+      var a = document.createElement("a");
+      a.href = D.url; a.target = "_blank"; a.rel = "noopener";
+      document.body.appendChild(a); a.click(); a.remove(); n++;
+    });
+    msg(n ? ("Abri " + n + (n === 1 ? " pestana." : " pestanas.") + " Si el navegador bloqueo alguna, usa el link de cada fila.")
+          : "Ningun destino esta marcado como que va.", n ? "ok" : "err");
+  });
+
   $("export").addEventListener("click", exportShort);
 
   $("ovtext").addEventListener("input", function(){ var o = curOv(); if (o) { o.text = this.value; renderOvs(); save(); } });
