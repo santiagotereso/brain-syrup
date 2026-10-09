@@ -3,23 +3,24 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Mesa de montaje: fuente arriba a la izquierda, salida vertical a la derecha, tomas y tramos en la linea de tiempo, tira de shorts al pie. */
+/* Mesa de montaje: material 16:9 a la izquierda, short armado a la derecha, tira de shorts al pie. */
 :root{
   color-scheme:dark;
   --bg:#0F1418; --panel:#161D23; --panel2:#111920;
   --line:#242E36; --line2:#38454F;
   --ink:#E7EDF2; --ink2:#AFBCC7; --dim:#7A8995;
-  --cyan:#2DD4BF; --cyan-soft:#122E2C;
-  --pink:#93B4FD; --pink-soft:#15203A;
-  --ok:#2DD4BF; --warn:#E9B949;
+  --teal:#2DD4BF; --teal-soft:#122E2C;
+  --blue:#93B4FD; --blue-soft:#15203A;
+  --warn:#E9B949; --ok:#2DD4BF;
   --ui:"Inter","Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
 .app{max-width:1600px;margin:0 auto;padding-block:20px 56px;padding-left:20px;padding-right:20px}
 button,select{font:inherit;cursor:pointer}
-button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
 input,textarea,select{font:inherit;color:var(--ink);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;width:100%}
 input::placeholder,textarea::placeholder{color:var(--dim)}
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
@@ -28,143 +29,164 @@ header{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding-bottom:20
 .logo{flex:none;width:88px;height:88px;border-radius:50%;display:block}
 header>.id{min-width:0}
 h1{margin:0;font-size:clamp(30px,4.2vw,46px);font-weight:800;letter-spacing:-.03em;line-height:1.02}
-.h1b{color:var(--cyan)}
-.kicker{font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin:0 0 10px}
+.h1b{color:var(--teal)}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin:0 0 10px}
 .nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
-.tab{text-decoration:none;border:1px solid var(--line2);color:var(--dim);font-size:13.5px;font-weight:600;
-  padding:8px 16px;border-radius:999px;white-space:nowrap}
-.tab:hover{color:var(--ink);border-color:var(--cyan)}
-.tab.on{background:var(--cyan);border-color:var(--cyan);color:#06211E}
+.tab{text-decoration:none;border:1px solid var(--line2);color:var(--dim);font-size:13.5px;font-weight:600;padding:8px 16px;border-radius:999px;white-space:nowrap}
+.tab:hover{color:var(--ink);border-color:var(--teal)}
+.tab.on{background:var(--teal);border-color:var(--teal);color:#06211E}
+
 .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:16px 0 0}
-.toolbar .lead{font-size:14px;color:var(--dim);margin:0;flex:1 1 220px;min-width:0}
+.toolbar .lead{font-size:14px;color:var(--dim);margin:0;flex:1 1 200px;min-width:0}
 .btn{background:transparent;border:1px solid var(--line2);color:var(--ink2);border-radius:999px;padding:8px 15px;font-size:13.5px;font-weight:600;white-space:nowrap}
-.btn:hover{color:var(--ink);border-color:var(--cyan)}
-.btn--go{background:var(--cyan);border-color:var(--cyan);color:#06211E}
+.btn:hover{color:var(--ink);border-color:var(--teal)}
+.btn--go{background:var(--teal);border-color:var(--teal);color:#06211E}
 .btn--go:hover{color:#06211E;filter:brightness(1.08)}
-.btn[disabled]{opacity:.42;cursor:not-allowed}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
 .btn--sm{padding:5px 11px;font-size:12.5px}
-select.pill{width:auto;border-radius:999px;padding:7px 12px;font-size:13px;border-color:var(--line2);color:var(--ink2)}
-.grid{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:20px;margin-top:20px;align-items:start}
+select.pill,input.pill{width:auto;border-radius:999px;padding:7px 12px;font-size:13px;border-color:var(--line2);color:var(--ink2)}
+input.pill{width:62px;text-align:center}
+
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:20px;margin-top:20px;align-items:start}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;min-width:0}
 .card h2{margin:0;font-size:21px;font-weight:700;letter-spacing:-.015em;color:var(--ink);
   padding:16px 16px 0;display:flex;align-items:center;gap:14px}
 .card h2::after{content:"";flex:1;height:1px;background:var(--line)}
+.lbl{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 
 .src{position:relative;margin:12px 16px 0;border-radius:10px;overflow:hidden;background:#05090C;aspect-ratio:16/9;display:grid;place-items:center}
 .src video{width:100%;height:100%;object-fit:contain;display:block}
-.frame{position:absolute;border:2px solid var(--pink);box-shadow:0 0 0 9999px rgba(5,9,12,.66);cursor:grab;touch-action:none}
+.frame{position:absolute;border:2px solid var(--blue);box-shadow:0 0 0 9999px rgba(5,9,12,.62);cursor:grab;touch-action:none}
 .frame[hidden]{display:none}
 .frame.drag{cursor:grabbing}
 .frame.anim{border-style:dashed}
-.frame b{position:absolute;left:0;top:-1px;transform:translateY(-100%);background:var(--pink);color:#0C1830;font-size:10.5px;font-weight:700;letter-spacing:.08em;padding:2px 7px;border-radius:5px 5px 0 0;white-space:nowrap}
-.drop{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;background:linear-gradient(180deg,#0B1317,#070D11)}
-.drop.over{background:#0E1B21;box-shadow:inset 0 0 0 2px var(--cyan)}
+.frame b{position:absolute;left:0;top:-1px;transform:translateY(-100%);background:var(--blue);color:#0C1830;font-size:10.5px;font-weight:700;letter-spacing:.08em;padding:2px 7px;border-radius:5px 5px 0 0;white-space:nowrap}
+.drop{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;background:linear-gradient(180deg,#121A20,#0B1116)}
+.drop.over{box-shadow:inset 0 0 0 2px var(--teal)}
 .drop p{margin:6px 0 0;color:var(--dim);font-size:13.5px}
 .drop strong{display:block;font-size:17px;color:var(--ink)}
 
 .tp{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:12px 16px}
-.tp .tc{font-family:var(--mono);font-size:14px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.tp .tc{font-family:var(--mono);font-size:14px;color:var(--ink2)}
 .tp .tc b{color:var(--ink);font-weight:600}
 .zoom{display:flex;align-items:center;gap:8px;margin-left:auto}
-.zoom label{font-size:12px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
-input[type=range]{width:120px;padding:0;background:none;border:0;accent-color:var(--cyan)}
+input[type=range]{width:118px;padding:0;background:none;border:0;accent-color:var(--teal)}
 
 .tl{position:relative;margin:0 16px 10px;height:104px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:crosshair;touch-action:none}
 .tl canvas{position:absolute;inset:0;width:100%;height:100%}
 .shot{position:absolute;top:0;bottom:20px;width:2px;background:var(--warn);opacity:.9;pointer-events:none;z-index:4}
 .shot::before{content:"";position:absolute;top:0;left:-3px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid var(--warn)}
-.blk{position:absolute;top:8px;bottom:22px;background:var(--cyan-soft);border:1px solid rgba(22,182,221,.5);border-radius:6px}
-.blk.on{background:rgba(242,97,158,.17);border-color:var(--pink)}
-.blk i{position:absolute;top:4px;left:6px;font-style:normal;font-size:11px;font-weight:700;color:var(--ink2);white-space:nowrap}
-.blk.on i{color:var(--pink)}
-.kmk{position:absolute;bottom:22px;width:9px;height:9px;transform:translate(-4px,4px) rotate(45deg);background:var(--ink);border:1px solid var(--panel2)}
-.kmk.a{background:var(--warn)}
+.used{position:absolute;top:8px;height:7px;border-radius:3px;background:var(--teal);opacity:.55;pointer-events:none}
+.mk{position:absolute;top:18px;bottom:22px;background:rgba(45,212,191,.12);border:1px solid var(--teal);border-radius:6px}
+.mk i{position:absolute;top:4px;left:7px;font-style:normal;font-size:11px;font-weight:700;color:var(--teal);white-space:nowrap}
 .hd{position:absolute;top:0;bottom:0;width:12px;cursor:ew-resize;touch-action:none}
-.hd::after{content:"";position:absolute;top:0;bottom:0;left:4px;width:3px;border-radius:2px;background:var(--pink)}
+.hd::after{content:"";position:absolute;top:0;bottom:0;left:4px;width:3px;border-radius:2px;background:var(--teal)}
 .hd.a{left:-6px} .hd.b{right:-6px}
-.ph{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);pointer-events:none}
+.ph{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);pointer-events:none;z-index:5}
 .ph::before{content:"";position:absolute;top:0;left:-4px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--ink)}
 .ruler{position:absolute;left:0;right:0;bottom:0;height:20px;border-top:1px solid var(--line);pointer-events:none}
 .ruler span{position:absolute;font-family:var(--mono);font-size:10.5px;color:var(--dim);transform:translateX(3px)}
 
-.shots{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:0 16px 14px}
-.shots .lbl{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.shots{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:0 16px 16px}
 .shots .cnt{font-family:var(--mono);font-size:12.5px;color:var(--warn)}
 .bar{height:4px;border-radius:2px;background:var(--line);overflow:hidden;width:100%}
-.shots .bar{flex:0 1 150px;min-width:90px}
-.bar i{display:block;height:100%;width:0;background:var(--cyan)}
+.bar i{display:block;height:100%;width:0;background:var(--teal)}
+.shots .bar{flex:0 1 140px;min-width:80px}
 
 .phone{margin:12px 16px 0;border-radius:12px;overflow:hidden;background:#05090C;border:1px solid var(--line);aspect-ratio:9/16;display:grid;place-items:center;max-width:100%}
-.phone canvas{width:100%;height:100%;display:block}
-.kf{display:flex;gap:6px;flex-wrap:wrap;padding:12px 16px 0}
+.phone canvas{width:100%;height:100%;display:block;cursor:crosshair}
+
+.prog{margin:12px 16px 0}
+.progh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:7px}
+.progh .t{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-left:auto}
+.segs{display:flex;gap:4px;min-height:46px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:5px;overflow-x:auto}
+.seg{flex:0 0 auto;min-width:54px;border:1px solid var(--line2);background:var(--bg);border-radius:6px;padding:5px 8px;text-align:left;display:flex;flex-direction:column;gap:1px}
+.seg.on{border-color:var(--teal);background:var(--teal-soft)}
+.seg b{font-size:11.5px;font-weight:700;color:var(--dim)}
+.seg.on b{color:var(--teal)}
+.seg span{font-family:var(--mono);font-size:11px;color:var(--ink2);white-space:nowrap}
+.seg .empty{color:var(--dim);font-size:12.5px;padding:8px}
+.segctl{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+
+.kf{display:flex;gap:6px;flex-wrap:wrap;padding:10px 16px 0}
 .chip{display:flex;align-items:center;gap:6px;border:1px solid var(--line2);background:var(--panel2);color:var(--ink2);border-radius:999px;padding:4px 6px 4px 10px;font-size:12px;font-family:var(--mono)}
-.chip.on{border-color:var(--pink);color:var(--ink)}
-.chip em{font-style:normal;font-family:var(--ui);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
-.chip.on em{color:var(--pink)}
+.chip.on{border-color:var(--blue);color:var(--ink)}
+.chip em{font-style:normal;font-family:var(--ui);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);cursor:pointer}
+.chip.on em{color:var(--blue)}
 .chip.an em{color:var(--warn)}
-.chip b{cursor:pointer;color:var(--dim);font-weight:600;padding:0 4px;border-radius:50%}
-.chip b:hover{color:var(--pink)}
+.chip b{cursor:pointer;color:var(--dim);font-weight:600;padding:0 4px}
+.chip b:hover{color:var(--blue)}
 .kfb{display:flex;gap:7px;flex-wrap:wrap;padding:10px 16px 0}
-.ovs{display:flex;flex-direction:column;gap:6px;padding:12px 16px 0}
+
+.ovs{display:flex;flex-direction:column;gap:6px;padding:14px 16px 0}
 .ovs .hdr{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.ovs .hdr span{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 .ov{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:7px 9px;font-size:12.5px;min-width:0}
-.ov.on{border-color:var(--cyan)}
+.ov.on{border-color:var(--teal)}
 .ov img{width:26px;height:26px;object-fit:contain;flex:none;background:#05090C;border-radius:5px}
+.ov .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;background:#05090C;border-radius:5px;font-weight:800;font-size:13px;color:var(--dim)}
 .ov .nm{flex:1 1 0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;color:var(--ink2)}
 .ov.on .nm{color:var(--ink)}
 .ov .rg{font-family:var(--mono);font-size:11px;color:var(--dim);white-space:nowrap}
 .ov b{cursor:pointer;color:var(--dim);font-weight:600;padding:0 3px}
-.ov b:hover{color:var(--pink)}
-.ovctl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--dim)}
-.ovctl input[type=range]{width:96px}
-.phone canvas{cursor:crosshair}
+.ov b:hover{color:var(--blue)}
+.ovctl{display:flex;flex-direction:column;gap:8px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:10px}
+.ovrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--dim)}
+.ovrow input[type=range]{width:88px}
+.swatch{width:22px;height:22px;border-radius:50%;border:2px solid var(--line2);padding:0;flex:none}
+.swatch[aria-pressed=true]{border-color:var(--ink)}
+
 .meta{padding:14px 16px;display:flex;flex-direction:column;gap:12px}
 .fld{display:flex;flex-direction:column;gap:5px}
 .fld label{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .fld .cnt{font-family:var(--mono);font-size:11px;letter-spacing:0;text-transform:none}
-.fld .cnt.bad{color:var(--pink)}
-textarea{resize:vertical;min-height:64px;line-height:1.45}
-.dests{display:flex;gap:7px;flex-wrap:wrap}
-.dest{border:1px solid var(--line2);background:transparent;color:var(--dim);border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:600}
-.dest[aria-pressed=true]{color:var(--cyan);border-color:var(--cyan);background:var(--cyan-soft)}
-.acts{display:flex;gap:8px;flex-wrap:wrap}
-.acts .btn{flex:1 1 140px;text-align:center}
+.fld .cnt.bad{color:var(--blue)}
+textarea{resize:vertical;min-height:64px}
+.dests{display:flex;flex-direction:column;gap:6px}
+.dst{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel2);border-radius:9px;padding:7px 9px}
+.dst .nm{flex:1 1 0;min-width:0;font-size:13.5px;font-weight:600;color:var(--ink2)}
+.dst.on .nm{color:var(--ink)}
+.dst .pick{border:1px solid var(--line2);background:transparent;color:var(--dim);border-radius:999px;padding:3px 10px;font-size:11.5px;font-weight:700}
+.dst.on .pick{color:var(--teal);border-color:var(--teal);background:var(--teal-soft)}
+.dst a{font-size:12px;color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line2);white-space:nowrap}
+.dst a:hover{color:var(--teal);border-color:var(--teal)}
+.dst .done{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);cursor:pointer;background:none;border:0;padding:0}
+.dst.up .done{color:var(--ok)}
 .msg{font-size:12.5px;color:var(--ink2);min-height:18px}
-.msg.err{color:var(--pink)}
+.msg.err{color:var(--blue)}
 .msg.ok{color:var(--ok)}
-.note{margin:0;padding:0 16px 16px;font-size:12.5px;color:var(--dim);line-height:1.5}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.acts .btn{flex:1 1 130px;text-align:center}
+.note{margin:0;padding:0 16px 16px;font-size:12.5px;color:var(--dim)}
 .note b{color:var(--ink2);font-weight:600}
 
+.plan{margin-top:16px;padding-bottom:16px}
+.planhelp{margin:10px 16px 0;font-size:13px;color:var(--dim);max-width:92ch}
+#planjson{margin:10px 16px 0;width:calc(100% - 32px);min-height:120px;font-family:var(--mono);font-size:12.5px;resize:vertical}
+.planacts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 16px 0}
 .strip{margin-top:20px}
-.striph{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding:14px 16px 0}
+.striph{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 16px 0}
 .striph h2{padding:0}
 .striph .hint{font-size:12.5px;color:var(--dim);min-width:0;overflow:hidden;text-overflow:ellipsis}
-.row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;padding:12px 16px 16px}
-.clip{text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.row{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;padding:12px 16px 16px}
+.clip{text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:6px;min-width:0}
 .clip:hover{border-color:var(--line2)}
-.clip.on{border-color:var(--pink);background:rgba(242,97,158,.06)}
+.clip.on{border-color:var(--teal);background:var(--teal-soft)}
 .clip .n{font-size:11.5px;font-weight:700;letter-spacing:.08em;color:var(--dim)}
-.clip.on .n{color:var(--pink)}
+.clip.on .n{color:var(--teal)}
 .clip .t{font-size:14px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .clip .d{font-family:var(--mono);font-size:12px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tag{align-self:flex-start;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--line);color:var(--dim)}
-.tag.exp{background:var(--cyan-soft);color:var(--cyan)}
-.tag.rdy{background:rgba(63,214,160,.15);color:var(--ok)}
-.tag.dem{background:rgba(245,183,78,.15);color:var(--warn)}
+.tag.exp{background:var(--blue-soft);color:var(--blue)}
+.tag.rdy{background:var(--teal-soft);color:var(--ok)}
+.tag.dem{background:#2A2413;color:var(--warn)}
 .keys{display:flex;gap:16px;flex-wrap:wrap;padding:0 16px 16px;font-size:12px;color:var(--dim)}
 .keys kbd{font-family:var(--mono);font-size:11px;background:var(--panel2);border:1px solid var(--line2);border-bottom-width:2px;border-radius:5px;padding:1px 6px;color:var(--ink2)}
 
-@media (max-width:1060px){
+@media (max-width:1080px){
   .grid{grid-template-columns:minmax(0,1fr)}
   .phone{max-width:300px;margin-inline:auto}
-  .row{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media (max-width:560px){
-  .row{grid-template-columns:minmax(0,1fr)}
-  .tl{height:84px}
-  .zoom{margin-left:0}
-}
+@media (max-width:560px){ .tl{height:84px} .zoom{margin-left:0} }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
@@ -183,21 +205,36 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
 </header>
 
 <div class="toolbar">
-  <p class="lead">De cada video de 16:9 salen cinco verticales para TikTok, Reels y Shorts.</p>
+  <p class="lead">Un short es una secuencia de tramos del mismo video. Marc&aacute; en 16:9, arm&aacute; en 9:16.</p>
   <select class="pill" id="mode" aria-label="Criterio de corte">
     <option value="audio">Picos de audio</option>
     <option value="shots">Tomas m&aacute;s largas</option>
     <option value="hook">Gancho y remate</option>
   </select>
-  <button class="btn" id="suggest">Proponer 5</button>
+  <input class="pill mono" id="howmany" type="number" min="1" max="20" value="5" aria-label="Cu&aacute;ntos shorts proponer">
+  <button class="btn" id="suggest">Proponer</button>
+  <button class="btn" id="planbtn">Plan</button>
   <button class="btn btn--go" id="pick">Cargar video</button>
   <input id="file" type="file" accept="video/*" hidden>
 </div>
 
+<section class="card plan" id="planbox" hidden>
+  <h2><span>Plan de montaje</span></h2>
+  <p class="planhelp">Peg&aacute; ac&aacute; el plan que te paso desde la terminal y apret&aacute; Aplicar: arma los shorts con
+    sus tramos, nombres, captions y carteles, y despu&eacute;s los edit&aacute;s a mano. Copiar devuelve lo que tengas ahora,
+    para que yo lo retome.</p>
+  <textarea id="planjson" spellcheck="false" placeholder='{"shorts":[{"title":"El remate","cap":"#brainsyrup","segs":[[12.4,19.8],[44,48.2]],"texts":[{"t":"ESPERÁ EL FINAL","from":0,"to":2.5,"anim":"rise","y":0.2}]}]}'></textarea>
+  <div class="planacts">
+    <button class="btn btn--go btn--sm" id="planapply">Aplicar plan</button>
+    <button class="btn btn--sm" id="plancopy">Copiar el plan actual</button>
+    <span class="msg" id="planmsg"></span>
+  </div>
+</section>
+
 <div class="grid">
 
   <section class="card">
-    <h2>Fuente</h2>
+    <h2>Material</h2>
     <div class="src" id="src">
       <video id="v" playsinline preload="auto"></video>
       <div class="frame" id="frame" hidden tabindex="0" role="slider" aria-label="Encuadre vertical"><b id="fl">9:16</b></div>
@@ -214,8 +251,9 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
       <span class="tc mono"><b id="now">00:00.000</b> / <span id="dur">00:00.000</span></span>
       <button class="btn btn--sm" id="setin">Entrada</button>
       <button class="btn btn--sm" id="setout">Salida</button>
+      <button class="btn btn--sm btn--go" id="addseg">Agregar tramo</button>
       <span class="zoom">
-        <label for="zoomr">Zoom</label>
+        <span class="lbl">Zoom</span>
         <input id="zoomr" type="range" min="100" max="260" value="100">
         <span class="tc mono" id="zoomv">1.00&times;</span>
       </span>
@@ -223,8 +261,9 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
 
     <div class="tl" id="tl">
       <canvas id="wave"></canvas>
-      <div id="blocks"></div>
+      <div id="used"></div>
       <div id="marks"></div>
+      <div id="mkbox"></div>
       <div class="ruler" id="ruler"></div>
       <div class="ph" id="ph" style="left:0"></div>
     </div>
@@ -232,7 +271,7 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
     <div class="shots">
       <button class="btn btn--sm" id="scan">Detectar tomas</button>
       <span class="lbl">Sensibilidad</span>
-      <input id="sens" type="range" min="2" max="16" value="9" style="width:110px">
+      <input id="sens" type="range" min="2" max="16" value="9" style="width:104px">
       <span class="cnt" id="scount">sin escanear</span>
       <div class="bar"><i id="sbar"></i></div>
     </div>
@@ -241,6 +280,21 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
   <aside class="card">
     <h2><span>Short <span id="selnum">01</span></span></h2>
     <div class="phone"><canvas id="prev" width="405" height="720"></canvas></div>
+
+    <div class="prog">
+      <div class="progh">
+        <span class="lbl">Montaje</span>
+        <button class="btn btn--sm" id="playshort">Ver el short</button>
+        <span class="t mono" id="progdur">0,0 s</span>
+      </div>
+      <div class="segs" id="segs"></div>
+      <div class="segctl">
+        <button class="btn btn--sm" id="segprev">&larr;</button>
+        <button class="btn btn--sm" id="segnext">&rarr;</button>
+        <button class="btn btn--sm" id="segdel">Quitar tramo</button>
+        <button class="btn btn--sm" id="segsrc">Ir al material</button>
+      </div>
+    </div>
 
     <div class="kf" id="kfrow"></div>
     <div class="kfb">
@@ -251,64 +305,84 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
 
     <div class="ovs">
       <div class="hdr">
-        <span>Gr&aacute;ficas</span>
-        <button class="btn btn--sm" id="addpng">Agregar PNG</button>
+        <span class="lbl">Gr&aacute;ficas y textos</span>
+        <button class="btn btn--sm" id="addpng">PNG</button>
+        <button class="btn btn--sm" id="addtxt">Texto</button>
         <input id="png" type="file" accept="image/png,image/webp,image/jpeg,image/gif" multiple hidden>
       </div>
       <div id="ovlist"></div>
       <div class="ovctl" id="ovctl" hidden>
-        <label for="ovsize">Tama&ntilde;o</label>
-        <input id="ovsize" type="range" min="4" max="150" value="45">
-        <label for="ovrot">Giro</label>
-        <input id="ovrot" type="range" min="-45" max="45" value="0">
-        <button class="btn btn--sm" id="ovfrom">Desde ac&aacute;</button>
-        <button class="btn btn--sm" id="ovto">Hasta ac&aacute;</button>
-        <button class="btn btn--sm" id="ovall">Todo el short</button>
+        <div class="ovrow" id="txtrow" hidden>
+          <input id="ovtext" placeholder="El texto del cartel">
+        </div>
+        <div class="ovrow">
+          <span>Tama&ntilde;o</span><input id="ovsize" type="range" min="4" max="150" value="45">
+          <span>Giro</span><input id="ovrot" type="range" min="-45" max="45" value="0">
+        </div>
+        <div class="ovrow" id="colrow" hidden>
+          <span>Color</span>
+          <button class="swatch" data-c="#FFFFFF" style="background:#FFFFFF"></button>
+          <button class="swatch" data-c="#0F1418" style="background:#0F1418"></button>
+          <button class="swatch" data-c="#2DD4BF" style="background:#2DD4BF"></button>
+          <button class="swatch" data-c="#93B4FD" style="background:#93B4FD"></button>
+          <button class="swatch" data-c="#E9B949" style="background:#E9B949"></button>
+          <button class="btn btn--sm" id="ovbox">Caja</button>
+        </div>
+        <div class="ovrow">
+          <span>Entrada</span>
+          <select id="ovanim" class="pill">
+            <option value="none">sin animaci&oacute;n</option>
+            <option value="fade">aparece</option>
+            <option value="rise">sube</option>
+            <option value="pop">rebota</option>
+          </select>
+          <button class="btn btn--sm" id="ovfrom">Desde ac&aacute;</button>
+          <button class="btn btn--sm" id="ovto">Hasta ac&aacute;</button>
+          <button class="btn btn--sm" id="ovall">Todo el short</button>
+        </div>
       </div>
     </div>
 
     <div class="meta">
       <div class="fld">
-        <label for="ttl">T&iacute;tulo <span class="cnt mono" id="cttl">0 / 100</span></label>
-        <input id="ttl" maxlength="140" placeholder="El t&iacute;tulo que ve YouTube Shorts">
+        <label for="ttl">Nombre del short <span class="cnt mono" id="cttl">0 / 100</span></label>
+        <input id="ttl" maxlength="140" placeholder="Tambi&eacute;n es el nombre del archivo">
       </div>
       <div class="fld">
         <label for="cap">Caption <span class="cnt mono" id="ccap">0 / 2200</span></label>
         <textarea id="cap" placeholder="Lo que va en TikTok e Instagram, con los hashtags"></textarea>
       </div>
-      <div class="fld">
-        <label>Destinos</label>
-        <div class="dests">
-          <button class="dest" id="d_tt" aria-pressed="true">TikTok</button>
-          <button class="dest" id="d_ig" aria-pressed="true">Reels</button>
-          <button class="dest" id="d_yt" aria-pressed="true">Shorts</button>
-        </div>
-      </div>
       <div class="bar"><i id="prog"></i></div>
       <p class="msg" id="msg"></p>
       <div class="acts">
         <button class="btn btn--go" id="export">Exportar 9:16</button>
-        <button class="btn" id="queue">Marcar listo</button>
+        <button class="btn" id="copycap">Copiar caption</button>
+      </div>
+      <div class="fld">
+        <label>Publicaci&oacute;n</label>
+        <div class="dests" id="dests"></div>
       </div>
     </div>
-    <p class="note"><b>Las APIs no est&aacute;n conectadas todav&iacute;a.</b> TikTok, Instagram y YouTube piden una app aprobada y un servidor que guarde los tokens, as&iacute; que la subida en un clic queda para la versi&oacute;n con backend. Por ahora exporta el archivo y lleva la cuenta de qu&eacute; short est&aacute; listo y para d&oacute;nde va.</p>
+    <p class="note"><b>La subida es a mano.</b> Las tres plataformas piden una app aprobada y un servidor con tus tokens. Ac&aacute; export&aacute;s, copi&aacute;s el caption, abr&iacute;s la p&aacute;gina de carga y despu&eacute;s mac&aacute;s cada destino como subido.</p>
   </aside>
 </div>
 
 <section class="card strip">
   <div class="striph">
-    <h2>Los cinco de este video</h2>
-    <span class="hint" id="hint">Ejemplo cargado. Cuando abras un video, estos tramos se reemplazan.</span>
+    <h2>Shorts</h2>
+    <button class="btn btn--sm" id="newshort">Nuevo short</button>
+    <button class="btn btn--sm" id="delshort">Borrar este</button>
+    <span class="hint" id="hint">Ejemplo cargado. Cuando abras un video, se reemplaza.</span>
   </div>
   <div class="row" id="clips"></div>
   <div class="keys">
     <span><kbd>espacio</kbd> play</span>
     <span><kbd>I</kbd> entrada</span>
     <span><kbd>O</kbd> salida</span>
+    <span><kbd>A</kbd> agregar tramo</span>
     <span><kbd>K</kbd> encuadre</span>
     <span><kbd>&larr;</kbd><kbd>&rarr;</kbd> un cuadro</span>
     <span><kbd>&#8679;</kbd>+<kbd>&larr;</kbd><kbd>&rarr;</kbd> toma anterior o siguiente</span>
-    <span><kbd>1</kbd>&hellip;<kbd>5</kbd> elegir short</span>
   </div>
 </section>
 
@@ -321,12 +395,18 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
   var v = $("v"), prev = $("prev"), pctx = prev.getContext("2d");
   var wave = $("wave"), wctx = wave.getContext("2d");
   var FR = 1 / 30, COLS = 64, ROWS = 36;
+  var DEST = [
+    { k: "yt", nm: "YouTube Shorts", url: "https://studio.youtube.com/", lim: 100 },
+    { k: "tt", nm: "TikTok", url: "https://www.tiktok.com/upload", lim: 2200 },
+    { k: "ig", nm: "Instagram Reels", url: "https://www.instagram.com/", lim: 2200 }
+  ];
 
   var S = {
     file: null, url: null, dur: 122, vw: 1920, vh: 1080,
-    clips: [], sel: 0, key: 0, demo: true,
-    env: null, samples: null, cuts: [], busy: false, scanning: false, dl: null,
-    imgs: [], ov: -1
+    shorts: [], sel: 0, seg: 0, key: 0, ov: -1, demo: true,
+    mark: { in: 0, out: 12 }, playing: null,
+    env: null, samples: null, cuts: [], imgs: [],
+    busy: false, scanning: false, dl: null
   };
 
   /* ---------- utilidades ---------- */
@@ -336,94 +416,66 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
     return (m < 10 ? "0" : "") + m + ":" + (r < 10 ? "0" : "") + r.toFixed(3);
   }
   function tcs(s){ return tc(s).slice(0, 7); }
-  function durTxt(s){ return s.toFixed(1).replace(".", ",") + " s"; }
+  function secs(s){ return s.toFixed(1).replace(".", ",") + " s"; }
   function clamp(x, a, b){ return x < a ? a : x > b ? b : x; }
   function ease(u){ return u < .5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2; }
   function slug(t){
     return (t || "short").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
-      .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 48) || "short";
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60) || "short";
   }
+
   function mkKey(t, cx, cy, z, mode){
-    return { t: t, cx: cx === undefined ? .5 : cx, cy: cy === undefined ? .5 : cy,
-             z: z || 1, mode: mode || "cut" };
+    return { t: t, cx: cx === undefined ? .5 : cx, cy: cy === undefined ? .5 : cy, z: z || 1, mode: mode || "cut" };
   }
-  function mkClip(a, b, title){
-    return { in: a, out: b, keys: [mkKey(a)], ovs: [], title: title || "", cap: "",
-             dest: { tt: true, ig: true, yt: true }, status: "" };
+  function mkSeg(a, b, cx){
+    return { in: a, out: b, keys: [mkKey(a, cx)] };
   }
-  function sel(){ return S.clips[S.sel]; }
-  function keys(){ return sel().keys; }
+  function mkShort(title){
+    return { title: title || "", cap: "", segs: [], ovs: [],
+             dest: { yt: true, tt: true, ig: true }, up: {}, status: "" };
+  }
+  var EMPTY = mkShort("");
+  function sh(){ return S.shorts[S.sel] || S.shorts[0] || EMPTY; }
+  function seg(){ return sh().segs[S.seg] || null; }
+  function keys(){ var g = seg(); return g ? g.keys : []; }
 
-  /* ---------- ejemplo ---------- */
-  function loadDemo(){
-    var d = [[4, 22, "La pregunta del principio"], [31.5, 48, "Lo que nadie entiende"],
-             [55, 72, "El dato que sorprende"], [80, 97, "El momento del giro"],
-             [103, 120, "El cierre"]];
-    S.clips = d.map(function(x){
-      var c = mkClip(x[0], x[1], x[2]);
-      c.cap = "Ejemplo. Reemplazalo cuando cargues el video.";
-      return c;
-    });
-    S.demo = true; S.dur = 122; S.sel = 0; S.key = 0;
+  /* ---------- tiempo del montaje ---------- */
+  function segStart(i){
+    var t = 0, g = sh().segs;
+    for (var j = 0; j < i && j < g.length; j++) t += g[j].out - g[j].in;
+    return t;
   }
-  loadDemo();
-
-  /* ---------- guardado local ---------- */
-  function kkey(){ return S.file ? "picadora2:" + S.file.name + ":" + S.file.size : null; }
-  function save(){
-    var k = kkey(); if (!k) return;
-    try {
-      localStorage.setItem(k, JSON.stringify({ clips: S.clips, sel: S.sel, cuts: S.cuts }));
-      var lib = S.imgs.map(function(im){ return { name: im.name, src: im.src }; });
-      var raw = JSON.stringify(lib);
-      if (raw.length < 3000000) localStorage.setItem(k + ":img", raw);
-    } catch (e) {}
+  function progDur(){
+    return sh().segs.reduce(function(a, g){ return a + (g.out - g.in); }, 0);
   }
-  function restore(){
-    var k = kkey(); if (!k) return false;
-    try {
-      var d = JSON.parse(localStorage.getItem(k) || "null");
-      if (!d || !d.clips || !d.clips.length) return false;
-      S.clips = d.clips; S.sel = clamp(d.sel | 0, 0, d.clips.length - 1);
-      S.cuts = d.cuts || []; S.demo = false; S.key = 0;
-      S.clips.forEach(function(c){ if (!c.ovs) c.ovs = []; });
-      try {
-        var lib = JSON.parse(localStorage.getItem(k + ":img") || "[]");
-        S.imgs = lib.map(function(o){
-          var im = new Image(); im.src = o.src;
-          return { name: o.name, src: o.src, el: im };
-        });
-      } catch (e2) { S.imgs = []; }
-      return true;
-    } catch (e) { return false; }
+  function progNow(){
+    var g = seg();
+    if (!g || !S.url) return 0;
+    return segStart(S.seg) + clamp(v.currentTime - g.in, 0, g.out - g.in);
   }
 
-  /* ---------- encuadre con cuadros clave ---------- */
+  /* ---------- encuadre ---------- */
   function cropFrom(k){
     var h = S.vh / k.z, w = h * 9 / 16;
     if (w > S.vw) { w = S.vw; h = w * 16 / 9; }
     return { x: clamp(k.cx * S.vw - w / 2, 0, S.vw - w),
              y: clamp(k.cy * S.vh - h / 2, 0, S.vh - h), w: w, h: h };
   }
-  function cropAt(c, t){
-    var ks = c.keys, i, a = ks[0], b = null;
-    for (i = 0; i < ks.length; i++) {
-      if (ks[i].t <= t) a = ks[i];
-      else { b = ks[i]; break; }
-    }
+  function cropAt(g, t){
+    if (!g) return cropFrom(mkKey(0));
+    var ks = g.keys, a = ks[0], b = null, i;
+    for (i = 0; i < ks.length; i++) { if (ks[i].t <= t) a = ks[i]; else { b = ks[i]; break; } }
     if (b && b.mode === "anim" && b.t > a.t) {
       var u = ease(clamp((t - a.t) / (b.t - a.t), 0, 1));
-      return cropFrom({ cx: a.cx + (b.cx - a.cx) * u, cy: a.cy + (b.cy - a.cy) * u,
-                        z: a.z + (b.z - a.z) * u });
+      return cropFrom({ cx: a.cx + (b.cx - a.cx) * u, cy: a.cy + (b.cy - a.cy) * u, z: a.z + (b.z - a.z) * u });
     }
     return cropFrom(a);
   }
   function activeKey(){
-    var ks = keys(), t = S.url ? v.currentTime : sel().in, idx = 0;
+    var ks = keys(), g = seg(), t = (S.url && g) ? v.currentTime : 0, idx = 0;
     for (var i = 0; i < ks.length; i++) if (ks[i].t <= t + .001) idx = i;
     return idx;
   }
-
   function fit(){
     var r = $("src").getBoundingClientRect();
     var s = Math.min(r.width / S.vw, r.height / S.vh);
@@ -432,68 +484,137 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
   function drawFrame(){
     var f = $("frame");
     if (!S.url) { f.hidden = true; return; }
+    var g = seg();
     f.hidden = false;
-    var t = v.currentTime, c = sel(), k = cropAt(c, t), g = fit();
-    f.style.left = (g.ox + k.x * g.s) + "px";
-    f.style.top = (g.oy + k.y * g.s) + "px";
-    f.style.width = (k.w * g.s) + "px";
-    f.style.height = (k.h * g.s) + "px";
-    var ks = c.keys, nxt = null;
+    var t = v.currentTime, k = cropAt(g, t), q = fit();
+    f.style.left = (q.ox + k.x * q.s) + "px";
+    f.style.top = (q.oy + k.y * q.s) + "px";
+    f.style.width = (k.w * q.s) + "px";
+    f.style.height = (k.h * q.s) + "px";
+    var nxt = null, ks = keys();
     for (var i = 0; i < ks.length; i++) if (ks[i].t > t) { nxt = ks[i]; break; }
-    var moving = nxt && nxt.mode === "anim";
-    f.classList.toggle("anim", !!moving);
-    $("fl").textContent = moving ? "9:16 · animando" : "9:16";
+    var mov = nxt && nxt.mode === "anim";
+    f.classList.toggle("anim", !!mov);
+    $("fl").textContent = mov ? "9:16 · animando" : "9:16";
   }
 
-  /* ---------- preview ---------- */
+  /* ---------- graficas y textos ---------- */
+  function ovBox(o, W){
+    if (o.kind === "text") {
+      var size = o.s * W;
+      var lines = wrapText(o.text || "", size, W * .86);
+      return { w: lines.w, h: lines.h, lines: lines.list, size: size };
+    }
+    var im = S.imgs[o.i];
+    if (!im || !im.el.naturalWidth) return null;
+    var w = o.s * W;
+    return { w: w, h: w * (im.el.naturalHeight / im.el.naturalWidth) };
+  }
+  function wrapText(txt, size, maxW){
+    pctx.save();
+    pctx.font = "800 " + size + "px Inter, sans-serif";
+    var out = [], w = 0;
+    (txt || " ").split("\n").forEach(function(par){
+      var words = par.split(" "), line = "";
+      words.forEach(function(wd){
+        var test = line ? line + " " + wd : wd;
+        if (pctx.measureText(test).width > maxW && line) { out.push(line); line = wd; }
+        else line = test;
+      });
+      out.push(line);
+    });
+    out.forEach(function(l){ w = Math.max(w, pctx.measureText(l).width); });
+    pctx.restore();
+    return { list: out, w: w + size * .5, h: out.length * size * 1.18 + size * .36 };
+  }
+  function ovAlpha(o, t){
+    var a = o.from == null ? 0 : o.from, b = o.to == null ? progDur() : o.to;
+    if (t < a || t > b) return null;
+    var d = .35, st = { a: 1, dy: 0, sc: 1 };
+    if (o.anim && o.anim !== "none") {
+      var u = clamp((t - a) / d, 0, 1), w = clamp((b - t) / d, 0, 1);
+      var p = Math.min(u, w), e = ease(p);
+      st.a = e;
+      if (o.anim === "rise") st.dy = (1 - e) * .06;
+      if (o.anim === "pop") st.sc = .72 + .28 * (u < 1 ? 1 + Math.sin(u * Math.PI) * .18 * (1 - u) + (e - 1) : e) + (1 - e) * 0;
+      if (o.anim === "pop") st.sc = .7 + .3 * e + (u < 1 ? Math.sin(Math.PI * u) * .08 : 0);
+    }
+    return st;
+  }
   function drawOvs(ctx, W, H, t, mark){
-    var c = sel();
-    if (!c.ovs) return;
-    c.ovs.forEach(function(o, i){
-      var im = S.imgs[o.i];
-      if (!im || !im.el.complete || !im.el.naturalWidth) return;
-      if (o.from != null && t < o.from) return;
-      if (o.to != null && t > o.to) return;
-      var w = o.s * W, h = w * (im.el.naturalHeight / im.el.naturalWidth);
+    var s = sh();
+    (s.ovs || []).forEach(function(o, i){
+      var st = ovAlpha(o, t);
+      if (!st) return;
+      var b = ovBox(o, W);
+      if (!b) return;
       ctx.save();
-      ctx.translate(o.x * W, o.y * H);
+      ctx.globalAlpha = st.a;
+      ctx.translate(o.x * W, (o.y + st.dy) * H);
       if (o.rot) ctx.rotate(o.rot * Math.PI / 180);
-      ctx.drawImage(im.el, -w / 2, -h / 2, w, h);
+      ctx.scale(st.sc, st.sc);
+      if (o.kind === "text") {
+        ctx.font = "800 " + b.size + "px Inter, sans-serif";
+        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        if (o.box) {
+          ctx.fillStyle = o.color === "#0F1418" ? "#FFFFFF" : "#0F1418";
+          var r = b.size * .18;
+          roundRect(ctx, -b.w / 2, -b.h / 2, b.w, b.h, r); ctx.fill();
+        } else {
+          ctx.lineWidth = b.size * .18; ctx.strokeStyle = "rgba(10,14,18,.75)";
+          ctx.lineJoin = "round";
+        }
+        ctx.fillStyle = o.color || "#FFFFFF";
+        b.lines.forEach(function(ln, j){
+          var y = (j - (b.lines.length - 1) / 2) * b.size * 1.18;
+          if (!o.box) ctx.strokeText(ln, 0, y);
+          ctx.fillText(ln, 0, y);
+        });
+      } else {
+        var im = S.imgs[o.i];
+        ctx.drawImage(im.el, -b.w / 2, -b.h / 2, b.w, b.h);
+      }
       if (mark && i === S.ov) {
-        ctx.strokeStyle = "#16B6DD"; ctx.lineWidth = 2; ctx.setLineDash([6, 5]);
-        ctx.strokeRect(-w / 2, -h / 2, w, h);
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = "#2DD4BF"; ctx.lineWidth = 2; ctx.setLineDash([6, 5]);
+        ctx.strokeRect(-b.w / 2, -b.h / 2, b.w, b.h);
         ctx.setLineDash([]);
         [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(function(q){
-          var hx = q[0] * w / 2, hy = q[1] * h / 2, r = 9;
-          ctx.fillStyle = "#16B6DD";
-          ctx.fillRect(hx - r / 2, hy - r / 2, r, r);
-          ctx.strokeStyle = "#05090C"; ctx.lineWidth = 1.5;
-          ctx.strokeRect(hx - r / 2, hy - r / 2, r, r);
+          var hx = q[0] * b.w / 2, hy = q[1] * b.h / 2, r = 9;
+          ctx.fillStyle = "#2DD4BF"; ctx.fillRect(hx - r / 2, hy - r / 2, r, r);
+          ctx.strokeStyle = "#05090C"; ctx.lineWidth = 1.5; ctx.strokeRect(hx - r / 2, hy - r / 2, r, r);
         });
       }
       ctx.restore();
     });
   }
+  function roundRect(ctx, x, y, w, h, r){
+    ctx.beginPath();
+    ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+  }
 
+  /* ---------- preview ---------- */
   function paint(){
     var W = prev.width, H = prev.height;
     if (!S.url || v.readyState < 2) {
       pctx.fillStyle = "#05090C"; pctx.fillRect(0, 0, W, H);
       pctx.fillStyle = "#3C4A54"; pctx.textAlign = "center";
-      pctx.font = "600 17px Archivo, sans-serif";
+      pctx.font = "700 17px Inter, sans-serif";
       pctx.fillText("9:16", W / 2, H / 2 - 10);
-      pctx.font = "400 13px Archivo, sans-serif";
-      pctx.fillText("Cargá un video para ver el corte", W / 2, H / 2 + 14);
+      pctx.font = "400 13px Inter, sans-serif";
+      pctx.fillText("Cargá un video para empezar", W / 2, H / 2 + 14);
       return;
     }
-    var k = cropAt(sel(), v.currentTime);
+    var k = cropAt(seg(), v.currentTime);
     pctx.fillStyle = "#000"; pctx.fillRect(0, 0, W, H);
     try { pctx.drawImage(v, k.x, k.y, k.w, k.h, 0, 0, W, H); } catch (e) {}
-    drawOvs(pctx, W, H, v.currentTime, true);
+    drawOvs(pctx, W, H, progNow(), true);
   }
-  (function loop(){ paint(); drawFrame(); requestAnimationFrame(loop); })();
+  function loop(){ paint(); drawFrame(); requestAnimationFrame(loop); }
 
-  /* ---------- linea de tiempo ---------- */
+  /* ---------- linea de tiempo del material ---------- */
   function tlw(){ return $("tl").clientWidth; }
   function xOf(t){ return (t / S.dur) * tlw(); }
   function tOf(x){ return clamp(x / tlw(), 0, 1) * S.dur; }
@@ -505,13 +626,12 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
     wctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     wctx.clearRect(0, 0, r.width, r.height);
     if (!S.env) return;
-    var base = r.height - 20, top = 10, h = base - top, n = S.env.length;
-    wctx.fillStyle = "rgba(22,182,221,.30)";
+    var base = r.height - 20, top = 26, h = base - top, n = S.env.length;
+    wctx.fillStyle = "rgba(45,212,191,.28)";
     for (var px = 0; px < r.width; px++) {
       var i0 = Math.floor(px / r.width * n), i1 = Math.floor((px + 1) / r.width * n), m = 0;
       for (var i = i0; i <= i1 && i < n; i++) if (S.env[i] > m) m = S.env[i];
-      var hh = Math.max(1, m * h);
-      wctx.fillRect(px, base - hh, 1, hh);
+      wctx.fillRect(px, base - Math.max(1, m * h), 1, Math.max(1, m * h));
     }
   }
   function drawRuler(){
@@ -521,8 +641,7 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
     for (var t = 0; t <= S.dur; t += step) {
       if (xOf(t) > w - 34) break;
       var s = document.createElement("span");
-      s.className = "mono"; s.textContent = tc(t).slice(0, 5);
-      s.style.left = xOf(t) + "px";
+      s.className = "mono"; s.textContent = tc(t).slice(0, 5); s.style.left = xOf(t) + "px";
       el.appendChild(s);
     }
   }
@@ -535,47 +654,47 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
       box.appendChild(d);
     });
   }
-  function drawBlocks(){
-    var box = $("blocks");
+  function drawUsed(){
+    var box = $("used");
     box.textContent = "";
-    S.clips.forEach(function(c, i){
+    sh().segs.forEach(function(g, i){
       var d = document.createElement("div");
-      d.className = "blk" + (i === S.sel ? " on" : "");
-      d.style.left = xOf(c.in) + "px";
-      d.style.width = Math.max(8, xOf(c.out) - xOf(c.in)) + "px";
-      var n = document.createElement("i");
-      n.textContent = (i + 1) + " · " + durTxt(c.out - c.in);
-      d.appendChild(n);
-      if (i === S.sel) {
-        c.keys.forEach(function(k, ki){
-          if (ki === 0) return;
-          var m = document.createElement("div");
-          m.className = "kmk" + (k.mode === "anim" ? " a" : "");
-          m.style.left = (xOf(k.t) - xOf(c.in)) + "px";
-          d.appendChild(m);
-        });
-        ["a", "b"].forEach(function(side){
-          var h = document.createElement("div");
-          h.className = "hd " + side;
-          h.addEventListener("pointerdown", function(ev){
-            ev.stopPropagation(); ev.preventDefault();
-            h.setPointerCapture(ev.pointerId);
-            var move = function(e2){
-              var r = $("tl").getBoundingClientRect(), t = tOf(e2.clientX - r.left), c2 = sel();
-              if (!e2.altKey) t = snap(t);
-              if (side === "a") { c2.in = clamp(t, 0, c2.out - .4); c2.keys[0].t = Math.min(c2.keys[0].t, c2.in); }
-              else c2.out = clamp(t, c2.in + .4, S.dur);
-              drawBlocks(); renderClips(); renderKeys(); save();
-            };
-            var up = function(){ h.removeEventListener("pointermove", move); h.removeEventListener("pointerup", up); };
-            h.addEventListener("pointermove", move); h.addEventListener("pointerup", up);
-          });
-          d.appendChild(h);
-        });
-      }
-      d.addEventListener("pointerdown", function(ev){ ev.stopPropagation(); pickClip(i); });
+      d.className = "used";
+      d.style.left = xOf(g.in) + "px";
+      d.style.width = Math.max(3, xOf(g.out) - xOf(g.in)) + "px";
+      if (i === S.seg) d.style.opacity = "1";
       box.appendChild(d);
     });
+  }
+  function drawMark(){
+    var box = $("mkbox");
+    box.textContent = "";
+    var d = document.createElement("div");
+    d.className = "mk";
+    d.style.left = xOf(S.mark.in) + "px";
+    d.style.width = Math.max(10, xOf(S.mark.out) - xOf(S.mark.in)) + "px";
+    var n = document.createElement("i");
+    n.textContent = secs(S.mark.out - S.mark.in);
+    d.appendChild(n);
+    ["a", "b"].forEach(function(side){
+      var h = document.createElement("div");
+      h.className = "hd " + side;
+      h.addEventListener("pointerdown", function(ev){
+        ev.stopPropagation(); ev.preventDefault();
+        h.setPointerCapture(ev.pointerId);
+        var move = function(e2){
+          var r = $("tl").getBoundingClientRect(), t = tOf(e2.clientX - r.left);
+          if (!e2.altKey) t = snap(t);
+          if (side === "a") S.mark.in = clamp(t, 0, S.mark.out - .3);
+          else S.mark.out = clamp(t, S.mark.in + .3, S.dur);
+          drawMark();
+        };
+        var up = function(){ h.removeEventListener("pointermove", move); h.removeEventListener("pointerup", up); save(); };
+        h.addEventListener("pointermove", move); h.addEventListener("pointerup", up);
+      });
+      d.appendChild(h);
+    });
+    box.appendChild(d);
   }
   function snap(t){
     var best = t, bd = .45;
@@ -584,6 +703,7 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
   }
   $("tl").addEventListener("pointerdown", function(ev){
     var r = this.getBoundingClientRect();
+    S.playing = null;
     seek(tOf(ev.clientX - r.left));
   });
   function seek(t){
@@ -595,13 +715,9 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
   /* ---------- arrastre del encuadre ---------- */
   (function(){
     var f = $("frame"), st = null;
-    function target(){
-      var i = activeKey();
-      S.key = i; renderKeys();
-      return keys()[i];
-    }
+    function target(){ var i = activeKey(); S.key = i; renderKeys(); return keys()[i]; }
     f.addEventListener("pointerdown", function(ev){
-      if (!S.url) return;
+      if (!S.url || !seg()) return;
       ev.preventDefault(); f.setPointerCapture(ev.pointerId); f.classList.add("drag");
       var k = target();
       st = { x: ev.clientX, y: ev.clientY, cx: k.cx, cy: k.cy, s: fit().s, k: k };
@@ -615,6 +731,7 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
       f.addEventListener(e, function(){ if (st) { st = null; f.classList.remove("drag"); save(); } });
     });
     f.addEventListener("keydown", function(ev){
+      if (!seg()) return;
       var k = target(), step = ev.shiftKey ? .08 : .02, used = true;
       if (ev.key === "ArrowLeft") k.cx = clamp(k.cx - step, 0, 1);
       else if (ev.key === "ArrowRight") k.cx = clamp(k.cx + step, 0, 1);
@@ -625,33 +742,78 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
     });
   })();
 
+  /* ---------- montaje ---------- */
+  function renderSegs(){
+    var box = $("segs"), s = sh();
+    box.textContent = "";
+    if (!s.segs.length) {
+      var e = document.createElement("div");
+      e.className = "empty";
+      e.textContent = "Marcá un tramo en el material y apretá Agregar tramo.";
+      box.appendChild(e);
+    }
+    s.segs.forEach(function(g, i){
+      var b = document.createElement("button");
+      b.className = "seg" + (i === S.seg ? " on" : ""); b.type = "button";
+      var n = document.createElement("b"); n.textContent = (i + 1);
+      var d = document.createElement("span"); d.textContent = secs(g.out - g.in);
+      var t = document.createElement("span"); t.textContent = tcs(g.in);
+      t.style.color = "var(--dim)";
+      b.appendChild(n); b.appendChild(d); b.appendChild(t);
+      b.addEventListener("click", function(){ pickSeg(i); });
+      box.appendChild(b);
+    });
+    $("progdur").textContent = secs(progDur());
+    drawUsed();
+  }
+  function pickSeg(i){
+    var s = sh();
+    S.seg = clamp(i, 0, Math.max(0, s.segs.length - 1));
+    S.key = 0;
+    renderSegs(); renderKeys();
+    var g = seg();
+    if (g && S.url) { S.playing = null; seek(g.in); }
+    var z = g ? g.keys[0].z : 1;
+    $("zoomr").value = Math.round(z * 100);
+    $("zoomv").textContent = z.toFixed(2) + "×";
+  }
+  function addSeg(){
+    if (!S.url) { msg("Cargá un video primero.", "err"); return; }
+    var a = S.mark.in, b = S.mark.out;
+    if (b - a < .3) { msg("El tramo es muy corto.", "err"); return; }
+    var g = mkSeg(a, b, centerOf(a));
+    sh().segs.push(g);
+    S.seg = sh().segs.length - 1;
+    S.demo = false;
+    renderSegs(); renderKeys(); renderClips(); save();
+    msg("Tramo " + sh().segs.length + " agregado. El short dura " + secs(progDur()) + ".", "ok");
+  }
+
   /* ---------- cuadros clave ---------- */
   function renderKeys(){
     var box = $("kfrow");
     box.textContent = "";
+    if (!seg()) return;
     keys().forEach(function(k, i){
       var c = document.createElement("span");
       c.className = "chip" + (i === S.key ? " on" : "") + (k.mode === "anim" ? " an" : "");
       var t = document.createElement("span");
-      t.textContent = tcs(k.t);
-      t.style.cursor = "pointer";
-      t.addEventListener("click", function(){ S.key = i; seek(k.t); renderKeys(); });
+      t.textContent = tcs(k.t); t.style.cursor = "pointer";
+      t.addEventListener("click", function(){ S.key = i; S.playing = null; seek(k.t); renderKeys(); });
       var e = document.createElement("em");
       e.textContent = i === 0 ? "inicio" : k.mode === "anim" ? "animado" : "corte";
-      e.style.cursor = "pointer";
       e.addEventListener("click", function(){
         if (i === 0) return;
         k.mode = k.mode === "anim" ? "cut" : "anim";
-        renderKeys(); drawBlocks(); save();
+        renderKeys(); save();
       });
       c.appendChild(t); c.appendChild(e);
       if (i > 0) {
         var x = document.createElement("b");
-        x.textContent = "×"; x.title = "Borrar este encuadre";
+        x.textContent = "×";
         x.addEventListener("click", function(){
-          keys().splice(i, 1);
-          S.key = Math.max(0, Math.min(S.key, keys().length - 1));
-          renderKeys(); drawBlocks(); save();
+          keys().splice(i, 1); S.key = Math.max(0, Math.min(S.key, keys().length - 1));
+          renderKeys(); save();
         });
         c.appendChild(x);
       }
@@ -659,39 +821,36 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
     });
   }
   function addKey(mode){
-    if (!S.url) { msg("Cargá un video primero.", "err"); return; }
-    var c = sel(), t = clamp(v.currentTime, c.in, c.out), k = cropAt(c, t);
-    var cur = keys()[activeKey()];
-    var nk = mkKey(t, cur.cx, cur.cy, cur.z, mode);
+    var g = seg();
+    if (!S.url || !g) { msg("Elegí un tramo primero.", "err"); return; }
+    var t = clamp(v.currentTime, g.in, g.out), cur = keys()[activeKey()];
     var i = 0;
-    while (i < c.keys.length && c.keys[i].t <= t) i++;
-    if (i > 0 && Math.abs(c.keys[i - 1].t - t) < .05) { c.keys[i - 1].mode = mode; S.key = i - 1; }
-    else { c.keys.splice(i, 0, nk); S.key = i; }
-    renderKeys(); drawBlocks(); save();
-    msg(mode === "anim" ? "Encuadre animado. Movelo y el recorrido se interpola." : "Encuadre nuevo en este punto.", "ok");
+    while (i < g.keys.length && g.keys[i].t <= t) i++;
+    if (i > 0 && Math.abs(g.keys[i - 1].t - t) < .05) { g.keys[i - 1].mode = mode; S.key = i - 1; }
+    else { g.keys.splice(i, 0, mkKey(t, cur.cx, cur.cy, cur.z, mode)); S.key = i; }
+    renderKeys(); save();
+    msg(mode === "anim" ? "Encuadre animado: movelo y el recorrido se interpola." : "Encuadre nuevo en este punto.", "ok");
   }
   function keysPerShot(){
+    var g = seg();
+    if (!g) { msg("Elegí un tramo.", "err"); return; }
     if (!S.cuts.length) { msg("Primero detectá las tomas.", "err"); return; }
-    var c = sel(), inside = S.cuts.filter(function(t){ return t > c.in + .2 && t < c.out - .2; });
-    var base = keys()[0];
-    c.keys = [mkKey(c.in, base.cx, base.cy, base.z, "cut")];
-    inside.forEach(function(t){
-      var cx = centerOf(t), k = mkKey(t, cx, base.cy, base.z, "cut");
-      c.keys.push(k);
-    });
-    c.keys[0].cx = centerOf(c.in + .1);
-    S.key = 0; renderKeys(); drawBlocks(); save();
-    msg(inside.length + 1 + " encuadres, uno por toma, centrados donde hay movimiento.", "ok");
+    var inside = S.cuts.filter(function(t){ return t > g.in + .2 && t < g.out - .2; });
+    var base = g.keys[0];
+    g.keys = [mkKey(g.in, centerOf(g.in + .1), base.cy, base.z, "cut")];
+    inside.forEach(function(t){ g.keys.push(mkKey(t, centerOf(t), base.cy, base.z, "cut")); });
+    S.key = 0; renderKeys(); save();
+    msg((inside.length + 1) + " encuadres en este tramo, centrados donde hay movimiento.", "ok");
   }
   function centerOf(t){
     if (!S.samples || !S.samples.length) return .5;
-    var a = t, b = t + 3, acc = new Float64Array(COLS), n = 0;
+    var acc = new Float64Array(COLS), n = 0, i;
     S.samples.forEach(function(s){
-      if (s.t >= a && s.t <= b) { for (var i = 0; i < COLS; i++) acc[i] += s.cols[i]; n++; }
+      if (s.t >= t && s.t <= t + 3) { for (i = 0; i < COLS; i++) acc[i] += s.cols[i]; n++; }
     });
     if (!n) return .5;
     var tot = 0, w = 0;
-    for (var i = 0; i < COLS; i++) { var e = acc[i] * acc[i]; tot += e; w += e * (i + .5) / COLS; }
+    for (i = 0; i < COLS; i++) { var e = acc[i] * acc[i]; tot += e; w += e * (i + .5) / COLS; }
     return tot > 0 ? clamp(w / tot, .12, .88) : .5;
   }
 
@@ -699,7 +858,7 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
   function scan(){
     if (!S.url) { msg("Cargá un video primero.", "err"); return; }
     if (S.scanning) return;
-    S.scanning = true; $("scan").disabled = true;
+    S.scanning = true; S.playing = null; $("scan").disabled = true;
     $("scount").textContent = "escaneando…";
     var cv = document.createElement("canvas");
     cv.width = COLS; cv.height = ROWS;
@@ -710,11 +869,11 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
     var take = function(t){
       try { cx.drawImage(v, 0, 0, COLS, ROWS); } catch (e) { return; }
       var px = cx.getImageData(0, 0, COLS, ROWS).data;
-      var lum = new Float32Array(COLS * ROWS);
-      for (var i = 0, j = 0; i < px.length; i += 4, j++) lum[j] = (px[i] * .3 + px[i + 1] * .59 + px[i + 2] * .11) / 255;
+      var lum = new Float32Array(COLS * ROWS), i, j;
+      for (i = 0, j = 0; i < px.length; i += 4, j++) lum[j] = (px[i] * .3 + px[i + 1] * .59 + px[i + 2] * .11) / 255;
       if (prevPx) {
-        var d = 0, cols = new Float32Array(COLS);
-        for (var y = 0; y < ROWS; y++) for (var x = 0; x < COLS; x++) {
+        var d = 0, cols = new Float32Array(COLS), x, y;
+        for (y = 0; y < ROWS; y++) for (x = 0; x < COLS; x++) {
           var k = y * COLS + x, a = Math.abs(lum[k] - prevPx[k]);
           d += a; cols[x] += a;
         }
@@ -723,47 +882,32 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
       prevPx = lum;
       $("sbar").style.width = clamp(t / S.dur, 0, 1) * 100 + "%";
     };
-
-    var done = function(){
+    var finish = function(){
       if (!S.scanning) return;
       S.scanning = false; $("scan").disabled = false;
-      v.pause(); v.muted = wasMuted; v.playbackRate = wasRate;
-      v.currentTime = 0; $("sbar").style.width = "0";
-      S.samples = out;
-      applySens();
-      msg(S.cuts.length
-        ? S.cuts.length + " tomas. Movés la sensibilidad y se recalculan solas, sin volver a escanear."
-        : "No encontré cortes. Subí la sensibilidad: se recalcula al instante.", S.cuts.length ? "ok" : "err");
+      v.removeEventListener("ended", finish); v.removeEventListener("timeupdate", endWatch);
+      v.pause(); v.muted = wasMuted; v.playbackRate = wasRate; v.currentTime = 0;
+      $("sbar").style.width = "0";
+      S.samples = out; applySens();
+      msg(S.cuts.length ? S.cuts.length + " tomas. Movés la sensibilidad y se recalculan sin volver a escanear."
+                        : "No encontré cortes. Subí la sensibilidad.", S.cuts.length ? "ok" : "err");
     };
-
     var endWatch = function(){ if (v.currentTime >= S.dur - .1) finish(); };
-    var finish = function(){ v.removeEventListener("ended", finish); v.removeEventListener("timeupdate", endWatch); done(); };
-
     v.currentTime = 0;
     var go = function(){
       v.removeEventListener("seeked", go);
-      v.addEventListener("ended", finish);
-      v.addEventListener("timeupdate", endWatch);
+      v.addEventListener("ended", finish); v.addEventListener("timeupdate", endWatch);
       if (v.requestVideoFrameCallback) {
-        var cb = function(now, meta){
-          if (!S.scanning) return;
-          take(meta.mediaTime);
-          v.requestVideoFrameCallback(cb);
-        };
+        var cb = function(now, meta){ if (!S.scanning) return; take(meta.mediaTime); v.requestVideoFrameCallback(cb); };
         v.requestVideoFrameCallback(cb);
       } else {
-        var tick = function(){
-          if (!S.scanning) return;
-          take(v.currentTime);
-          requestAnimationFrame(tick);
-        };
+        var tick = function(){ if (!S.scanning) return; take(v.currentTime); requestAnimationFrame(tick); };
         tick();
       }
       v.play().catch(function(){ S.scanning = false; $("scan").disabled = false; msg("El navegador no dejó reproducir para escanear.", "err"); });
     };
     v.addEventListener("seeked", go);
   }
-
   function applySens(){
     if (!S.samples || !S.samples.length) { S.cuts = []; drawMarks(); return; }
     var n = S.samples.length, i, j, d = new Float64Array(n);
@@ -771,8 +915,6 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
     var span = S.samples[n - 1].t - S.samples[0].t;
     var dt = span > 0 ? span / Math.max(1, n - 1) : .04;
     var win = clamp(Math.round(1.5 / Math.max(dt, .01)), 5, 60);
-    // un corte es un pico muy por encima del movimiento normal de SU entorno,
-    // asi el umbral no depende de si el video es quieto o movido
     var R = Math.max(1.6, 12 - (+$("sens").value));
     var cuts = [], last = -9, buf = [];
     for (i = 0; i < n; i++) {
@@ -784,56 +926,183 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
       buf.sort(function(a, b){ return a - b; });
       var med = buf[buf.length >> 1] || .004;
       if (d[i] / Math.max(med, .004) >= R && S.samples[i].t - last > .5) {
-        cuts.push(+S.samples[i].t.toFixed(2));
-        last = S.samples[i].t;
+        cuts.push(+S.samples[i].t.toFixed(2)); last = S.samples[i].t;
       }
     }
     S.cuts = cuts;
-    $("scount").textContent = cuts.length ? cuts.length + (cuts.length === 1 ? " toma" : " tomas")
-                                          : "sin cortes · subí la sensibilidad";
+    $("scount").textContent = cuts.length ? cuts.length + (cuts.length === 1 ? " toma" : " tomas") : "sin cortes · subí la sensibilidad";
     drawMarks(); save();
   }
-  $("sens").addEventListener("input", applySens);
-  $("scan").addEventListener("click", scan);
 
-  /* ---------- tira ---------- */
+  /* ---------- graficas: alta, lista y arrastre ---------- */
+  function addPngs(files){
+    var list = Array.prototype.slice.call(files || []);
+    if (!list.length) return;
+    var pend = list.length;
+    list.forEach(function(f){
+      var r = new FileReader();
+      r.onload = function(){
+        var im = new Image();
+        im.onload = function(){
+          S.imgs.push({ name: f.name, src: r.result, el: im });
+          sh().ovs.push({ kind: "img", i: S.imgs.length - 1, x: .5, y: .5, s: .45, rot: 0,
+                          from: null, to: null, anim: "fade" });
+          S.ov = sh().ovs.length - 1;
+          if (!--pend) { renderOvs(); save(); msg("Arrastrala sobre el preview; las esquinas la escalan.", "ok"); }
+        };
+        im.onerror = function(){ if (!--pend) renderOvs(); };
+        im.src = r.result;
+      };
+      r.readAsDataURL(f);
+    });
+  }
+  function addText(){
+    sh().ovs.push({ kind: "text", text: "Texto nuevo", color: "#FFFFFF", box: false,
+                    x: .5, y: .22, s: .11, rot: 0, from: null, to: null, anim: "rise" });
+    S.ov = sh().ovs.length - 1;
+    renderOvs(); save();
+    $("ovtext").focus(); $("ovtext").select();
+  }
+  function curOv(){ var s = sh(); return S.ov >= 0 ? s.ovs[S.ov] : null; }
+  function renderOvs(){
+    var box = $("ovlist"), s = sh();
+    box.textContent = "";
+    if (!s.ovs) s.ovs = [];
+    if (S.ov >= s.ovs.length) S.ov = s.ovs.length - 1;
+    s.ovs.forEach(function(o, i){
+      var d = document.createElement("div");
+      d.className = "ov" + (i === S.ov ? " on" : "");
+      if (o.kind === "text") {
+        var ic = document.createElement("span"); ic.className = "ic"; ic.textContent = "T";
+        d.appendChild(ic);
+      } else {
+        var im = S.imgs[o.i];
+        var t = document.createElement("img"); t.src = im ? im.src : ""; t.alt = "";
+        d.appendChild(t);
+      }
+      var nm = document.createElement("span");
+      nm.className = "nm";
+      nm.textContent = o.kind === "text" ? (o.text || "texto") : (S.imgs[o.i] ? S.imgs[o.i].name : "imagen");
+      nm.addEventListener("click", function(){ S.ov = i; renderOvs(); });
+      var rg = document.createElement("span");
+      rg.className = "rg";
+      rg.textContent = (o.from == null && o.to == null) ? "todo"
+        : secs(o.from == null ? 0 : o.from) + "→" + secs(o.to == null ? progDur() : o.to);
+      var x = document.createElement("b");
+      x.textContent = "×";
+      x.addEventListener("click", function(){ s.ovs.splice(i, 1); S.ov = s.ovs.length - 1; renderOvs(); save(); });
+      d.appendChild(nm); d.appendChild(rg); d.appendChild(x);
+      box.appendChild(d);
+    });
+    var o = curOv();
+    $("ovctl").hidden = !o;
+    $("txtrow").hidden = !(o && o.kind === "text");
+    $("colrow").hidden = !(o && o.kind === "text");
+    if (o) {
+      $("ovsize").value = Math.round(clamp(o.s, .04, 1.5) * 100);
+      $("ovrot").value = Math.round(o.rot || 0);
+      $("ovanim").value = o.anim || "none";
+      if (o.kind === "text") {
+        $("ovtext").value = o.text || "";
+        Array.prototype.forEach.call(document.querySelectorAll(".swatch"), function(b){
+          b.setAttribute("aria-pressed", b.getAttribute("data-c") === o.color ? "true" : "false");
+        });
+      }
+    }
+  }
+  function toLocal(px, py, o){
+    var dx = px - o.x * prev.width, dy = py - o.y * prev.height;
+    var a = -(o.rot || 0) * Math.PI / 180, cs = Math.cos(a), sn = Math.sin(a);
+    return { x: dx * cs - dy * sn, y: dx * sn + dy * cs };
+  }
+  (function(){
+    var st = null;
+    function at(ev){
+      var r = prev.getBoundingClientRect();
+      return { x: (ev.clientX - r.left) / r.width * prev.width, y: (ev.clientY - r.top) / r.height * prev.height };
+    }
+    prev.addEventListener("pointerdown", function(ev){
+      var s = sh();
+      if (!s.ovs || !s.ovs.length) return;
+      var p = at(ev), i, o, b, l;
+      if (S.ov >= 0 && s.ovs[S.ov]) {
+        o = s.ovs[S.ov]; b = ovBox(o, prev.width);
+        if (b) {
+          l = toLocal(p.x, p.y, o);
+          var corner = null;
+          [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(function(q){
+            if (Math.abs(l.x - q[0] * b.w / 2) < 20 && Math.abs(l.y - q[1] * b.h / 2) < 20) corner = q;
+          });
+          if (corner) {
+            ev.preventDefault(); prev.setPointerCapture(ev.pointerId);
+            st = { mode: "size", o: o, s0: o.s, d0: Math.max(12, Math.hypot(l.x, l.y)) };
+            return;
+          }
+        }
+      }
+      var hit = -1;
+      for (i = s.ovs.length - 1; i >= 0; i--) {
+        o = s.ovs[i]; b = ovBox(o, prev.width);
+        if (!b) continue;
+        l = toLocal(p.x, p.y, o);
+        if (Math.abs(l.x) <= b.w / 2 && Math.abs(l.y) <= b.h / 2) { hit = i; break; }
+      }
+      if (hit < 0) return;
+      ev.preventDefault(); prev.setPointerCapture(ev.pointerId);
+      S.ov = hit; renderOvs();
+      st = { mode: "move", o: s.ovs[hit], p: p, x: s.ovs[hit].x, y: s.ovs[hit].y };
+    });
+    prev.addEventListener("pointermove", function(ev){
+      if (!st) return;
+      var p = at(ev);
+      if (st.mode === "move") {
+        st.o.x = clamp(st.x + (p.x - st.p.x) / prev.width, 0, 1);
+        st.o.y = clamp(st.y + (p.y - st.p.y) / prev.height, 0, 1);
+      } else {
+        var l = toLocal(p.x, p.y, st.o);
+        st.o.s = clamp(st.s0 * Math.hypot(l.x, l.y) / st.d0, .03, 2);
+        $("ovsize").value = Math.round(clamp(st.o.s, .04, 1.5) * 100);
+      }
+    });
+    ["pointerup", "pointercancel"].forEach(function(e){
+      prev.addEventListener(e, function(){ if (st) { st = null; save(); } });
+    });
+  })();
+
+  /* ---------- shorts ---------- */
   function renderClips(){
     var row = $("clips");
     row.textContent = "";
-    S.clips.forEach(function(c, i){
+    S.shorts.forEach(function(s, i){
       var b = document.createElement("button");
       b.className = "clip" + (i === S.sel ? " on" : ""); b.type = "button";
-      var n = document.createElement("div"); n.className = "n"; n.textContent = "SHORT 0" + (i + 1);
-      var t = document.createElement("div"); t.className = "t"; t.textContent = c.title || "Sin título";
+      var n = document.createElement("div"); n.className = "n";
+      n.textContent = "SHORT " + (i < 9 ? "0" : "") + (i + 1);
+      var t = document.createElement("div"); t.className = "t"; t.textContent = s.title || "Sin nombre";
       var d = document.createElement("div"); d.className = "d mono";
-      d.textContent = tcs(c.in) + " → " + tcs(c.out) + " · " + durTxt(c.out - c.in) +
-                      (c.keys.length > 1 ? " · " + c.keys.length + " enc." : "");
+      var dur = s.segs.reduce(function(a, g){ return a + (g.out - g.in); }, 0);
+      d.textContent = s.segs.length + (s.segs.length === 1 ? " tramo · " : " tramos · ") + secs(dur) +
+                      (s.ovs && s.ovs.length ? " · " + s.ovs.length + " gráf." : "");
       var g = document.createElement("span");
-      var st = S.demo ? "dem" : c.status;
+      var st = S.demo ? "dem" : s.status;
       g.className = "tag" + (st ? " " + st : "");
-      g.textContent = st === "dem" ? "Ejemplo" : st === "rdy" ? "Listo para subir"
-                    : st === "exp" ? "Exportado" : "Borrador";
+      g.textContent = st === "dem" ? "Ejemplo" : st === "rdy" ? "Subido" : st === "exp" ? "Exportado" : "Borrador";
       b.appendChild(n); b.appendChild(t); b.appendChild(d); b.appendChild(g);
-      b.addEventListener("click", function(){ pickClip(i); });
+      b.addEventListener("click", function(){ pickShort(i); });
       row.appendChild(b);
     });
-    $("hint").textContent = S.demo
-      ? "Ejemplo cargado. Cuando abras un video, estos tramos se reemplazan."
-      : S.file.name;
+    $("hint").textContent = S.demo ? "Ejemplo cargado. Cuando abras un video, se reemplaza."
+                                   : (S.file ? S.file.name : "");
   }
-
-  function pickClip(i){
-    S.sel = clamp(i, 0, S.clips.length - 1);
-    var c = sel();
-    S.key = 0;
-    $("selnum").textContent = "0" + (S.sel + 1);
-    $("ttl").value = c.title; $("cap").value = c.cap;
-    $("zoomr").value = Math.round(c.keys[0].z * 100);
-    $("zoomv").textContent = c.keys[0].z.toFixed(2) + "×";
-    ["tt", "ig", "yt"].forEach(function(k){ $("d_" + k).setAttribute("aria-pressed", c.dest[k] ? "true" : "false"); });
-    S.ov = (c.ovs && c.ovs.length) ? 0 : -1;
-    counts(); drawBlocks(); renderClips(); renderKeys(); renderOvs();
-    if (S.url) seek(c.in);
+  function pickShort(i){
+    S.sel = clamp(i, 0, S.shorts.length - 1);
+    var s = sh();
+    S.seg = 0; S.key = 0; S.ov = (s.ovs && s.ovs.length) ? 0 : -1; S.playing = null;
+    $("selnum").textContent = (S.sel < 9 ? "0" : "") + (S.sel + 1);
+    $("ttl").value = s.title; $("cap").value = s.cap;
+    counts(); renderSegs(); renderKeys(); renderOvs(); renderDests(); renderClips();
+    var g = seg();
+    if (g && S.url) seek(g.in);
     msg(""); save();
   }
   function counts(){
@@ -843,12 +1112,207 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
   }
   function msg(t, kind){ var m = $("msg"); m.textContent = t; m.className = "msg" + (kind ? " " + kind : ""); }
 
-  /* ---------- archivo ---------- */
+  /* ---------- destinos ---------- */
+  function renderDests(){
+    var box = $("dests"), s = sh();
+    box.textContent = "";
+    DEST.forEach(function(D){
+      var on = !!s.dest[D.k], up = !!(s.up && s.up[D.k]);
+      var d = document.createElement("div");
+      d.className = "dst" + (on ? " on" : "") + (up ? " up" : "");
+      var p = document.createElement("button");
+      p.className = "pick"; p.type = "button";
+      p.textContent = on ? "va" : "no va";
+      p.addEventListener("click", function(){ s.dest[D.k] = !s.dest[D.k]; renderDests(); save(); });
+      var nm = document.createElement("span"); nm.className = "nm"; nm.textContent = D.nm;
+      var a = document.createElement("a");
+      a.href = D.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "abrir";
+      var done = document.createElement("button");
+      done.className = "done"; done.type = "button";
+      done.textContent = up ? "subido" : "marcar";
+      done.addEventListener("click", function(){
+        s.up = s.up || {};
+        s.up[D.k] = !s.up[D.k];
+        var all = DEST.every(function(X){ return !s.dest[X.k] || (s.up && s.up[X.k]); });
+        s.status = all ? "rdy" : (s.status === "rdy" ? "exp" : s.status);
+        renderDests(); renderClips(); save();
+      });
+      d.appendChild(p); d.appendChild(nm); d.appendChild(a); d.appendChild(done);
+      box.appendChild(d);
+    });
+  }
+
+  /* ---------- reproducir el short ---------- */
+  function playShort(){
+    var s = sh();
+    if (!S.url || !s.segs.length) { msg("Agregá al menos un tramo.", "err"); return; }
+    S.playing = { i: 0 };
+    S.seg = 0; renderSegs(); renderKeys();
+    v.currentTime = s.segs[0].in;
+    var go = function(){ v.removeEventListener("seeked", go); v.play(); };
+    v.addEventListener("seeked", go);
+  }
+  v.addEventListener("timeupdate", function(){
+    $("now").textContent = tc(v.currentTime);
+    $("ph").style.left = xOf(v.currentTime) + "px";
+    if (!S.playing || S.busy) return;
+    var s = sh(), g = s.segs[S.playing.i];
+    if (!g) { S.playing = null; return; }
+    if (v.currentTime >= g.out - .02) {
+      var n = S.playing.i + 1;
+      if (n >= s.segs.length) { S.playing = null; v.pause(); return; }
+      S.playing.i = n; S.seg = n; renderSegs(); renderKeys();
+      v.currentTime = s.segs[n].in;
+    }
+  });
+
+  /* ---------- exportar ---------- */
+  var actx = null, asrc = null, adest = null;
+  function audioTrack(){
+    try {
+      if (!actx) {
+        var AC = window.AudioContext || window.webkitAudioContext;
+        actx = new AC(); asrc = actx.createMediaElementSource(v);
+        adest = actx.createMediaStreamDestination();
+        asrc.connect(adest); asrc.connect(actx.destination);
+      }
+      if (actx.state === "suspended") actx.resume();
+      return adest.stream.getAudioTracks()[0] || null;
+    } catch (e) { return null; }
+  }
+  function mime(){
+    var list = ["video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm"];
+    for (var i = 0; i < list.length; i++) if (window.MediaRecorder && MediaRecorder.isTypeSupported(list[i])) return list[i];
+    return "";
+  }
+  function seekTo(t){
+    return new Promise(function(res){
+      var go = function(){ v.removeEventListener("seeked", go); res(); };
+      v.addEventListener("seeked", go);
+      v.currentTime = t;
+    });
+  }
+  function playUntil(t){
+    return new Promise(function(res){
+      var w = function(){
+        if (v.currentTime >= t - .02) { v.removeEventListener("timeupdate", w); v.pause(); res(); }
+      };
+      v.addEventListener("timeupdate", w);
+      v.play().catch(function(){ v.removeEventListener("timeupdate", w); res(); });
+    });
+  }
+  function exportShort(){
+    if (S.busy || S.scanning) return;
+    var s = sh();
+    if (!S.url) { msg("Cargá un video primero.", "err"); return; }
+    if (!s.segs.length) { msg("Este short no tiene tramos.", "err"); return; }
+    if (!window.MediaRecorder) { msg("Este navegador no puede grabar el corte.", "err"); return; }
+    S.busy = true; S.playing = null; $("export").disabled = true;
+    var total = progDur();
+    msg("Grabando en tiempo real, " + secs(total) + "…");
+
+    var cv = document.createElement("canvas");
+    cv.width = 720; cv.height = 1280;
+    var cx = cv.getContext("2d");
+    var stream = cv.captureStream(30);
+    var at = audioTrack();
+    if (at) stream.addTrack(at);
+    var type = mime();
+    var rec = new MediaRecorder(stream, type ? { mimeType: type, videoBitsPerSecond: 6000000 } : {});
+    var parts = [];
+    rec.ondataavailable = function(e){ if (e.data && e.data.size) parts.push(e.data); };
+    rec.onstop = function(){
+      S.busy = false; $("export").disabled = false; $("prog").style.width = "0";
+      offer(new Blob(parts, { type: "video/webm" }), s);
+    };
+
+    var cur = 0, acc = 0;
+    var draw = function(){
+      if (!S.busy) return;
+      var g = s.segs[cur] || s.segs[s.segs.length - 1];
+      var k = cropAt(g, v.currentTime);
+      cx.fillStyle = "#000"; cx.fillRect(0, 0, cv.width, cv.height);
+      try { cx.drawImage(v, k.x, k.y, k.w, k.h, 0, 0, cv.width, cv.height); } catch (e) {}
+      var pt = acc + clamp(v.currentTime - g.in, 0, g.out - g.in);
+      drawOvs(cx, cv.width, cv.height, pt, false);
+      $("prog").style.width = clamp(pt / total, 0, 1) * 100 + "%";
+      requestAnimationFrame(draw);
+    };
+
+    var run = function(){
+      var g = s.segs[cur];
+      S.seg = cur; renderSegs();
+      seekTo(g.in).then(function(){
+        if (cur > 0 && rec.state === "paused") rec.resume();
+        if (cur === 0) { rec.start(); draw(); }
+        return playUntil(g.out);
+      }).then(function(){
+        acc += g.out - g.in;
+        cur++;
+        if (cur >= s.segs.length) { try { rec.stop(); } catch (e) {} return; }
+        try { rec.pause(); } catch (e) {}
+        run();
+      });
+    };
+    run();
+  }
+  function offer(blob, s){
+    var name = slug(s.title || ("short-" + (S.sel + 1))) + ".webm";
+    var mb = (blob.size / 1048576).toFixed(1).replace(".", ",");
+    var done = function(){
+      if (s.status !== "rdy") s.status = "exp";
+      renderClips(); save();
+      msg("Guardado " + name + " (" + mb + " MB). Copiá el caption y abrí cada destino.", "ok");
+    };
+    if (!S.dl) {
+      try {
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob); a.download = name;
+        document.body.appendChild(a); a.click();
+        setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+        done();
+      } catch (e) { msg("El corte quedó listo (" + mb + " MB) pero no se pudo guardar.", "err"); }
+      return;
+    }
+    msg("Guardando " + name + " (" + mb + " MB)…");
+    S.dl.save({ filename: name, data: blob }).then(done, function(err){
+      var code = err && err.code;
+      msg(code === "declined" ? "Cancelaste la descarga."
+        : code === "too_large" ? "El archivo salió muy grande. Acortá el short."
+        : "No se pudo guardar el archivo.", "err");
+    });
+  }
+
+  /* ---------- archivo y guardado ---------- */
+  function kkey(){ return S.file ? "picadora3:" + S.file.name + ":" + S.file.size : null; }
+  function save(){
+    var k = kkey(); if (!k) return;
+    try {
+      localStorage.setItem(k, JSON.stringify({ shorts: S.shorts, sel: S.sel, cuts: S.cuts, mark: S.mark }));
+      var raw = JSON.stringify(S.imgs.map(function(im){ return { name: im.name, src: im.src }; }));
+      if (raw.length < 3000000) localStorage.setItem(k + ":img", raw);
+    } catch (e) {}
+  }
+  function restore(){
+    var k = kkey(); if (!k) return false;
+    try {
+      var d = JSON.parse(localStorage.getItem(k) || "null");
+      if (!d || !d.shorts || !d.shorts.length) return false;
+      S.shorts = d.shorts; S.sel = clamp(d.sel | 0, 0, d.shorts.length - 1);
+      S.cuts = d.cuts || []; S.mark = d.mark || S.mark; S.demo = false;
+      S.shorts.forEach(function(s){ if (!s.ovs) s.ovs = []; if (!s.segs) s.segs = []; if (!s.up) s.up = {}; });
+      try {
+        var lib = JSON.parse(localStorage.getItem(k + ":img") || "[]");
+        S.imgs = lib.map(function(o){ var im = new Image(); im.src = o.src; return { name: o.name, src: o.src, el: im }; });
+      } catch (e2) { S.imgs = []; }
+      return true;
+    } catch (e) { return false; }
+  }
   function open(file){
     if (!file) return;
     if (S.url) URL.revokeObjectURL(S.url);
     S.file = file; S.url = URL.createObjectURL(file);
-    S.samples = null; S.cuts = []; S.env = null;
+    S.samples = null; S.cuts = []; S.env = null; S.playing = null;
     v.src = S.url; $("drop").hidden = true;
     $("scount").textContent = "sin escanear";
     msg("Leyendo el audio…");
@@ -856,15 +1320,10 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
       S.dur = v.duration || 1; S.vw = v.videoWidth || 1920; S.vh = v.videoHeight || 1080;
       $("dur").textContent = tc(S.dur);
       if (!restore()) {
-        S.demo = false; S.clips = [];
-        var len = Math.min(20, S.dur / 6);
-        for (var i = 0; i < 5; i++) {
-          var a = (S.dur - len) * (i / 4) * .98;
-          S.clips.push(mkClip(a, a + len, ""));
-        }
-        S.sel = 0;
+        S.demo = false; S.shorts = [mkShort("")]; S.sel = 0;
+        S.mark = { in: 0, out: Math.min(15, S.dur) };
       }
-      drawRuler(); drawWave(); drawMarks(); pickClip(S.sel);
+      drawRuler(); drawWave(); drawMarks(); drawMark(); pickShort(S.sel);
       analyze(file);
     };
   }
@@ -876,50 +1335,18 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
       var ch = ab.getChannelData(0), sr = ab.sampleRate, step = Math.round(sr / 10);
       var n = Math.floor(ch.length / step), env = new Float32Array(n), max = 0, i, j;
       for (i = 0; i < n; i++) {
-        var s = 0;
-        for (j = i * step; j < (i + 1) * step; j++) s += ch[j] * ch[j];
-        env[i] = Math.sqrt(s / step);
+        var s2 = 0;
+        for (j = i * step; j < (i + 1) * step; j++) s2 += ch[j] * ch[j];
+        env[i] = Math.sqrt(s2 / step);
         if (env[i] > max) max = env[i];
       }
       if (max > 0) for (i = 0; i < n; i++) env[i] /= max;
       S.env = env; drawWave();
-      msg("Audio analizado. Podés proponer cinco tramos o detectar las tomas.", "ok");
-    }).catch(function(){ msg("No pude leer el audio de este archivo. El resto funciona igual.", ""); });
+      msg("Audio analizado. Podés proponer shorts o detectar las tomas.", "ok");
+    }).catch(function(){ msg("No pude leer el audio. El resto funciona igual.", ""); });
   }
 
   /* ---------- propuestas ---------- */
-  function propose(){
-    var how = $("mode").value, len = Math.min(20, Math.max(8, S.dur / 6)), starts = [];
-    if (how === "shots") {
-      if (!S.cuts.length) { msg("Para cortar por tomas, primero detectá las tomas.", "err"); return; }
-      var bounds = [0].concat(S.cuts, [S.dur]), segs = [];
-      for (var i = 0; i < bounds.length - 1; i++) segs.push({ a: bounds[i], d: bounds[i + 1] - bounds[i] });
-      segs.sort(function(x, y){ return y.d - x.d; });
-      starts = segs.slice(0, 5).map(function(s){ return clamp(s.a, 0, S.dur - len); });
-    } else if (how === "hook") {
-      if (!S.env) { msg("Necesito el audio para esto.", "err"); return; }
-      starts = [0, S.dur - len].concat(peaks(len, 3, len * 1.2, S.dur - len * 1.2));
-    } else {
-      if (!S.env) { msg("Necesito el audio para esto.", "err"); return; }
-      starts = peaks(len, 5, 0, S.dur);
-    }
-    starts = starts.map(function(t){ return clamp(t, 0, Math.max(0, S.dur - len)); })
-                   .sort(function(a, b){ return a - b; }).slice(0, 5);
-    while (starts.length < 5) starts.push(clamp(starts.length * len, 0, Math.max(0, S.dur - len)));
-    var old = S.clips;
-    S.clips = starts.map(function(a, idx){
-      var c = mkClip(S.cuts.length ? snap(a) : a, 0, old[idx] ? old[idx].title : "");
-      c.out = clamp(c.in + len, c.in + .5, S.dur);
-      if (old[idx]) { c.cap = old[idx].cap; c.dest = old[idx].dest; }
-      c.keys = [mkKey(c.in, centerOf(c.in))];
-      return c;
-    });
-    S.demo = false; S.sel = 0;
-    drawBlocks(); pickClip(0);
-    msg(how === "shots" ? "Cinco tramos sobre las tomas más largas."
-      : how === "hook" ? "Arranque, remate y tres picos en el medio."
-      : "Cinco tramos sobre los picos de audio. Movelos a gusto.", "ok");
-  }
   function peaks(len, howMany, from, to){
     var W = Math.round(len * 10), n = S.env.length;
     if (n <= W) return [0];
@@ -941,243 +1368,201 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
     }
     return out;
   }
-
-  /* ---------- exportar ---------- */
-  var actx = null, asrc = null, adest = null;
-  function audioTrack(){
-    try {
-      if (!actx) {
-        var AC = window.AudioContext || window.webkitAudioContext;
-        actx = new AC();
-        asrc = actx.createMediaElementSource(v);
-        adest = actx.createMediaStreamDestination();
-        asrc.connect(adest); asrc.connect(actx.destination);
-      }
-      if (actx.state === "suspended") actx.resume();
-      return adest.stream.getAudioTracks()[0] || null;
-    } catch (e) { return null; }
-  }
-  function mime(){
-    var list = ["video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm"];
-    for (var i = 0; i < list.length; i++) if (window.MediaRecorder && MediaRecorder.isTypeSupported(list[i])) return list[i];
-    return "";
-  }
-  function exportClip(){
-    if (S.busy || S.scanning) return;
+  function propose(){
     if (!S.url) { msg("Cargá un video primero.", "err"); return; }
-    if (!window.MediaRecorder) { msg("Este navegador no puede grabar el corte.", "err"); return; }
-    var c = sel(), len = c.out - c.in;
-    S.busy = true; $("export").disabled = true;
-    msg("Grabando en tiempo real, " + durTxt(len) + "…");
-
-    var cv = document.createElement("canvas");
-    cv.width = 720; cv.height = 1280;
-    var cx = cv.getContext("2d");
-    var stream = cv.captureStream(30);
-    var at = audioTrack();
-    if (at) stream.addTrack(at);
-    var type = mime();
-    var rec = new MediaRecorder(stream, type ? { mimeType: type, videoBitsPerSecond: 6000000 } : {});
-    var parts = [];
-    rec.ondataavailable = function(e){ if (e.data && e.data.size) parts.push(e.data); };
-    rec.onstop = function(){
-      S.busy = false; $("export").disabled = false; $("prog").style.width = "0";
-      offer(new Blob(parts, { type: "video/webm" }), c);
-    };
-    var watch = function(){ if (v.currentTime >= c.out - .02) stop(); };
-    var stop = function(){
-      try { rec.stop(); } catch (e) {}
-      v.pause(); v.removeEventListener("timeupdate", watch);
-    };
-    var draw = function(){
-      if (!S.busy) return;
-      var k = cropAt(c, v.currentTime);
-      cx.fillStyle = "#000"; cx.fillRect(0, 0, cv.width, cv.height);
-      try { cx.drawImage(v, k.x, k.y, k.w, k.h, 0, 0, cv.width, cv.height); } catch (e) {}
-      drawOvs(cx, cv.width, cv.height, v.currentTime, false);
-      $("prog").style.width = clamp((v.currentTime - c.in) / len, 0, 1) * 100 + "%";
-      requestAnimationFrame(draw);
-    };
-    v.currentTime = c.in;
-    var go = function(){
-      v.removeEventListener("seeked", go);
-      rec.start(); v.addEventListener("timeupdate", watch); draw();
-      v.play().catch(function(){ msg("El navegador no dejó reproducir. Tocá Play y probá de nuevo.", "err"); stop(); });
-    };
-    v.addEventListener("seeked", go);
-  }
-  function offer(blob, c){
-    var name = slug(c.title || ("short-0" + (S.sel + 1))) + ".webm";
-    var mb = (blob.size / 1048576).toFixed(1).replace(".", ",");
-    if (!S.dl) {
-      // fuera del visor de artifacts (por ejemplo en el sitio) el navegador guarda directo
-      try {
-        var a = document.createElement("a");
-        a.href = URL.createObjectURL(blob); a.download = name;
-        document.body.appendChild(a); a.click();
-        setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 4000);
-        c.status = "exp"; renderClips(); save();
-        msg("Guardado " + name + " (" + mb + " MB).", "ok");
-      } catch (e) {
-        msg("El corte quedó listo (" + mb + " MB) pero no se pudo guardar.", "err");
-      }
-      return;
+    var how = $("mode").value, N = clamp(parseInt($("howmany").value, 10) || 5, 1, 20);
+    var len = clamp(S.dur / (N + 2), 6, 22), starts = [];
+    if (how === "shots") {
+      if (!S.cuts.length) { msg("Para cortar por tomas, primero detectá las tomas.", "err"); return; }
+      var bounds = [0].concat(S.cuts, [S.dur]), segs = [];
+      for (var i = 0; i < bounds.length - 1; i++) segs.push({ a: bounds[i], d: bounds[i + 1] - bounds[i] });
+      segs.sort(function(x, y){ return y.d - x.d; });
+      starts = segs.slice(0, N).map(function(x){ return x.a; });
+    } else if (how === "hook") {
+      if (!S.env) { msg("Necesito el audio para esto.", "err"); return; }
+      starts = [0, Math.max(0, S.dur - len)].concat(peaks(len, Math.max(0, N - 2), len * 1.2, S.dur - len * 1.2));
+    } else {
+      if (!S.env) { msg("Necesito el audio para esto.", "err"); return; }
+      starts = peaks(len, N, 0, S.dur);
     }
-    msg("Guardando " + name + " (" + mb + " MB)…");
-    S.dl.save({ filename: name, data: blob }).then(function(){
-      c.status = "exp"; renderClips(); save();
-      msg("Guardado " + name + ".", "ok");
-    }).catch(function(err){
-      var code = err && err.code;
-      msg(code === "declined" ? "Cancelaste la descarga."
-        : code === "too_large" ? "El archivo salió muy grande. Acortá el tramo."
-        : "No se pudo guardar el archivo.", "err");
+    starts = starts.map(function(t){ return clamp(S.cuts.length ? snap(t) : t, 0, Math.max(0, S.dur - len)); })
+                   .sort(function(a, b){ return a - b; }).slice(0, N);
+    var old = S.shorts;
+    S.shorts = starts.map(function(a, idx){
+      var s = mkShort(old[idx] ? old[idx].title : "");
+      if (old[idx]) { s.cap = old[idx].cap; s.dest = old[idx].dest; }
+      s.segs = [mkSeg(a, Math.min(a + len, S.dur), centerOf(a))];
+      return s;
     });
+    if (!S.shorts.length) S.shorts = [mkShort("")];
+    S.demo = false; S.sel = 0;
+    pickShort(0);
+    msg(S.shorts.length + " shorts de un tramo cada uno. Sumales tramos, gráficas y texto.", "ok");
   }
 
-  /* ---------- graficas sobre el 9:16 ---------- */
-  function addPngs(files){
-    var list = Array.prototype.slice.call(files || []);
-    if (!list.length) return;
-    var pend = list.length;
-    list.forEach(function(f){
-      var r = new FileReader();
-      r.onload = function(){
-        var im = new Image();
-        im.onload = function(){
-          S.imgs.push({ name: f.name, src: r.result, el: im });
-          var c = sel();
-          c.ovs.push({ i: S.imgs.length - 1, x: .5, y: .5, s: .45, rot: 0, from: null, to: null });
-          S.ov = c.ovs.length - 1;
-          if (!--pend) { renderOvs(); save(); msg("Arrastrá la gráfica sobre el preview para ubicarla.", "ok"); }
-        };
-        im.onerror = function(){ if (!--pend) renderOvs(); };
-        im.src = r.result;
+  /* ---------- plan de montaje ---------- */
+  function planMsg(t, kind){ var m = $("planmsg"); m.textContent = t; m.className = "msg" + (kind ? " " + kind : ""); }
+  function applyPlan(){
+    var raw = $("planjson").value.trim();
+    if (!raw) { planMsg("Pegá el plan primero.", "err"); return; }
+    var d;
+    try { d = JSON.parse(raw); } catch (e) { planMsg("Eso no es JSON válido.", "err"); return; }
+    var list = d && d.shorts;
+    if (!list || !list.length) { planMsg("El plan no trae shorts.", "err"); return; }
+    var lim = S.url ? S.dur : 1e9;
+    S.shorts = list.map(function(x){
+      var s2 = mkShort(x.title || "");
+      s2.cap = x.cap || "";
+      (x.segs || []).forEach(function(r){
+        var a = clamp(+r[0] || 0, 0, lim), b = clamp(+r[1] || 0, 0, lim);
+        if (b - a >= .3) s2.segs.push(mkSeg(a, b, centerOf(a)));
+      });
+      (x.texts || []).forEach(function(t){
+        s2.ovs.push({ kind: "text", text: t.t || "", color: t.color || "#FFFFFF", box: !!t.box,
+                      x: t.x == null ? .5 : +t.x, y: t.y == null ? .22 : +t.y,
+                      s: t.size == null ? .11 : +t.size, rot: +t.rot || 0,
+                      from: t.from == null ? null : +t.from, to: t.to == null ? null : +t.to,
+                      anim: t.anim || "rise" });
+      });
+      return s2;
+    }).filter(function(s2){ return s2.segs.length; });
+    if (!S.shorts.length) { S.shorts = [mkShort("")]; planMsg("Ningún tramo del plan era válido.", "err"); }
+    else planMsg(S.shorts.length + " shorts armados. Editalos a gusto.", "ok");
+    S.demo = false; S.sel = 0;
+    pickShort(0);
+  }
+  function copyPlan(){
+    var d = { video: S.file ? S.file.name : "", shorts: S.shorts.map(function(s2){
+      return {
+        title: s2.title, cap: s2.cap,
+        segs: s2.segs.map(function(g){ return [+g.in.toFixed(2), +g.out.toFixed(2)]; }),
+        texts: (s2.ovs || []).filter(function(o){ return o.kind === "text"; }).map(function(o){
+          return { t: o.text, x: +o.x.toFixed(3), y: +o.y.toFixed(3), size: +o.s.toFixed(3),
+                   color: o.color, box: !!o.box, anim: o.anim,
+                   from: o.from == null ? null : +o.from.toFixed(2),
+                   to: o.to == null ? null : +o.to.toFixed(2) };
+        })
       };
-      r.onerror = function(){ if (!--pend) renderOvs(); };
-      r.readAsDataURL(f);
-    });
+    }) };
+    var txt = JSON.stringify(d, null, 1);
+    $("planjson").value = txt;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(function(){ planMsg("Plan copiado.", "ok"); },
+        function(){ planMsg("Está en el cuadro: copialo a mano.", ""); });
+    } else planMsg("Está en el cuadro: copialo a mano.", "");
   }
-
-  function renderOvs(){
-    var box = $("ovlist"), c = sel();
-    box.textContent = "";
-    if (!c.ovs) c.ovs = [];
-    if (S.ov >= c.ovs.length) S.ov = c.ovs.length - 1;
-    c.ovs.forEach(function(o, i){
-      var im = S.imgs[o.i];
-      var d = document.createElement("div");
-      d.className = "ov" + (i === S.ov ? " on" : "");
-      if (im) { var t = document.createElement("img"); t.src = im.src; t.alt = ""; d.appendChild(t); }
-      var nm = document.createElement("span");
-      nm.className = "nm"; nm.textContent = im ? im.name : "imagen";
-      nm.addEventListener("click", function(){ S.ov = i; renderOvs(); });
-      var rg = document.createElement("span");
-      rg.className = "rg";
-      rg.textContent = (o.from == null && o.to == null) ? "todo"
-        : tcs(o.from == null ? c.in : o.from) + "→" + tcs(o.to == null ? c.out : o.to);
-      var x = document.createElement("b");
-      x.textContent = "×"; x.title = "Quitar";
-      x.addEventListener("click", function(){ c.ovs.splice(i, 1); S.ov = c.ovs.length - 1; renderOvs(); save(); });
-      d.appendChild(nm); d.appendChild(rg); d.appendChild(x);
-      box.appendChild(d);
-    });
-    var ctl = $("ovctl"), has = S.ov >= 0 && c.ovs[S.ov];
-    ctl.hidden = !has;
-    if (has) {
-      $("ovsize").value = Math.round(c.ovs[S.ov].s * 100);
-      $("ovrot").value = Math.round(c.ovs[S.ov].rot || 0);
-    }
-  }
-
-  function ovBox(o){
-    var im = S.imgs[o.i];
-    if (!im || !im.el.naturalWidth) return null;
-    var w = o.s * prev.width;
-    return { w: w, h: w * (im.el.naturalHeight / im.el.naturalWidth) };
-  }
-  // pasa un punto del canvas al sistema del grafico, girado y centrado en el
-  function toLocal(px, py, o){
-    var dx = px - o.x * prev.width, dy = py - o.y * prev.height;
-    var a = -(o.rot || 0) * Math.PI / 180, cs = Math.cos(a), sn = Math.sin(a);
-    return { x: dx * cs - dy * sn, y: dx * sn + dy * cs };
-  }
-
-  (function(){
-    var st = null;
-    function at(ev){
-      var r = prev.getBoundingClientRect();
-      return { x: (ev.clientX - r.left) / r.width * prev.width,
-               y: (ev.clientY - r.top) / r.height * prev.height };
-    }
-    prev.addEventListener("pointerdown", function(ev){
-      var c = sel();
-      if (!c.ovs || !c.ovs.length) return;
-      var p = at(ev), i, o, b, l;
-
-      // primero los tiradores del grafico elegido
-      if (S.ov >= 0 && c.ovs[S.ov]) {
-        o = c.ovs[S.ov]; b = ovBox(o);
-        if (b) {
-          l = toLocal(p.x, p.y, o);
-          var grab = 20, corner = null;
-          [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(function(q){
-            if (Math.abs(l.x - q[0] * b.w / 2) < grab && Math.abs(l.y - q[1] * b.h / 2) < grab) corner = q;
-          });
-          if (corner) {
-            ev.preventDefault(); prev.setPointerCapture(ev.pointerId);
-            st = { mode: "size", o: o, s0: o.s, d0: Math.max(12, Math.hypot(l.x, l.y)) };
-            return;
-          }
-        }
-      }
-
-      // si no, el cuerpo del grafico de mas arriba
-      var hit = -1;
-      for (i = c.ovs.length - 1; i >= 0; i--) {
-        o = c.ovs[i]; b = ovBox(o);
-        if (!b) continue;
-        l = toLocal(p.x, p.y, o);
-        if (Math.abs(l.x) <= b.w / 2 && Math.abs(l.y) <= b.h / 2) { hit = i; break; }
-      }
-      if (hit < 0) return;
-      ev.preventDefault(); prev.setPointerCapture(ev.pointerId);
-      S.ov = hit; renderOvs();
-      st = { mode: "move", o: c.ovs[hit], p: p, x: c.ovs[hit].x, y: c.ovs[hit].y };
-    });
-    prev.addEventListener("pointermove", function(ev){
-      if (!st) return;
-      var p = at(ev);
-      if (st.mode === "move") {
-        st.o.x = clamp(st.x + (p.x - st.p.x) / prev.width, 0, 1);
-        st.o.y = clamp(st.y + (p.y - st.p.y) / prev.height, 0, 1);
-      } else {
-        var l = toLocal(p.x, p.y, st.o);
-        st.o.s = clamp(st.s0 * Math.hypot(l.x, l.y) / st.d0, .03, 2);
-        $("ovsize").value = Math.round(clamp(st.o.s, .04, 1.5) * 100);
-      }
-    });
-    ["pointerup", "pointercancel"].forEach(function(e){
-      prev.addEventListener(e, function(){ if (st) { st = null; save(); } });
-    });
-  })();
-
-  function curOv(){ var c = sel(); return S.ov >= 0 ? c.ovs[S.ov] : null; }
-  $("addpng").addEventListener("click", function(){ $("png").click(); });
-  $("png").addEventListener("change", function(){ addPngs(this.files); this.value = ""; });
-  $("ovsize").addEventListener("input", function(){ var o = curOv(); if (o) { o.s = this.value / 100; save(); } });
-  $("ovrot").addEventListener("input", function(){ var o = curOv(); if (o) { o.rot = +this.value; save(); } });
-  $("ovfrom").addEventListener("click", function(){ var o = curOv(); if (o) { o.from = v.currentTime; renderOvs(); save(); } });
-  $("ovto").addEventListener("click", function(){ var o = curOv(); if (o) { o.to = v.currentTime; renderOvs(); save(); } });
-  $("ovall").addEventListener("click", function(){ var o = curOv(); if (o) { o.from = null; o.to = null; renderOvs(); save(); } });
+  $("planbtn").addEventListener("click", function(){
+    var b = $("planbox");
+    b.hidden = !b.hidden;
+    if (!b.hidden) $("planjson").focus();
+  });
+  $("planapply").addEventListener("click", applyPlan);
+  $("plancopy").addEventListener("click", copyPlan);
 
   /* ---------- eventos ---------- */
   $("pick").addEventListener("click", function(){ $("file").click(); });
   $("file").addEventListener("change", function(){ open(this.files && this.files[0]); });
   $("suggest").addEventListener("click", propose);
+  $("scan").addEventListener("click", scan);
+  $("sens").addEventListener("input", applySens);
+  $("addseg").addEventListener("click", addSeg);
+  $("playshort").addEventListener("click", playShort);
   $("kcut").addEventListener("click", function(){ addKey("cut"); });
   $("kanim").addEventListener("click", function(){ addKey("anim"); });
   $("kshots").addEventListener("click", keysPerShot);
+  $("addpng").addEventListener("click", function(){ $("png").click(); });
+  $("png").addEventListener("change", function(){ addPngs(this.files); this.value = ""; });
+  $("addtxt").addEventListener("click", addText);
+
+  $("segprev").addEventListener("click", function(){
+    var s = sh();
+    if (S.seg <= 0) return;
+    var g = s.segs.splice(S.seg, 1)[0];
+    s.segs.splice(S.seg - 1, 0, g); S.seg--;
+    renderSegs(); save();
+  });
+  $("segnext").addEventListener("click", function(){
+    var s = sh();
+    if (S.seg >= s.segs.length - 1) return;
+    var g = s.segs.splice(S.seg, 1)[0];
+    s.segs.splice(S.seg + 1, 0, g); S.seg++;
+    renderSegs(); save();
+  });
+  $("segdel").addEventListener("click", function(){
+    var s = sh();
+    if (!s.segs.length) return;
+    s.segs.splice(S.seg, 1);
+    pickSeg(Math.max(0, S.seg - 1));
+    renderClips(); save();
+  });
+  $("segsrc").addEventListener("click", function(){
+    var g = seg();
+    if (!g) return;
+    S.mark = { in: g.in, out: g.out };
+    drawMark(); S.playing = null; seek(g.in);
+  });
+
+  $("newshort").addEventListener("click", function(){
+    S.shorts.push(mkShort("")); S.demo = false;
+    pickShort(S.shorts.length - 1);
+    msg("Short nuevo. Marcá un tramo en el material y agregalo.", "ok");
+  });
+  $("delshort").addEventListener("click", function(){
+    if (S.shorts.length <= 1) { msg("Tiene que quedar al menos uno.", "err"); return; }
+    S.shorts.splice(S.sel, 1);
+    pickShort(Math.max(0, S.sel - 1));
+  });
+
+  $("play").addEventListener("click", function(){
+    if (!S.url || S.scanning) return;
+    if (v.paused) v.play(); else { v.pause(); S.playing = null; }
+  });
+  v.addEventListener("pause", function(){ $("play").textContent = "Play"; });
+  v.addEventListener("play", function(){ $("play").textContent = "Pausa"; });
+
+  $("setin").addEventListener("click", function(){
+    if (!S.url) return;
+    S.mark.in = clamp(snap(v.currentTime), 0, S.mark.out - .3);
+    drawMark(); save();
+  });
+  $("setout").addEventListener("click", function(){
+    if (!S.url) return;
+    S.mark.out = clamp(snap(v.currentTime), S.mark.in + .3, S.dur);
+    drawMark(); save();
+  });
+  $("zoomr").addEventListener("input", function(){
+    if (!seg()) return;
+    var i = activeKey(); S.key = i;
+    keys()[i].z = this.value / 100;
+    $("zoomv").textContent = keys()[i].z.toFixed(2) + "×";
+    renderKeys(); save();
+  });
+  $("ttl").addEventListener("input", function(){ sh().title = this.value; counts(); renderClips(); save(); });
+  $("cap").addEventListener("input", function(){ sh().cap = this.value; counts(); save(); });
+  $("copycap").addEventListener("click", function(){
+    var s = sh(), txt = (s.title ? s.title + "\n\n" : "") + (s.cap || "");
+    if (!txt.trim()) { msg("No hay nada para copiar todavía.", "err"); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(function(){ msg("Nombre y caption copiados.", "ok"); },
+        function(){ msg("No pude copiar. Seleccioná el texto a mano.", "err"); });
+    } else msg("Este navegador no deja copiar solo.", "err");
+  });
+  $("export").addEventListener("click", exportShort);
+
+  $("ovtext").addEventListener("input", function(){ var o = curOv(); if (o) { o.text = this.value; renderOvs(); save(); } });
+  $("ovsize").addEventListener("input", function(){ var o = curOv(); if (o) { o.s = this.value / 100; save(); } });
+  $("ovrot").addEventListener("input", function(){ var o = curOv(); if (o) { o.rot = +this.value; save(); } });
+  $("ovanim").addEventListener("change", function(){ var o = curOv(); if (o) { o.anim = this.value; save(); } });
+  $("ovbox").addEventListener("click", function(){ var o = curOv(); if (o) { o.box = !o.box; save(); } });
+  Array.prototype.forEach.call(document.querySelectorAll(".swatch"), function(b){
+    b.addEventListener("click", function(){
+      var o = curOv();
+      if (o) { o.color = b.getAttribute("data-c"); renderOvs(); save(); }
+    });
+  });
+  $("ovfrom").addEventListener("click", function(){ var o = curOv(); if (o) { o.from = progNow(); renderOvs(); save(); } });
+  $("ovto").addEventListener("click", function(){ var o = curOv(); if (o) { o.to = progNow(); renderOvs(); save(); } });
+  $("ovall").addEventListener("click", function(){ var o = curOv(); if (o) { o.from = null; o.to = null; renderOvs(); save(); } });
 
   var drop = $("drop"), srcEl = $("src");
   ["dragenter", "dragover"].forEach(function(e){
@@ -1191,62 +1576,13 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
     });
   });
 
-  $("play").addEventListener("click", function(){
-    if (!S.url || S.scanning) return;
-    if (v.paused) v.play(); else v.pause();
-  });
-  v.addEventListener("pause", function(){ $("play").textContent = "Play"; });
-  v.addEventListener("play", function(){ $("play").textContent = "Pausa"; });
-  v.addEventListener("timeupdate", function(){
-    $("now").textContent = tc(v.currentTime);
-    $("ph").style.left = xOf(v.currentTime) + "px";
-  });
-
-  $("setin").addEventListener("click", function(){
-    if (!S.url) return;
-    var c = sel(); c.in = clamp(snap(v.currentTime), 0, c.out - .4);
-    c.keys[0].t = Math.min(c.keys[0].t, c.in);
-    drawBlocks(); renderClips(); renderKeys(); save();
-  });
-  $("setout").addEventListener("click", function(){
-    if (!S.url) return;
-    var c = sel(); c.out = clamp(snap(v.currentTime), c.in + .4, S.dur);
-    drawBlocks(); renderClips(); save();
-  });
-  $("zoomr").addEventListener("input", function(){
-    var k = keys()[activeKey()];
-    S.key = activeKey();
-    k.z = this.value / 100;
-    $("zoomv").textContent = k.z.toFixed(2) + "×";
-    renderKeys(); save();
-  });
-  $("ttl").addEventListener("input", function(){ sel().title = this.value; counts(); renderClips(); save(); });
-  $("cap").addEventListener("input", function(){ sel().cap = this.value; counts(); save(); });
-  ["tt", "ig", "yt"].forEach(function(k){
-    $("d_" + k).addEventListener("click", function(){
-      var c = sel(); c.dest[k] = !c.dest[k];
-      this.setAttribute("aria-pressed", c.dest[k] ? "true" : "false"); save();
-    });
-  });
-  $("export").addEventListener("click", exportClip);
-  $("queue").addEventListener("click", function(){
-    var c = sel(), d = [];
-    if (c.dest.tt) d.push("TikTok");
-    if (c.dest.ig) d.push("Reels");
-    if (c.dest.yt) d.push("Shorts");
-    if (!d.length) { msg("Elegí al menos un destino.", "err"); return; }
-    if (!c.title) { msg("Ponele un título antes de marcarlo.", "err"); return; }
-    c.status = "rdy"; renderClips(); save();
-    msg("Short 0" + (S.sel + 1) + " marcado para " + d.join(", ") + ". La subida es a mano por ahora.", "ok");
-  });
-
   function nearCut(dir){
     var t = v.currentTime, best = null;
     S.cuts.forEach(function(c){
       if (dir > 0 && c > t + .05 && (best === null || c < best)) best = c;
       if (dir < 0 && c < t - .05 && (best === null || c > best)) best = c;
     });
-    if (best !== null) seek(best);
+    if (best !== null) { S.playing = null; seek(best); }
   }
   document.addEventListener("keydown", function(ev){
     var t = ev.target.tagName;
@@ -1254,16 +1590,28 @@ textarea{resize:vertical;min-height:64px;line-height:1.45}
     if (ev.key === " ") { ev.preventDefault(); $("play").click(); }
     else if (ev.key === "i" || ev.key === "I") $("setin").click();
     else if (ev.key === "o" || ev.key === "O") $("setout").click();
+    else if (ev.key === "a" || ev.key === "A") addSeg();
     else if (ev.key === "k" || ev.key === "K") addKey("cut");
-    else if (ev.key === "ArrowLeft" && S.url) { ev.preventDefault(); ev.shiftKey ? nearCut(-1) : seek(v.currentTime - FR); }
-    else if (ev.key === "ArrowRight" && S.url) { ev.preventDefault(); ev.shiftKey ? nearCut(1) : seek(v.currentTime + FR); }
-    else if (ev.key >= "1" && ev.key <= "5") pickClip(+ev.key - 1);
+    else if (ev.key === "ArrowLeft" && S.url) { ev.preventDefault(); if (ev.shiftKey) nearCut(-1); else { S.playing = null; seek(v.currentTime - FR); } }
+    else if (ev.key === "ArrowRight" && S.url) { ev.preventDefault(); if (ev.shiftKey) nearCut(1); else { S.playing = null; seek(v.currentTime + FR); } }
   });
-  window.addEventListener("resize", function(){ drawWave(); drawRuler(); drawMarks(); drawBlocks(); });
+  window.addEventListener("resize", function(){ drawWave(); drawRuler(); drawMarks(); drawUsed(); drawMark(); });
 
   /* ---------- arranque ---------- */
+  (function demo(){
+    var d = [["La pregunta del principio", [[4, 12], [31, 38]]],
+             ["Lo que nadie entiende", [[55, 66]]],
+             ["El remate", [[103, 118]]]];
+    S.shorts = d.map(function(x){
+      var s = mkShort(x[0]);
+      s.cap = "Ejemplo. Se reemplaza cuando cargues un video.";
+      s.segs = x[1].map(function(r){ return mkSeg(r[0], r[1]); });
+      return s;
+    });
+    S.demo = true; S.dur = 122; S.sel = 0;
+  })();
   $("dur").textContent = tc(S.dur);
-  drawRuler(); drawBlocks(); pickClip(0);
+  drawRuler(); drawMark(); pickShort(0); loop();
   if (window.claude && window.claude.use) {
     window.claude.use("downloads").then(function(d){ S.dl = d; }, function(){});
   }
