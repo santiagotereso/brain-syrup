@@ -22,12 +22,16 @@ body{margin:0;padding:0 28px;background:var(--bg);color:var(--ink);
 .wrap{max-width:1500px;margin:0 auto;padding-block:40px 80px}
 p{margin:0 0 12px}
 
-header{display:flex;align-items:center;gap:22px;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:8px}
+header{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:8px}
 .logo{flex:none;width:88px;height:88px;border-radius:50%;display:block}
 h1{font-size:clamp(30px,4.2vw,46px);font-weight:800;letter-spacing:-.03em;line-height:1.02;margin:0}
 .kicker{font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
   color:var(--teal);margin:0 0 10px}
 
+.nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-self:center}
+.tab{text-decoration:none;border:1px solid var(--line-strong);color:var(--ink-faint);font-size:13.5px;font-weight:600;padding:8px 16px;border-radius:999px;white-space:nowrap}
+.tab:hover{color:var(--ink);border-color:var(--teal)}
+.tab.on{background:var(--teal);border-color:var(--teal);color:#06211E}
 h2{font-size:21px;letter-spacing:-.015em;color:var(--ink);font-weight:700;
   margin:46px 0 14px;display:flex;align-items:center;gap:14px}
 h2::after{content:"";flex:1;height:1px;background:var(--line)}
@@ -165,6 +169,10 @@ tr.goal th:first-child{box-shadow:inset 3px 0 0 var(--teal)}
     <p class="kicker">Objetivo</p>
     <h1>Brain Syrup <span class="h1b">YouTube Channel</span></h1>
   </div>
+  <nav class="nav">
+    <a class="tab on" href="https://santiagotereso.github.io/brain-syrup/" aria-current="page">Objetivo</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/picadora/">Picadora de shorts</a>
+  </nav>
 </header>
 
 <section id="p2">
