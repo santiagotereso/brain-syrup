@@ -96,15 +96,16 @@ tr.ej td,tr.ej th{background:rgba(233,185,73,.05)}
   </div>
   <nav class="nav">
     <a class="tab" href="https://santiagotereso.github.io/brain-syrup/">Objetivo</a>
-    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/picadora/">Picadora</a>
     <a class="tab on" href="https://santiagotereso.github.io/brain-syrup/seguimiento/" aria-current="page">Seguimiento</a>
     <a class="tab" href="https://santiagotereso.github.io/brain-syrup/videos/">Videos</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/picadora/">Picadora</a>
     <a class="tab" href="https://santiagotereso.github.io/brain-syrup/cuentas/">Cuentas</a>
-    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/referencias/">Referencias</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/referencias/">Material de estudio</a>
   </nav>
 </header>
 
-<h2>Cómo viene cada red</h2>
+<h2>Cuánto cuesta un seguidor en cada red</h2>
+<p class="pie" style="margin:0 0 14px">Es la plata invertida dividida por los seguidores que trajo. Cuanto más bajo, mejor: esa es la red que rinde.</p>
 <div class="grand" id="res"></div>
 <p class="pie" id="veredicto">Cargá las primeras publicaciones y acá va a aparecer cuál red trae seguidores más baratos.</p>
 
@@ -128,7 +129,7 @@ tr.ej td,tr.ej th{background:rgba(233,185,73,.05)}
         <th colspan="3" class="grp tt red">TikTok</th>
         <th colspan="3" class="grp ig red">Instagram Reels</th>
         <th colspan="3" class="grp yt red">YouTube Shorts</th>
-        <th rowspan="2" class="n">$ por seguidor</th>
+        <th rowspan="2" class="n">Costo por seguidor</th>
         <th rowspan="2"></th>
       </tr>
       <tr>
@@ -288,12 +289,16 @@ tr.ej td,tr.ej th{background:rgba(233,185,73,.05)}
       var sp = document.createElement("span"); sp.textContent = R.nm;
       var b = document.createElement("b");
       b.className = "vteal";
-      b.textContent = cps === null ? "—" : "$" + dos(cps);
+      b.textContent = cps === null ? "sin datos" : "$" + dos(cps);
+      var u1 = document.createElement("span");
+      u1.style.marginTop = "2px"; u1.style.letterSpacing = "0"; u1.style.textTransform = "none";
+      u1.style.fontSize = "13px"; u1.style.color = "var(--ink2)";
+      u1.textContent = cps === null ? "todavía no cargaste seguidores" : "por cada seguidor";
       var sub = document.createElement("span");
-      sub.style.marginTop = "6px"; sub.style.letterSpacing = "0"; sub.style.textTransform = "none";
+      sub.style.marginTop = "8px"; sub.style.letterSpacing = "0"; sub.style.textTransform = "none";
       sub.style.fontSize = "12px"; sub.className = "mono";
-      sub.textContent = money(p) + " · " + nf(v) + " vistas · " + nf(s) + " segs.";
-      d.appendChild(sp); d.appendChild(b); d.appendChild(sub);
+      sub.textContent = money(p) + " invertidos · " + nf(v) + " vistas · " + nf(s) + " seguidores";
+      d.appendChild(sp); d.appendChild(b); d.appendChild(u1); d.appendChild(sub);
       box.appendChild(d);
     });
 
