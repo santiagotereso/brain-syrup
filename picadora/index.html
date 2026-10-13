@@ -163,7 +163,7 @@ textarea{resize:vertical;min-height:64px}
 .planhelp{margin:10px 16px 0;font-size:13px;color:var(--dim);max-width:92ch}
 #planjson{margin:10px 16px 0;width:calc(100% - 32px);min-height:120px;font-family:var(--mono);font-size:12.5px;resize:vertical}
 .planacts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 16px 0}
-.strip{margin-top:20px}
+.strip{margin-top:20px;margin-bottom:0}
 .striph{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 16px 0}
 .striph h2{padding:0}
 .striph .hint{font-size:12.5px;color:var(--dim);min-width:0;overflow:hidden;text-overflow:ellipsis}
@@ -200,8 +200,9 @@ textarea{resize:vertical;min-height:64px}
   </div>
   <nav class="nav">
     <a class="tab" href="https://santiagotereso.github.io/brain-syrup/">Objetivo</a>
-    <a class="tab on" href="https://santiagotereso.github.io/brain-syrup/picadora/" aria-current="page">Picadora de shorts</a>
+    <a class="tab on" href="https://santiagotereso.github.io/brain-syrup/picadora/" aria-current="page">Picadora</a>
     <a class="tab" href="https://santiagotereso.github.io/brain-syrup/seguimiento/">Seguimiento</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/referencias/">Referencias</a>
   </nav>
 </header>
 
@@ -229,6 +230,25 @@ textarea{resize:vertical;min-height:64px}
     <button class="btn btn--go btn--sm" id="planapply">Aplicar plan</button>
     <button class="btn btn--sm" id="plancopy">Copiar el plan actual</button>
     <span class="msg" id="planmsg"></span>
+  </div>
+</section>
+
+<section class="card strip">
+  <div class="striph">
+    <h2>Shorts</h2>
+    <button class="btn btn--sm" id="newshort">Nuevo short</button>
+    <button class="btn btn--sm" id="delshort">Borrar este</button>
+    <span class="hint" id="hint">Ejemplo cargado. Cuando abras un video, se reemplaza.</span>
+  </div>
+  <div class="row" id="clips"></div>
+  <div class="keys">
+    <span><kbd>espacio</kbd> play</span>
+    <span><kbd>I</kbd> entrada</span>
+    <span><kbd>O</kbd> salida</span>
+    <span><kbd>A</kbd> agregar tramo</span>
+    <span><kbd>K</kbd> encuadre</span>
+    <span><kbd>&larr;</kbd><kbd>&rarr;</kbd> un cuadro</span>
+    <span><kbd>&#8679;</kbd>+<kbd>&larr;</kbd><kbd>&rarr;</kbd> toma anterior o siguiente</span>
   </div>
 </section>
 
@@ -375,25 +395,6 @@ textarea{resize:vertical;min-height:64px}
     <p class="note"><b>Es el mismo archivo para las tres.</b> Eleg&iacute; una carpeta y cada short se guarda en su propia subcarpeta, con el video y un caption.txt. Despu&eacute;s abr&iacute;s las p&aacute;ginas de carga, arrastr&aacute;s el archivo y marc&aacute;s cada destino como subido.</p>
   </aside>
 </div>
-
-<section class="card strip">
-  <div class="striph">
-    <h2>Shorts</h2>
-    <button class="btn btn--sm" id="newshort">Nuevo short</button>
-    <button class="btn btn--sm" id="delshort">Borrar este</button>
-    <span class="hint" id="hint">Ejemplo cargado. Cuando abras un video, se reemplaza.</span>
-  </div>
-  <div class="row" id="clips"></div>
-  <div class="keys">
-    <span><kbd>espacio</kbd> play</span>
-    <span><kbd>I</kbd> entrada</span>
-    <span><kbd>O</kbd> salida</span>
-    <span><kbd>A</kbd> agregar tramo</span>
-    <span><kbd>K</kbd> encuadre</span>
-    <span><kbd>&larr;</kbd><kbd>&rarr;</kbd> un cuadro</span>
-    <span><kbd>&#8679;</kbd>+<kbd>&larr;</kbd><kbd>&rarr;</kbd> toma anterior o siguiente</span>
-  </div>
-</section>
 
 </div>
 
