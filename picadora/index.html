@@ -238,6 +238,7 @@ textarea{resize:vertical;min-height:64px}
     <h2>Material</h2>
     <div class="src" id="src">
       <video id="v" playsinline preload="auto"></video>
+      <audio id="va" preload="auto"></audio>
       <div class="frame" id="frame" hidden tabindex="0" role="slider" aria-label="Encuadre vertical"><b id="fl">9:16</b></div>
       <div class="drop" id="drop">
         <div>
@@ -287,6 +288,11 @@ textarea{resize:vertical;min-height:64px}
         <span class="lbl">Montaje</span>
         <button class="btn btn--sm" id="playshort">Ver el short</button>
         <span class="t mono" id="progdur">0,0 s</span>
+      </div>
+      <div class="progh" id="vozrow" hidden>
+        <span class="lbl">Voz</span>
+        <span class="mono" id="voztxt" style="font-size:12.5px;color:var(--blue)"></span>
+        <button class="btn btn--sm" id="vozclr">Quitar</button>
       </div>
       <div class="segs" id="segs"></div>
       <div class="segctl">
@@ -434,9 +440,15 @@ textarea{resize:vertical;min-height:64px}
     return { in: a, out: b, keys: [mkKey(a, cx)] };
   }
   function mkShort(title){
-    return { title: title || "", cap: "", segs: [], ovs: [],
+    return { title: title || "", cap: "", segs: [], voz: [], ovs: [],
              dest: { yt: true, tt: true, ig: true }, up: {}, status: "" };
   }
+  // la voz es una lista de tramos del original que suenan seguidos,
+  // independiente de lo que muestre la imagen
+  function vozDur(s2){
+    return (s2.voz || []).reduce(function(a, r){ return a + (r[1] - r[0]); }, 0);
+  }
+  function tieneVoz(){ var s2 = sh(); return s2.voz && s2.voz.length > 0; }
   var EMPTY = mkShort("");
   function sh(){ return S.shorts[S.sel] || S.shorts[0] || EMPTY; }
   function seg(){ return sh().segs[S.seg] || null; }
@@ -766,7 +778,13 @@ textarea{resize:vertical;min-height:64px}
       b.addEventListener("click", function(){ pickSeg(i); });
       box.appendChild(b);
     });
-    $("progdur").textContent = secs(progDur());
+    var s2 = sh(), hv = s2.voz && s2.voz.length;
+    $("vozrow").hidden = !hv;
+    if (hv) {
+      $("voztxt").textContent = s2.voz.map(function(r){ return tcs(r[0]) + "-" + tcs(r[1]); }).join("  ") +
+        "  ·  " + secs(vozDur(s2));
+    }
+    $("progdur").textContent = secs(progDur()) + (hv ? " de imagen" : "");
     drawUsed();
   }
   function pickSeg(i){
@@ -1146,15 +1164,36 @@ textarea{resize:vertical;min-height:64px}
   }
 
   /* ---------- reproducir el short ---------- */
+  var va = $("va");
   function playShort(){
     var s = sh();
     if (!S.url || !s.segs.length) { msg("Agregá al menos un tramo.", "err"); return; }
-    S.playing = { i: 0 };
+    S.playing = { i: 0, vi: 0 };
     S.seg = 0; renderSegs(); renderKeys();
+    var hv = s.voz && s.voz.length;
+    v.muted = !!hv;
     v.currentTime = s.segs[0].in;
-    var go = function(){ v.removeEventListener("seeked", go); v.play(); };
+    var go = function(){
+      v.removeEventListener("seeked", go);
+      v.play();
+      if (hv) { va.currentTime = s.voz[0][0]; va.play().catch(function(){}); }
+    };
     v.addEventListener("seeked", go);
   }
+  function stopShort(){
+    S.playing = null; v.pause(); va.pause(); v.muted = false;
+  }
+  // la voz corre seguida aunque la imagen salte de un lado a otro
+  va.addEventListener("timeupdate", function(){
+    if (!S.playing) return;
+    var s = sh(), r = s.voz[S.playing.vi];
+    if (!r) return;
+    if (va.currentTime >= r[1] - .02) {
+      var n = S.playing.vi + 1;
+      if (n >= s.voz.length) { stopShort(); return; }
+      S.playing.vi = n; va.currentTime = s.voz[n][0];
+    }
+  });
   v.addEventListener("timeupdate", function(){
     $("now").textContent = tc(v.currentTime);
     $("ph").style.left = xOf(v.currentTime) + "px";
@@ -1163,22 +1202,31 @@ textarea{resize:vertical;min-height:64px}
     if (!g) { S.playing = null; return; }
     if (v.currentTime >= g.out - .02) {
       var n = S.playing.i + 1;
-      if (n >= s.segs.length) { S.playing = null; v.pause(); return; }
+      if (n >= s.segs.length) {
+        if (s.voz && s.voz.length) { v.pause(); return; }  // la voz sigue, la imagen queda quieta
+        stopShort(); return;
+      }
       S.playing.i = n; S.seg = n; renderSegs(); renderKeys();
       v.currentTime = s.segs[n].in;
     }
   });
 
   /* ---------- exportar ---------- */
-  var actx = null, asrc = null, adest = null;
-  function audioTrack(){
+  var actx = null, asrcV = null, asrcA = null, adest = null;
+  function audioTrack(desdeVoz){
     try {
+      var AC = window.AudioContext || window.webkitAudioContext;
       if (!actx) {
-        var AC = window.AudioContext || window.webkitAudioContext;
-        actx = new AC(); asrc = actx.createMediaElementSource(v);
+        actx = new AC();
         adest = actx.createMediaStreamDestination();
-        asrc.connect(adest); asrc.connect(actx.destination);
+        asrcV = actx.createMediaElementSource(v);
+        asrcA = actx.createMediaElementSource(va);
+        asrcV.connect(actx.destination); asrcA.connect(actx.destination);
       }
+      // solo una de las dos fuentes entra a la grabacion
+      try { asrcV.disconnect(adest); } catch (e) {}
+      try { asrcA.disconnect(adest); } catch (e) {}
+      (desdeVoz ? asrcA : asrcV).connect(adest);
       if (actx.state === "suspended") actx.resume();
       return adest.stream.getAudioTracks()[0] || null;
     } catch (e) { return null; }
@@ -1221,14 +1269,17 @@ textarea{resize:vertical;min-height:64px}
     cv.width = 720; cv.height = 1280;
     var cx = cv.getContext("2d");
     var stream = cv.captureStream(30);
-    var at = audioTrack();
+    var hv = s.voz && s.voz.length;
+    var at = audioTrack(!!hv);
     if (at) stream.addTrack(at);
+    v.muted = !!hv;
     var type = mime();
     var rec = new MediaRecorder(stream, type ? { mimeType: type, videoBitsPerSecond: 6000000 } : {});
     var parts = [];
     rec.ondataavailable = function(e){ if (e.data && e.data.size) parts.push(e.data); };
     rec.onstop = function(){
       S.busy = false; $("export").disabled = false; $("prog").style.width = "0";
+      v.muted = false; va.pause();
       offer(new Blob(parts, { type: type || "video/webm" }), s);
     };
 
@@ -1249,14 +1300,18 @@ textarea{resize:vertical;min-height:64px}
       var g = s.segs[cur];
       S.seg = cur; renderSegs();
       seekTo(g.in).then(function(){
-        if (cur > 0 && rec.state === "paused") rec.resume();
-        if (cur === 0) { rec.start(); draw(); }
+        if (cur === 0) {
+          rec.start(); draw();
+          if (hv) { va.currentTime = s.voz[0][0]; va.play().catch(function(){}); }
+        } else if (!hv && rec.state === "paused") rec.resume();
         return playUntil(g.out);
       }).then(function(){
         acc += g.out - g.in;
         cur++;
         if (cur >= s.segs.length) { try { rec.stop(); } catch (e) {} return; }
-        try { rec.pause(); } catch (e) {}
+        // sin voz propia se puede pausar la grabacion mientras busca;
+        // con voz no, porque el audio tiene que seguir corriendo
+        if (!hv) { try { rec.pause(); } catch (e) {} }
         run();
       });
     };
@@ -1344,7 +1399,7 @@ textarea{resize:vertical;min-height:64px}
       if (!d || !d.shorts || !d.shorts.length) return false;
       S.shorts = d.shorts; S.sel = clamp(d.sel | 0, 0, d.shorts.length - 1);
       S.cuts = d.cuts || []; S.mark = d.mark || S.mark; S.demo = false;
-      S.shorts.forEach(function(s){ if (!s.ovs) s.ovs = []; if (!s.segs) s.segs = []; if (!s.up) s.up = {}; });
+      S.shorts.forEach(function(s){ if (!s.ovs) s.ovs = []; if (!s.segs) s.segs = []; if (!s.voz) s.voz = []; if (!s.up) s.up = {}; });
       try {
         var lib = JSON.parse(localStorage.getItem(k + ":img") || "[]");
         S.imgs = lib.map(function(o){ var im = new Image(); im.src = o.src; return { name: o.name, src: o.src, el: im }; });
@@ -1357,7 +1412,7 @@ textarea{resize:vertical;min-height:64px}
     if (S.url) URL.revokeObjectURL(S.url);
     S.file = file; S.url = URL.createObjectURL(file);
     S.samples = null; S.cuts = []; S.env = null; S.playing = null;
-    v.src = S.url; $("drop").hidden = true;
+    v.src = S.url; va.src = S.url; $("drop").hidden = true;
     $("scount").textContent = "sin escanear";
     msg("Leyendo el audio…");
     v.onloadedmetadata = function(){
@@ -1457,9 +1512,13 @@ textarea{resize:vertical;min-height:64px}
     S.shorts = list.map(function(x){
       var s2 = mkShort(x.title || "");
       s2.cap = x.cap || "";
-      (x.segs || []).forEach(function(r){
+      (x.imagen || x.segs || []).forEach(function(r){
         var a = clamp(+r[0] || 0, 0, lim), b = clamp(+r[1] || 0, 0, lim);
         if (b - a >= .3) s2.segs.push(mkSeg(a, b, centerOf(a)));
+      });
+      (x.voz || []).forEach(function(r){
+        var a = clamp(+r[0] || 0, 0, lim), b = clamp(+r[1] || 0, 0, lim);
+        if (b - a >= .2) s2.voz.push([a, b]);
       });
       (x.texts || []).forEach(function(t){
         s2.ovs.push({ kind: "text", text: t.t || "", color: t.color || "#FFFFFF", box: !!t.box,
@@ -1479,7 +1538,8 @@ textarea{resize:vertical;min-height:64px}
     var d = { video: S.file ? S.file.name : "", shorts: S.shorts.map(function(s2){
       return {
         title: s2.title, cap: s2.cap,
-        segs: s2.segs.map(function(g){ return [+g.in.toFixed(2), +g.out.toFixed(2)]; }),
+        imagen: s2.segs.map(function(g){ return [+g.in.toFixed(2), +g.out.toFixed(2)]; }),
+        voz: (s2.voz || []).map(function(r){ return [+r[0].toFixed(2), +r[1].toFixed(2)]; }),
         texts: (s2.ovs || []).filter(function(o){ return o.kind === "text"; }).map(function(o){
           return { t: o.text, x: +o.x.toFixed(3), y: +o.y.toFixed(3), size: +o.s.toFixed(3),
                    color: o.color, box: !!o.box, anim: o.anim,
@@ -1559,7 +1619,7 @@ textarea{resize:vertical;min-height:64px}
 
   $("play").addEventListener("click", function(){
     if (!S.url || S.scanning) return;
-    if (v.paused) v.play(); else { v.pause(); S.playing = null; }
+    if (v.paused) v.play(); else stopShort();
   });
   v.addEventListener("pause", function(){ $("play").textContent = "Play"; });
   v.addEventListener("play", function(){ $("play").textContent = "Pausa"; });
@@ -1614,6 +1674,10 @@ textarea{resize:vertical;min-height:64px}
           : "Ningun destino esta marcado como que va.", n ? "ok" : "err");
   });
 
+  $("vozclr").addEventListener("click", function(){
+    sh().voz = []; renderSegs(); save();
+    msg("Este short vuelve a usar el audio de sus propias tomas.", "ok");
+  });
   $("export").addEventListener("click", exportShort);
 
   $("ovtext").addEventListener("input", function(){ var o = curOv(); if (o) { o.text = this.value; renderOvs(); save(); } });
