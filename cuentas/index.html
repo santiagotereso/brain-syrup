@@ -1,3 +1,4 @@
+<meta name="robots" content="noindex">
 <title>Abrir las cuentas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,6 +71,28 @@ td.v{color:var(--ink2)}
   border:1px solid var(--line);border-radius:9px;margin-bottom:8px;color:var(--ink2);max-width:92ch}
 .chk li i{flex:none;width:20px;height:20px;border:2px solid var(--line2);border-radius:5px;margin-top:2px}
 .chk li b{color:var(--ink)}
+
+.gate{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.gate input{background:var(--panel2);border:1px solid var(--line2);border-radius:9px;
+  padding:11px 14px;color:var(--ink);font-family:var(--ui);font-size:15px;width:240px}
+.gate input:focus{outline:none;border-color:var(--teal)}
+.gate button{background:var(--teal);border:0;border-radius:9px;padding:11px 22px;
+  color:#06211E;font-family:var(--ui);font-size:14.5px;font-weight:700;cursor:pointer}
+.gate button:disabled{opacity:.5;cursor:default}
+#uerr{color:var(--warn);font-size:14px;font-weight:600}
+#ubox{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;margin-top:16px}
+.uc{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--teal);
+  border-radius:12px;padding:16px 18px}
+.uc.pink{border-left-color:#E1306C}.uc.red{border-left-color:#FF0033}.uc.ink{border-left-color:var(--ink2)}
+.uc h4{margin:0 0 12px;font-size:18px;font-weight:700}
+.ur{display:flex;align-items:baseline;gap:10px;margin-bottom:7px}
+.uk{flex:none;width:78px;font-size:11px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dim)}
+.uv{flex:1;min-width:0;text-align:left;background:var(--panel2);border:1px solid var(--line2);
+  border-radius:6px;padding:5px 9px;color:var(--ink);font-family:var(--mono);font-size:13px;
+  cursor:pointer;word-break:break-all}
+.uv:hover{border-color:var(--teal);color:var(--teal)}
+.uv.ok{border-color:var(--teal);background:var(--teal-soft);color:var(--teal)}
 </style>
 
 <div class="app">
@@ -89,6 +112,54 @@ td.v{color:var(--ink2)}
     <a class="tab" href="https://santiagotereso.github.io/brain-syrup/referencias/">Material de estudio</a>
   </nav>
 </header>
+
+<section id="users">
+<h2>Usuarios y contrase&ntilde;as</h2>
+<p class="intro">Esta secci&oacute;n est&aacute; cifrada. Sin la contrase&ntilde;a no hay forma de leerla,
+  ni siquiera mirando el c&oacute;digo de la p&aacute;gina.</p>
+<form id="ugate" class="gate" autocomplete="off">
+  <input id="upw" type="password" placeholder="Contrase&ntilde;a" autocomplete="new-password" spellcheck="false">
+  <button type="submit" id="ubtn">Abrir</button>
+  <span id="uerr" hidden>No es esa</span>
+</form>
+<div id="ubox" hidden></div>
+<script>
+(function(){
+  var D={s:"PvSf6LRPiZultVq+Zx7xjw==",i:"Hd7hOZCNPqwjK5xW",c:"kmTeeLA6giE1Ys74hqcYHgmVvoZu8kTZHreCoTSMbetZEOxZ+HYEk5vdTdRE5km/Q8D2DylBtvUrvIcf1OdK4tzsBQyfLxT3hHmzTf8xhqTMlfsiYQp+2yR1cbIK1/DCI9FafQtl3vmdw1Itset2ms/Xkyr+Tzm8zV37PfNHwKsgabHv+jajOebSfbTnsKup1mcN+V3EeUsdp7YRBNIoa7uiQGx0yBJ91jSqf3MUlRE1roYIFyhCYLG+v8n6IwPS8hUULlcltxF61gS4bPgUuNu3/X1io5zE5E8x3ptPj9+VWq8G8PXH30M7cwNUOfNqN5H/bSRGnZuSt6uigYxAvIcXVRReILrTjOxdaOOVtlLGyfNFntrQIdRxCK/jFMewgV1Vt2ov0HuyZN4g7B+gGVFPkLN0wDuu8jvDrqntZUw2Lmajr72ilhBt8pp5pPqOK4+pyXUrBFIzkFg3PT6OUp9gFK9dqCMIcFam+5zv3fuSmQs/ititp0RjV60orvR88thOwu1z3otS9FGUy9KHsjkrAEtaWfAz7QLohkFvGgu5tM7HNByOO+3Ro1It4yJTyOsb7whWWRVFUtqmsCbeEtZYLjiJ3e1NtOOVftebMhIs5kf4sT4iHIYSiGQKdOtQ6ChqttxsLvzCwx36cTfx5rmxjEab7dEar0Au3qQ85vxnLRNRSjYj0zrqZn3Q38zF8yfgEbTJpMwpYOO9k98M+r1TE3Sopgg=",n:310000};
+  function b(x){var r=atob(x),a=new Uint8Array(r.length);for(var i=0;i<r.length;i++)a[i]=r.charCodeAt(i);return a.buffer}
+  var f=document.getElementById("ugate"),p=document.getElementById("upw"),
+      e=document.getElementById("uerr"),box=document.getElementById("ubox"),bt=document.getElementById("ubtn");
+  f.addEventListener("submit",function(ev){
+    ev.preventDefault(); e.hidden=true; bt.disabled=true; bt.textContent="Abriendo\u2026";
+    crypto.subtle.importKey("raw",new TextEncoder().encode(p.value),"PBKDF2",false,["deriveKey"])
+      .then(function(k){return crypto.subtle.deriveKey(
+        {name:"PBKDF2",salt:b(D.s),iterations:D.n,hash:"SHA-256"},k,
+        {name:"AES-GCM",length:256},false,["decrypt"])})
+      .then(function(k){return crypto.subtle.decrypt({name:"AES-GCM",iv:b(D.i)},k,b(D.c))})
+      .then(function(t){pintar(JSON.parse(new TextDecoder().decode(t)));})
+      .catch(function(){e.hidden=false;bt.disabled=false;bt.textContent="Abrir";p.select();});
+  });
+  function pintar(d){
+    var h="";
+    for(var i=0;i<d.length;i++){
+      var s=d[i],r="";
+      for(var j=0;j<s.rows.length;j++)
+        r+='<div class="ur"><span class="uk">'+s.rows[j][0]+'</span>'+
+           '<button class="uv" type="button" title="Copiar">'+esc(s.rows[j][1])+'</button></div>';
+      h+='<div class="uc '+s.c+'"><h4>'+s.n+'</h4>'+r+'</div>';
+    }
+    box.innerHTML=h; box.hidden=false; f.hidden=true;
+    box.addEventListener("click",function(ev){
+      var t=ev.target.closest(".uv"); if(!t)return;
+      navigator.clipboard.writeText(t.textContent).then(function(){
+        t.classList.add("ok"); setTimeout(function(){t.classList.remove("ok")},900);
+      });
+    });
+  }
+  function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+})();
+</script>
+</section>
 
 <div class="quien">
   <div class="q us">
