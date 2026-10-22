@@ -13,13 +13,20 @@ Cuenta: `_BrainSyrup` · Reels publicados el 17 y el 21 de octubre de 2026.
     cd <carpeta del repo>
     git pull
 
-Después, con el navegador de PATAPIM (sin `browser_id`), abrí:
+Todas las llamadas al navegador van **con `browser_id: "instagram"`**, sin excepción.
+
+Eso es obligatorio y es el detalle que hace que esto funcione. El navegador sin nombre
+es distinto en cada corrida y arranca sin sesión; el que se llama `instagram` es siempre
+el mismo y conserva el login entre corridas. Si usás el sin nombre, vas a ver la pantalla
+de "Log In" aunque la cuenta esté perfectamente logueada.
+
+Abrí, con ese `browser_id`:
 
     https://www.instagram.com/_brainsyrup/
 
-Si pide login, **no cambies nada y no publiques**: avisá en pantalla que hay que
-loguearse en Instagram en el panel de PATAPIM, y terminá. Números viejos presentados
-como nuevos son peor que no actualizar.
+Si aparece "Log In" o "Sign Up", **no cambies nada y no publiques**: avisá en pantalla que
+hay que entrar a Instagram en el navegador `instagram` del panel de PATAPIM, y terminá.
+Números viejos presentados como nuevos son peor que no actualizar.
 
 ## 1. Leer cada reel
 
@@ -91,6 +98,7 @@ algo no se pudo leer.
 
 ## Reglas
 
+- **Siempre `browser_id: "instagram"`.** El navegador sin nombre no tiene la sesión.
 - Si un número no se puede leer, **dejá el anterior y decilo**. Nunca inventes ni estimes.
 - No toques `datos/youtube.json` ni `datos/tiktok.json`. No son de esta máquina.
 - No toques ningún otro archivo del repo.

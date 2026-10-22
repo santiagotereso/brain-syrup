@@ -62,7 +62,7 @@ echo.
 git pull --rebase
 
 "%CLAUDE%" --print ^
- "Segui el procedimiento de fuente/ACTUALIZAR-INSTAGRAM.md, de principio a fin, sin pedirme confirmacion en ningun paso. Es una corrida desatendida: nadie va a contestar preguntas. Si la sesion de Instagram esta cortada, no publiques nada y decilo. Termina con un resumen corto de que cambio respecto de los numeros anteriores." ^
+ "Segui el procedimiento de fuente/ACTUALIZAR-INSTAGRAM.md, de principio a fin. IMPORTANTE: todas las llamadas al navegador van con browser_id instagram, nunca sin nombre, porque la sesion de Instagram vive en ese navegador y no en el sin nombre. Segui sin pedirme confirmacion en ningun paso. Es una corrida desatendida: nadie va a contestar preguntas. Si la sesion de Instagram esta cortada, no publiques nada y decilo. Termina con un resumen corto de que cambio respecto de los numeros anteriores." ^
  --permission-mode bypassPermissions ^
  --allowedTools "Bash" "Read" "Write" "Edit" "Glob" "Grep" "mcp__patapim-browser__browser_navigate" "mcp__patapim-browser__browser_content" "mcp__patapim-browser__browser_evaluate" "mcp__patapim-browser__browser_screenshot" "mcp__patapim-browser__browser_click" "mcp__patapim-browser__browser_scroll" > "%LOG%" 2>&1
 
