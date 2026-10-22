@@ -121,25 +121,32 @@ td.v{color:var(--ink2)}
 <form id="ugate" class="gate" autocomplete="off">
   <input id="upw" type="password" placeholder="Contrase&ntilde;a" autocomplete="new-password" spellcheck="false">
   <button type="submit" id="ubtn">Abrir</button>
+  <label class="urem"><input type="checkbox" id="urem" checked> Recordar en esta computadora</label>
   <span id="uerr" hidden>No es esa</span>
 </form>
 <div id="ubox" hidden></div>
 <script>
 (function(){
-  var D={s:"PvSf6LRPiZultVq+Zx7xjw==",i:"Hd7hOZCNPqwjK5xW",c:"kmTeeLA6giE1Ys74hqcYHgmVvoZu8kTZHreCoTSMbetZEOxZ+HYEk5vdTdRE5km/Q8D2DylBtvUrvIcf1OdK4tzsBQyfLxT3hHmzTf8xhqTMlfsiYQp+2yR1cbIK1/DCI9FafQtl3vmdw1Itset2ms/Xkyr+Tzm8zV37PfNHwKsgabHv+jajOebSfbTnsKup1mcN+V3EeUsdp7YRBNIoa7uiQGx0yBJ91jSqf3MUlRE1roYIFyhCYLG+v8n6IwPS8hUULlcltxF61gS4bPgUuNu3/X1io5zE5E8x3ptPj9+VWq8G8PXH30M7cwNUOfNqN5H/bSRGnZuSt6uigYxAvIcXVRReILrTjOxdaOOVtlLGyfNFntrQIdRxCK/jFMewgV1Vt2ov0HuyZN4g7B+gGVFPkLN0wDuu8jvDrqntZUw2Lmajr72ilhBt8pp5pPqOK4+pyXUrBFIzkFg3PT6OUp9gFK9dqCMIcFam+5zv3fuSmQs/ititp0RjV60orvR88thOwu1z3otS9FGUy9KHsjkrAEtaWfAz7QLohkFvGgu5tM7HNByOO+3Ro1It4yJTyOsb7whWWRVFUtqmsCbeEtZYLjiJ3e1NtOOVftebMhIs5kf4sT4iHIYSiGQKdOtQ6ChqttxsLvzCwx36cTfx5rmxjEab7dEar0Au3qQ85vxnLRNRSjYj0zrqZn3Q38zF8yfgEbTJpMwpYOO9k98M+r1TE3Sopgg=",n:310000};
+  var D={s:"LVB+ujP14zvyu+eKE57rcg==",i:"OSiz94AeHovjA5E7",c:"hiFDwQYgHTmU1FOY8vcm510I1HmxVAL4re6OdLCF9Z6bIjivSc29wyw4xEx1gMExULme7IOu5sDkf9kiSqZimh/2hflQoWBu3t3WnimODOGz6P7LK41bK9bJWvHK4jJO/r0ZHkp8Pbzi2sQgCjz4tIX9d3k+Go7fm+mClNgW8WsiZv4Oku7q/ta9XxXBdbq14djsSHqz72rUzzRaszwmq2mEQtb/CR8Hrc4WHBuCVJzFYNods77gxO/2HaCxVmLEXs7xJ7ae+ThXr9awQDeoCvxEny0sw8q+kgTYY4/cSiRJaFphIcI5hnMf3+7lS5baXjc/M1MIeYOYMXYz2TUXFnY/gk9K8+I58PDG0jcLPWiHsf0+sgagv2VcVUoOaW/Ft7eVp7LIj8Umzcs17D6awZEJ0vjPPzIAfhI3imo7Jw8lYa0MWeOHcAjH06GgEdrkxGmBU/WVjbOsKpwFNZgx+utPlxyg5p6M4Kz2+E2VtzOsZ9Fur8PW5bnxIvbSk0zzXR9aRaNmxG0iUk7wE2RkAMBRxP3A4hZmOf4yDBAHAmpgMMEep/3LB9LjYWemqGRK8GsUEP14o2SjbxwGL3D98BxpuIKJtvUuGKEQo6Ug6Ij9DNXVPvPE0LoDdZq/qVqETppGLR8V2Oo0QzlT2QpWVkN1H4NJRVzu25voO9RQ53C+rTQJuJbOqArd6HEwC2CjIdj63MBt/wIqriahmtF+rC4GCy56lSU=",n:310000};
   function b(x){var r=atob(x),a=new Uint8Array(r.length);for(var i=0;i<r.length;i++)a[i]=r.charCodeAt(i);return a.buffer}
   var f=document.getElementById("ugate"),p=document.getElementById("upw"),
-      e=document.getElementById("uerr"),box=document.getElementById("ubox"),bt=document.getElementById("ubtn");
-  f.addEventListener("submit",function(ev){
-    ev.preventDefault(); e.hidden=true; bt.disabled=true; bt.textContent="Abriendo\u2026";
-    crypto.subtle.importKey("raw",new TextEncoder().encode(p.value),"PBKDF2",false,["deriveKey"])
+      e=document.getElementById("uerr"),box=document.getElementById("ubox"),bt=document.getElementById("ubtn"),
+      rem=document.getElementById("urem"),KEY="brainsyrup:cuentas:pw";
+  function guardada(){try{return localStorage.getItem(KEY)}catch(x){return null}}
+  function olvidar(){try{localStorage.removeItem(KEY)}catch(x){}}
+  f.addEventListener("submit",function(ev){ev.preventDefault();abrir(p.value,rem.checked);});
+  function abrir(pw,recordar){
+    e.hidden=true; bt.disabled=true; bt.textContent="Abriendo\u2026";
+    crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"])
       .then(function(k){return crypto.subtle.deriveKey(
         {name:"PBKDF2",salt:b(D.s),iterations:D.n,hash:"SHA-256"},k,
         {name:"AES-GCM",length:256},false,["decrypt"])})
       .then(function(k){return crypto.subtle.decrypt({name:"AES-GCM",iv:b(D.i)},k,b(D.c))})
-      .then(function(t){pintar(JSON.parse(new TextDecoder().decode(t)));})
-      .catch(function(){e.hidden=false;bt.disabled=false;bt.textContent="Abrir";p.select();});
-  });
+      .then(function(t){
+        if(recordar){try{localStorage.setItem(KEY,pw)}catch(x){}}else olvidar();
+        pintar(JSON.parse(new TextDecoder().decode(t)));})
+      .catch(function(){olvidar();e.hidden=false;bt.disabled=false;bt.textContent="Abrir";p.value="";p.focus();});
+  }
   function pintar(d){
     var h="";
     for(var i=0;i<d.length;i++){
@@ -149,7 +156,9 @@ td.v{color:var(--ink2)}
            '<button class="uv" type="button" title="Copiar">'+esc(s.rows[j][1])+'</button></div>';
       h+='<div class="uc '+s.c+'"><h4>'+s.n+'</h4>'+r+'</div>';
     }
-    box.innerHTML=h; box.hidden=false; f.hidden=true;
+    box.innerHTML=h+'<button class="uolv" type="button">Olvidar en esta computadora</button>';
+    box.hidden=false; f.hidden=true;
+    box.querySelector(".uolv").addEventListener("click",function(){olvidar();location.reload();});
     box.addEventListener("click",function(ev){
       var t=ev.target.closest(".uv"); if(!t)return;
       navigator.clipboard.writeText(t.textContent).then(function(){
@@ -158,6 +167,7 @@ td.v{color:var(--ink2)}
     });
   }
   function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+  var g=guardada(); if(g){bt.textContent="Abriendo…";abrir(g,true);}
 })();
 </script>
 </section>
