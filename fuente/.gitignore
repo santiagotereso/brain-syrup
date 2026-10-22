@@ -1,0 +1,12 @@
+# Credenciales en texto plano: nunca suben.
+_users.js
+_users.pw.txt
+
+# Intermedios que build.py regenera en cada corrida.
+plan-brain-syrup.html
+picadora.html
+referencias.html
+cuentas.html
+cta.html
+seguimiento.html
+videos/

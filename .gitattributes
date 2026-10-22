@@ -1,0 +1,8 @@
+# Saltos de linea iguales en las dos computadoras.
+# Evita el bug que rompio el regex de _users.js.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.png binary
+*.jpg binary
+*.webp binary
+*.mp4 binary

@@ -1,0 +1,603 @@
+<title>Seguimiento de publicaciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Planilla del experimento: resumen por red arriba, una fila por publicacion abajo. */
+:root{
+  color-scheme:dark;
+  --bg:#0F1418; --panel:#161D23; --panel2:#111920;
+  --line:#242E36; --line2:#38454F;
+  --ink:#E7EDF2; --ink2:#AFBCC7; --dim:#7A8995;
+  --teal:#2DD4BF; --teal-soft:#122E2C;
+  --blue:#93B4FD; --blue-soft:#15203A;
+  --warn:#E9B949; --past:#8A98A5;
+  --ui:"Inter","Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.app{max-width:1600px;margin:0 auto;padding-block:20px 64px;padding-left:20px;padding-right:20px}
+button{font:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--teal);outline-offset:1px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+header{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.logo{flex:none;width:88px;height:88px;border-radius:50%;display:block}
+header>.id{min-width:0}
+h1{margin:0;font-size:clamp(30px,4.2vw,46px);font-weight:800;letter-spacing:-.03em;line-height:1.02}
+.h1b{color:var(--teal)}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin:0 0 10px}
+.nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.tab{text-decoration:none;border:1px solid var(--line2);color:var(--dim);font-size:13.5px;font-weight:600;padding:8px 16px;border-radius:999px;white-space:nowrap}
+.tab:hover{color:var(--ink);border-color:var(--teal)}
+.tab.on{background:var(--teal);border-color:var(--teal);color:#06211E}
+
+h2{font-size:21px;letter-spacing:-.015em;color:var(--ink);font-weight:700;margin:40px 0 14px;display:flex;align-items:center;gap:14px}
+h2::after{content:"";flex:1;height:1px;background:var(--line)}
+
+.grand{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;background:var(--panel);overflow:hidden}
+.grand div{flex:1;min-width:190px;padding:16px 20px;border-right:1px solid var(--line)}
+.grand div:last-child{border-right:0}
+.grand span{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.grand b{display:block;font-size:24px;font-weight:800;letter-spacing:-.02em;margin-top:4px;font-variant-numeric:tabular-nums}
+.grand .vteal{color:var(--teal)} .grand .vink{color:var(--ink)} .grand .vdim{color:var(--past)}
+
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+thead th{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
+  background:var(--panel2);position:sticky;top:0;z-index:2}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.win{color:var(--teal)}
+.grp{border-left:2px solid var(--line2)}
+.grp.tt{border-left-color:var(--blue)}
+.grp.ig{border-left-color:var(--warn)}
+.grp.yt{border-left-color:var(--teal)}
+thead .red{font-size:12px;letter-spacing:.04em;text-transform:none;color:var(--ink2)}
+
+input,select{font:inherit;color:var(--ink);background:transparent;border:1px solid transparent;border-radius:6px;padding:5px 7px;width:100%}
+input:hover,select:hover{border-color:var(--line2)}
+input:focus,select:focus{background:var(--panel2);border-color:var(--teal)}
+input.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;width:82px}
+input.date{width:128px;font-family:var(--mono);font-size:13px}
+input.ttl{min-width:200px}
+td.calc{font-family:var(--mono);color:var(--ink2);font-size:13px}
+tr.ej td,tr.ej th{background:rgba(233,185,73,.05)}
+.badge{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:999px;background:rgba(233,185,73,.15);color:var(--warn)}
+
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0 0}
+.btn{background:transparent;border:1px solid var(--line2);color:var(--ink2);border-radius:999px;padding:8px 15px;font-size:13.5px;font-weight:600;white-space:nowrap}
+.btn:hover{color:var(--ink);border-color:var(--teal)}
+.btn--go{background:var(--teal);border-color:var(--teal);color:#06211E}
+.btn--go:hover{filter:brightness(1.08)}
+.msg{font-size:13px;color:var(--ink2);min-height:18px;margin-left:4px}
+.msg.ok{color:var(--teal)}
+.msg.err{color:var(--blue)}
+.pie{font-size:16.5px;line-height:1.55;color:var(--ink2);margin:12px 0 0}
+.nota{margin:0;padding:22px 26px;border:1px solid var(--line);border-left:3px solid var(--teal);
+  border-radius:10px;background:var(--panel)}
+.nota p{margin:0;font-size:19px;line-height:1.5;color:var(--ink)}
+.nota p+p{margin-top:12px}
+.hl{color:var(--teal);font-weight:700}
+a.lnk{color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line2)}
+a.lnk:hover{border-color:var(--teal)}
+td.txt{white-space:normal;color:var(--ink2);min-width:320px}
+td.txt b{color:var(--ink)}
+.sub{display:block;font-size:11.5px;color:var(--dim);margin-top:2px}
+
+td.vid{white-space:normal;min-width:300px}
+td.vid img{float:left;width:52px;height:92px;object-fit:cover;border-radius:6px;
+  border:1px solid var(--line2);margin-right:12px}
+td.vid span{display:block;overflow:hidden}
+td.vid b{color:var(--ink);font-weight:600}
+.mbar{display:block;height:5px;border-radius:3px;background:var(--line2);margin:6px 0 2px;overflow:hidden}
+.mbar i{display:block;height:100%;background:var(--teal)}
+tr.tot td{background:var(--panel2);font-weight:700;border-top:1px solid var(--line2)}
+tr.tot td.vid b{font-weight:800}
+
+@media (max-width:700px){ .grand div{min-width:150px} }
+</style>
+
+<div class="app">
+
+<header>
+  <img class="logo" src="__LOGO__" alt="Logo de Brain Syrup">
+  <div class="id">
+    <p class="kicker">Seguimiento</p>
+    <h1>Brain Syrup <span class="h1b">YouTube Channel</span></h1>
+  </div>
+  <nav class="nav">
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/">Objetivo</a>
+    <a class="tab on" href="https://santiagotereso.github.io/brain-syrup/seguimiento/" aria-current="page">Seguimiento</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/videos/">Videos</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/picadora/">Picadora</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/cuentas/">Cuentas</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/cta/">Mejor call to action</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/posteos/">Posteos</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/referencias/">Material de estudio</a>
+  </nav>
+</header>
+
+<h2>Lo que compr&oacute; la plata &middot; YouTube</h2>
+<p class="pie" style="margin:0 0 14px">Los cinco shorts publicados. Vistas y retenci&oacute;n de YouTube
+  Analytics al 21 de octubre; costos de Google&nbsp;Ads al 22. La campa&ntilde;a corri&oacute; del 20 al 23 de
+  octubre sobre los cuatro primeros: el quinto se public&oacute; despu&eacute;s y no recibi&oacute; un peso.</p>
+
+<div class="grand">
+  <div><span>Gastado</span><b class="vteal">USD&nbsp;55,17</b></div>
+  <div><span>De un presupuesto de</span><b class="vdim">USD&nbsp;100</b></div>
+  <div><span>Vistas compradas</span><b class="vink">6.151</b></div>
+  <div><span>Vistas ganadas solas</span><b class="vteal">4.909</b></div>
+  <div><span>Suscriptores</span><b class="vink">11</b></div>
+  <div><span>Costo por suscriptor</span><b class="vteal">USD&nbsp;5,02</b></div>
+</div>
+
+<div class="tw" style="margin-top:14px">
+  <table>
+    <thead>
+      <tr>
+        <th>Video</th>
+        <th class="n">Costo</th>
+        <th class="n">Vistas</th>
+        <th class="n">Visto</th>
+        <th class="n">Subs</th>
+        <th class="n">Me gusta</th>
+        <th class="n">Costo por sub</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="vid"><img src="__SITE__posteos/media/thumb-seniors-sm.webp" alt="">
+          <span><b>Which power would you pick?</b><span class="sub">Super Seniors &middot; 0:23</span></span></td>
+        <td class="n mono">USD&nbsp;19,77</td>
+        <td class="n mono">3.921<span class="mbar"><i style="width:50.4%"></i></span>
+          <span class="sub">1.976 pagas &middot; 1.945 ganadas</span></td>
+        <td class="n mono win">91,6%<span class="sub">0:21 de 0:23</span></td>
+        <td class="n mono">8</td>
+        <td class="n mono">35</td>
+        <td class="n mono">USD&nbsp;2,47</td>
+      </tr>
+      <tr>
+        <td class="vid"><img src="__SITE__posteos/media/thumb-algo-sm.webp" alt="">
+          <span><b>This is your boss. Thoughts?</b><span class="sub">Who controls the Internet &middot; 0:25</span></span></td>
+        <td class="n mono">USD&nbsp;17,61</td>
+        <td class="n mono">3.239<span class="mbar"><i style="width:74.8%"></i></span>
+          <span class="sub">2.423 pagas &middot; 816 ganadas</span></td>
+        <td class="n mono win">97,0%<span class="sub">0:24 de 0:25</span></td>
+        <td class="n mono">1</td>
+        <td class="n mono">18</td>
+        <td class="n mono">USD&nbsp;17,61</td>
+      </tr>
+      <tr>
+        <td class="vid"><img src="__SITE__posteos/media/thumb-gravity-sm.webp" alt="">
+          <span><b>Most will last under a minute.</b><span class="sub">Gravity undo &middot; 0:24</span></span></td>
+        <td class="n mono">USD&nbsp;8,70</td>
+        <td class="n mono">2.003<span class="mbar"><i style="width:41.3%"></i></span>
+          <span class="sub">827 pagas &middot; 1.176 ganadas</span></td>
+        <td class="n mono win">98,2%<span class="sub">0:23 de 0:24</span></td>
+        <td class="n mono">2</td>
+        <td class="n mono">37</td>
+        <td class="n mono">USD&nbsp;4,35</td>
+      </tr>
+      <tr>
+        <td class="vid"><img src="__SITE__posteos/media/thumb-iphone-1960-sm.webp" alt="">
+          <span><b>How much space would an iPhone take in 1960?</b><span class="sub">iPhone 1960 &middot; 0:19</span></span></td>
+        <td class="n mono">USD&nbsp;9,09</td>
+        <td class="n mono">1.673<span class="mbar"><i style="width:55.3%"></i></span>
+          <span class="sub">925 pagas &middot; 748 ganadas</span></td>
+        <td class="n mono win">104,5%<span class="sub">0:19 de 0:19</span></td>
+        <td class="n mono">0</td>
+        <td class="n mono">13</td>
+        <td class="n mono">&mdash;</td>
+      </tr>
+      <tr>
+        <td class="vid"><img src="__SITE__posteos/media/thumb-gianni-sm.webp" alt="">
+          <span><b>He'll multiply your followers. Call 1800-GIANNI</b><span class="sub">1800-GIANNI &middot; 0:40</span></span></td>
+        <td class="n mono">&mdash;</td>
+        <td class="n mono">224<span class="mbar"><i style="width:0.0%"></i></span>
+          <span class="sub">0 pagas &middot; 224 ganadas</span></td>
+        <td class="n mono">33,4%<span class="sub">0:13 de 0:40</span></td>
+        <td class="n mono">0</td>
+        <td class="n mono">0</td>
+        <td class="n mono">&mdash;</td>
+      </tr>
+      <tr class="tot">
+        <td class="vid"><span><b>Los cinco</b><span class="sub">17 y 21 de octubre</span></span></td>
+        <td class="n mono">USD&nbsp;55,17</td>
+        <td class="n mono">11.060<span class="mbar"><i style="width:55.6%"></i></span>
+          <span class="sub">6.151 pagas &middot; 4.909 ganadas</span></td>
+        <td class="n mono">&mdash;</td>
+        <td class="n mono">11</td>
+        <td class="n mono">103</td>
+        <td class="n mono">USD&nbsp;5,02</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p class="pie">La barra verde es lo que pag&oacute; la pauta; la gris, lo que el video consigui&oacute; solo en el
+  feed de Shorts. Cada vista cost&oacute; medio centavo de d&oacute;lar.</p>
+
+<h2>De d&oacute;nde viene el p&uacute;blico</h2>
+<div class="tw">
+  <table>
+    <thead><tr><th>Pa&iacute;s</th><th class="n">Vistas</th><th class="n">Del total</th></tr></thead>
+    <tbody>
+      <tr><td>Estados Unidos</td><td class="n mono">66.655</td><td class="n mono win">94,7%</td></tr>
+      <tr><td>Reino Unido</td><td class="n mono">23</td><td class="n mono">0,0%</td></tr>
+      <tr><td>Canad&aacute;</td><td class="n mono">19</td><td class="n mono">0,0%</td></tr>
+      <tr><td>Argentina</td><td class="n mono">16</td><td class="n mono">0,0%</td></tr>
+      <tr class="tot"><td><b>Canal completo</b><span class="sub">28 d&iacute;as, al 21 de octubre</span></td>
+        <td class="n mono">70.355</td><td class="n mono">100%</td></tr>
+    </tbody>
+  </table>
+</div>
+<p class="pie">El canal es pr&aacute;cticamente un canal estadounidense: 94,7% de las vistas. El resto del mundo
+  junto no llega a 100 vistas. El p&uacute;blico es 81,6% masculino y la mitad tiene entre 18 y 34 a&ntilde;os.</p>
+
+<h2>Qu&eacute; dicen estos n&uacute;meros</h2>
+<div class="nota">
+  <p><span class="hl">USD&nbsp;55 compraron 6.151 vistas y el contenido se gan&oacute; 4.909 m&aacute;s sin costo.</span>
+    Casi la mitad de las vistas no las pagamos. Eso solo pasa cuando el video retiene: los cuatro de la
+    campa&ntilde;a se miran entre el 91,6% y el 104,5%, y ese 104,5% significa que lo vuelven a ver.</p>
+  <p><span class="hl">Super Seniors trae un suscriptor por USD&nbsp;2,47; el de Internet, por USD&nbsp;17,61.</span>
+    Mismo presupuesto, misma semana, mismo p&uacute;blico: siete veces de diferencia. La plata que queda va a
+    Super Seniors, no repartida en partes iguales.</p>
+  <p><span class="hl">El de 40 segundos retiene 33,4% y junt&oacute; 224 vistas.</span> Los de 19 a 25 segundos
+    retienen arriba del 91% y juntaron entre 1.673 y 3.921. No es el tema ni el humor: es el largo.
+    De ac&aacute; en adelante, ning&uacute;n short pasa de 25 segundos.</p>
+  <p><span class="hl">Las 70.355 vistas del canal no son nuestras.</span> El 88,6% del tr&aacute;fico del canal
+    viene de publicidad de YouTube sobre los dos episodios largos, que es otra pauta. Lo que produjo esta
+    inversi&oacute;n son las 11.060 vistas de los cinco shorts, no el n&uacute;mero grande del panel.</p>
+</div>
+
+<h2>Cuánto cuesta un seguidor en cada red</h2>
+<p class="pie" style="margin:0 0 14px">Es la plata invertida dividida por los seguidores que trajo. Cuanto más bajo, mejor: esa es la red que rinde.</p>
+<div class="grand" id="res"></div>
+<p class="pie" id="veredicto">Cargá las primeras publicaciones y acá va a aparecer cuál red trae seguidores más baratos.</p>
+
+<h2>El experimento</h2>
+<div class="grand">
+  <div><span>Publicaciones cargadas</span><b class="vink" id="kN">0</b></div>
+  <div><span>De las 60 del trimestre</span><b class="vdim" id="kPct">0%</b></div>
+  <div><span>Invertido</span><b class="vteal" id="kInv">$0</b></div>
+  <div><span>Queda del presupuesto</span><b class="vdim" id="kRest">$2.500</b></div>
+  <div><span>Seguidores sumados</span><b class="vteal" id="kSeg">0</b></div>
+</div>
+
+<h2>Publicaciones</h2>
+<div class="tw">
+  <table id="tabla">
+    <thead>
+      <tr>
+        <th rowspan="2">#</th>
+        <th rowspan="2">Fecha</th>
+        <th rowspan="2">Pieza</th>
+        <th colspan="3" class="grp tt red">TikTok</th>
+        <th colspan="3" class="grp ig red">Instagram Reels</th>
+        <th colspan="3" class="grp yt red">YouTube Shorts</th>
+        <th rowspan="2" class="n">Costo por seguidor</th>
+        <th rowspan="2"></th>
+      </tr>
+      <tr>
+        <th class="n grp tt">Plata</th><th class="n">Vistas</th><th class="n">Segs.</th>
+        <th class="n grp ig">Plata</th><th class="n">Vistas</th><th class="n">Segs.</th>
+        <th class="n grp yt">Plata</th><th class="n">Vistas</th><th class="n">Segs.</th>
+      </tr>
+    </thead>
+    <tbody id="filas"></tbody>
+  </table>
+</div>
+
+<div class="bar">
+  <button class="btn btn--go" id="add">Agregar publicación</button>
+  <button class="btn" id="week">Agregar la semana (5)</button>
+  <button class="btn" id="csv">Copiar como tabla</button>
+  <button class="btn" id="clearej" hidden>Borrar los ejemplos</button>
+  <span class="msg" id="msg"></span>
+</div>
+
+<div class="nota" style="margin-top:4px">
+  <p><span class="hl">475 vistas por suscriptor.</span> Las 4.751 vistas de YouTube dejaron 10
+    suscriptores: 0,21%. Esta página venía asumiendo cerca del 1%, así que la conversión real es
+    cinco veces peor que la hipótesis. Es el número que define si el plan cierra, y ahora está
+    medido en vez de supuesto.</p>
+  <p><span class="hl">Super Seniors ganó en las dos redes que funcionan.</span> 1,6 veces en YouTube
+    y 8 veces en Instagram. No es el repunte de una red: es la pieza. Ahí va el 60%.</p>
+  <p><span class="hl">TikTok no entregó: 19 reproducciones y cero seguidores.</span> No es el
+    contenido, es arranque en frío — cuenta de cero días, sin seguir a nadie, cuatro videos subidos
+    en dos minutos desde la web. No se le pone plata hasta que un posteo haga números solo.</p>
+  <p><span class="hl">Todos los videos se miran 16 segundos.</span> Duración promedio de 0:16 a 0:18
+    en las cuatro piezas, midan 0:19 o 0:25. Y el más corto es el que más se repite. Los trailers
+    nuevos van a 20 segundos, no a 30.</p>
+</div>
+
+<h2>Qué se decide con esto</h2>
+<div class="nota">
+  <p>Cada semana, la pieza que mejor anduvo se lleva el <span class="hl">60% de la pauta</span>
+    y el 40% restante se reparte en las otras cuatro.</p>
+  <p>Las vistas pagas no son el número que manda: una vista comprada que no deja seguidor no sirve
+    para conseguir una marca.</p>
+</div>
+
+<h2>Cu&aacute;ndo entra la plata</h2>
+<p class="pie" style="margin:0 0 14px">Dos d&iacute;as de org&aacute;nico antes de pagar: son los que
+definen a qu&eacute; pieza va el 60%.</p>
+<div class="tw">
+  <table>
+    <thead><tr><th>Cu&aacute;ndo</th><th>Qu&eacute; pasa</th><th class="n">Cu&aacute;nto</th></tr></thead>
+    <tbody>
+      <tr><th>Hoy</th>
+        <td class="txt">Salen las 15 publicaciones: 5 piezas en 3 redes.</td>
+        <td class="n">$0</td></tr>
+      <tr><th>Dos d&iacute;as</th>
+        <td class="txt">Org&aacute;nico. Se miden <b>retenci&oacute;n, guardados y visitas al
+          perfil</b>, no vistas.</td>
+        <td class="n">$0</td></tr>
+      <tr><th>Lunes &middot; 60%</th>
+        <td class="txt">A la pieza con mejor retenci&oacute;n: <b>$50 en cada una de las tres
+          redes</b>.</td>
+        <td class="n">$150</td></tr>
+      <tr><th>Lunes &middot; 40%</th>
+        <td class="txt">A las otras cuatro: <b>$25 cada una</b>, en la red donde mejor anduvo.</td>
+        <td class="n">$100</td></tr>
+      <tr><th>Por semana</th>
+        <td class="txt">Mismo esquema todas las semanas.</td>
+        <td class="n">$250</td></tr>
+      <tr><th>Por mes</th>
+        <td class="txt">Tope.</td>
+        <td class="n">$1.000</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="nota" style="margin-top:16px">
+  <p><span class="hl">Por qu&eacute; no desde el minuto cero.</span> Si las 15 publicaciones
+    arrancan con plata, todas tienen vistas y ninguna dice cu&aacute;l es buena: se gasta el
+    presupuesto y encima se pierde la informaci&oacute;n.</p>
+  <p><span class="hl">Por qu&eacute; 60 y no 100.</span> Concentrar rinde m&aacute;s, pero las otras
+    cuatro siguen con pauta: cuatro de cinco piezas no se mueren sin haber tenido empuje.</p>
+  <p><span class="hl">Por qu&eacute; queda margen.</span> Si una pieza arranca sola a mitad de
+    semana, tiene que haber presupuesto para empujarla.</p>
+</div>
+
+<h2>D&oacute;nde se compra la pauta</h2>
+<div class="tw">
+  <table>
+    <thead><tr><th>Red</th><th>D&oacute;nde</th><th>C&oacute;mo</th></tr></thead>
+    <tbody>
+      <tr><th class="grp tt">TikTok</th>
+        <td><a class="lnk" href="https://ads.tiktok.com" target="_blank" rel="noopener">ads.tiktok.com</a>
+          <span class="sub">TikTok Ads Manager</span></td>
+        <td class="txt"><b>Spark Ads</b> sobre el posteo ya publicado. El bot&oacute;n
+          <b>Promote</b> del perfil no sirve: es el de la app y pide pagar desde el celular.</td></tr>
+      <tr><th class="grp ig">Instagram</th>
+        <td><a class="lnk" href="https://business.facebook.com/adsmanager" target="_blank" rel="noopener">Meta Ads Manager</a>
+          <span class="sub">business.facebook.com</span></td>
+        <td class="txt">La cuenta tiene que estar como <b>Business</b> y vinculada a una p&aacute;gina
+          de Facebook. El bot&oacute;n <b>Boost</b> de la app es la versi&oacute;n recortada.</td></tr>
+      <tr><th class="grp yt">YouTube Shorts</th>
+        <td><a class="lnk" href="https://ads.google.com" target="_blank" rel="noopener">Google Ads</a>
+          <span class="sub">campa&ntilde;a de video</span></td>
+        <td class="txt">Sobre el short que ya est&aacute; publicado, no sobre una copia subida
+          aparte.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Las tres reglas</h2>
+<div class="nota">
+  <p><span class="hl">Toda campa&ntilde;a segmentada a Estados Unidos.</span> Los $100 que se
+    invirtieron sin segmentar trajeron 50.000 vistas de Kazajist&aacute;n. Esas vistas no dejan
+    suscriptores ni sirven para conseguir una marca.</p>
+  <p><span class="hl">Siempre sobre el posteo org&aacute;nico</span>, nunca un aviso suelto. Si la
+    pauta corre por fuera, las vistas y los seguidores no se le suman a la publicaci&oacute;n, y el
+    costo por seguidor de esta p&aacute;gina deja de significar algo.</p>
+  <p><span class="hl">Todo se paga con la tarjeta BX de Santiago</span>, que reemplaza a la de la
+    oficina que ven&iacute;a usando Federico.</p>
+</div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var REDES = [{ k: "tt", nm: "TikTok" }, { k: "ig", nm: "Instagram Reels" }, { k: "yt", nm: "YouTube Shorts" }];
+  var KEY = "brainsyrup:seguimiento:v2", PRES = 2500, META = 60;
+  var filas = [];
+
+  function nf(n){ return (n || 0).toLocaleString("es-AR"); }
+  function money(n){ return "$" + nf(Math.round(n || 0)); }
+  function dos(n){ return (n || 0).toFixed(2).replace(".", ","); }
+  function hoy(){
+    var d = new Date(), p = function(x){ return (x < 10 ? "0" : "") + x; };
+    return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+  }
+  function mkFila(fecha, titulo, ej){
+    var f = { fecha: fecha || hoy(), titulo: titulo || "", ej: !!ej };
+    REDES.forEach(function(R){ f[R.k] = { p: 0, v: 0, s: 0 }; });
+    return f;
+  }
+  function msg(t, k){ var m = $("msg"); m.textContent = t; m.className = "msg" + (k ? " " + k : ""); }
+
+  /* ---------- guardado ---------- */
+  function save(){
+    try { localStorage.setItem(KEY, JSON.stringify(filas)); } catch (e) {}
+  }
+  function load(){
+    try {
+      var d = JSON.parse(localStorage.getItem(KEY) || "null");
+      if (d && d.length) { filas = d; return true; }
+    } catch (e) {}
+    return false;
+  }
+
+  /* ---------- ejemplo de arranque ---------- */
+  function ejemplos(){
+    /* Publicadas el sábado 17/10/2026. Números leídos el lunes 19, a 48 horas.
+       Plata en 0: la primera campaña de Google Ads todavía no gastó. */
+    var a = mkFila("2026-10-17", "Super Seniors", false);
+    a.tt = { p: 0, v: 7, s: 0 }; a.ig = { p: 0, v: 1352, s: 0 }; a.yt = { p: 0, v: 1950, s: 7 };
+    var b = mkFila("2026-10-17", "Gravity · How long would you last", false);
+    b.tt = { p: 0, v: 4, s: 0 }; b.ig = { p: 0, v: 169, s: 0 }; b.yt = { p: 0, v: 1215, s: 2 };
+    var c = mkFila("2026-10-17", "Who controls the Internet", false);
+    c.tt = { p: 0, v: 4, s: 0 }; c.ig = { p: 0, v: 137, s: 0 }; c.yt = { p: 0, v: 820, s: 1 };
+    var d = mkFila("2026-10-17", "iPhone 1960", false);
+    d.tt = { p: 0, v: 4, s: 0 }; d.ig = { p: 0, v: 137, s: 0 }; d.yt = { p: 0, v: 766, s: 0 };
+    filas = [a, b, c, d];
+  }
+
+  /* ---------- tabla ---------- */
+  function num(val, on){
+    var i = document.createElement("input");
+    i.className = "num"; i.type = "number"; i.min = "0"; i.step = "1";
+    i.value = val ? val : "";
+    i.placeholder = "0";
+    i.addEventListener("input", function(){ on(parseFloat(this.value) || 0); });
+    return i;
+  }
+  function render(){
+    var tb = $("filas");
+    tb.textContent = "";
+    filas.forEach(function(f, i){
+      var tr = document.createElement("tr");
+      if (f.ej) tr.className = "ej";
+
+      var th = document.createElement("th");
+      th.className = "mono";
+      th.textContent = (i + 1 < 10 ? "0" : "") + (i + 1);
+      tr.appendChild(th);
+
+      var tdF = document.createElement("td");
+      var inF = document.createElement("input");
+      inF.className = "date"; inF.type = "date"; inF.value = f.fecha;
+      inF.addEventListener("input", function(){ f.fecha = this.value; save(); });
+      tdF.appendChild(inF); tr.appendChild(tdF);
+
+      var tdT = document.createElement("td");
+      var inT = document.createElement("input");
+      inT.className = "ttl"; inT.type = "text"; inT.value = f.titulo;
+      inT.placeholder = "Nombre de la pieza";
+      inT.addEventListener("input", function(){ f.titulo = this.value; save(); });
+      tdT.appendChild(inT);
+      if (f.ej) { var b = document.createElement("span"); b.className = "badge"; b.textContent = "ejemplo"; tdT.appendChild(b); }
+      tr.appendChild(tdT);
+
+      REDES.forEach(function(R){
+        ["p", "v", "s"].forEach(function(campo, j){
+          var td = document.createElement("td");
+          td.className = "n" + (j === 0 ? " grp " + R.k : "");
+          td.appendChild(num(f[R.k][campo], function(x){ f[R.k][campo] = x; save(); resumen(); costo(tr, f); }));
+          tr.appendChild(td);
+        });
+      });
+
+      var tdC = document.createElement("td");
+      tdC.className = "n calc";
+      tr.appendChild(tdC);
+
+      var tdX = document.createElement("td");
+      var bx = document.createElement("button");
+      bx.className = "btn"; bx.style.padding = "3px 10px"; bx.style.fontSize = "12px";
+      bx.textContent = "Quitar";
+      bx.addEventListener("click", function(){ filas.splice(i, 1); save(); render(); resumen(); });
+      tdX.appendChild(bx); tr.appendChild(tdX);
+
+      tb.appendChild(tr);
+      costo(tr, f);
+    });
+    $("clearej").hidden = !filas.some(function(f){ return f.ej; });
+  }
+  function costo(tr, f){
+    var p = 0, s = 0;
+    REDES.forEach(function(R){ p += f[R.k].p; s += f[R.k].s; });
+    var td = tr.children[tr.children.length - 2];
+    td.textContent = (p > 0 && s > 0) ? "$" + dos(p / s) : (p > 0 ? "sin seguidores" : "—");
+    td.className = "n calc" + (p > 0 && s > 0 && p / s < 1 ? " win" : "");
+  }
+
+  /* ---------- resumen ---------- */
+  function resumen(){
+    var box = $("res");
+    box.textContent = "";
+    var tot = { p: 0, v: 0, s: 0 }, mejor = null;
+    REDES.forEach(function(R){
+      var p = 0, v = 0, s = 0;
+      filas.forEach(function(f){ p += f[R.k].p; v += f[R.k].v; s += f[R.k].s; });
+      tot.p += p; tot.v += v; tot.s += s;
+      var cps = (p > 0 && s > 0) ? p / s : null;
+      if (cps !== null && (!mejor || cps < mejor.cps)) mejor = { nm: R.nm, cps: cps };
+      var d = document.createElement("div");
+      var sp = document.createElement("span"); sp.textContent = R.nm;
+      var b = document.createElement("b");
+      b.className = "vteal";
+      b.textContent = cps === null ? "sin datos" : "$" + dos(cps);
+      var u1 = document.createElement("span");
+      u1.style.marginTop = "2px"; u1.style.letterSpacing = "0"; u1.style.textTransform = "none";
+      u1.style.fontSize = "13px"; u1.style.color = "var(--ink2)";
+      u1.textContent = cps === null ? "todavía no cargaste seguidores" : "por cada seguidor";
+      var sub = document.createElement("span");
+      sub.style.marginTop = "8px"; sub.style.letterSpacing = "0"; sub.style.textTransform = "none";
+      sub.style.fontSize = "12px"; sub.className = "mono";
+      sub.textContent = money(p) + " invertidos · " + nf(v) + " vistas · " + nf(s) + " seguidores";
+      d.appendChild(sp); d.appendChild(b); d.appendChild(u1); d.appendChild(sub);
+      box.appendChild(d);
+    });
+
+    $("kN").textContent = filas.length;
+    $("kPct").textContent = Math.round(filas.length / META * 100) + "%";
+    $("kInv").textContent = money(tot.p);
+    $("kRest").textContent = money(Math.max(0, PRES - tot.p));
+    $("kSeg").textContent = nf(tot.s);
+
+    var v = $("veredicto");
+    if (!mejor) v.textContent = "Cargá las primeras publicaciones y acá va a aparecer cuál red trae seguidores más baratos.";
+    else {
+      v.textContent = "Por ahora " + mejor.nm + " trae el seguidor más barato, a $" + dos(mejor.cps) +
+        ". Con menos de 20 pruebas por red todavía es temprano para moverle los turnos.";
+    }
+  }
+
+  /* ---------- acciones ---------- */
+  $("add").addEventListener("click", function(){
+    filas.push(mkFila()); save(); render(); resumen();
+    msg("Fila agregada.", "ok");
+  });
+  $("week").addEventListener("click", function(){
+    var d = new Date();
+    for (var i = 0; i < 5; i++) {
+      var f = new Date(d.getTime() + i * 86400000), p = function(x){ return (x < 10 ? "0" : "") + x; };
+      filas.push(mkFila(f.getFullYear() + "-" + p(f.getMonth() + 1) + "-" + p(f.getDate()), ""));
+    }
+    save(); render(); resumen();
+    msg("Cinco filas, una por día.", "ok");
+  });
+  $("clearej").addEventListener("click", function(){
+    filas = filas.filter(function(f){ return !f.ej; });
+    if (!filas.length) filas = [mkFila()];
+    save(); render(); resumen();
+    msg("Ejemplos borrados.", "ok");
+  });
+  $("csv").addEventListener("click", function(){
+    var TAB = String.fromCharCode(9), NL = String.fromCharCode(10);
+    var out = ["#", "Fecha", "Pieza"];
+    REDES.forEach(function(R){ out.push(R.nm + " plata", R.nm + " vistas", R.nm + " seguidores"); });
+    var txt = out.join(TAB) + NL;
+    filas.forEach(function(f, i){
+      var r = [i + 1, f.fecha, f.titulo];
+      REDES.forEach(function(R){ r.push(f[R.k].p, f[R.k].v, f[R.k].s); });
+      txt += r.join(TAB) + NL;
+    });
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(
+        function(){ msg("Copiado. Pegalo en una planilla y entra en columnas.", "ok"); },
+        function(){ msg("No pude copiar.", "err"); });
+    } else msg("Este navegador no deja copiar solo.", "err");
+  });
+
+  if (!load()) ejemplos();
+  render(); resumen();
+})();
+</script>

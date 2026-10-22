@@ -1,0 +1,51 @@
+# -*- coding: utf-8 -*-
+"""Abre Gmail con el mail para German ya redactado, sin enviarlo."""
+import io, subprocess, sys
+try:
+    from urllib.parse import quote
+except ImportError:
+    from urllib import quote
+
+SUBJECT = u"Pauta de los 5 cortos: propuesta de cuándo gastarla"
+
+BODY = u"""German,
+
+Hoy salen los cinco cortos en las tres redes: quince publicaciones. Te propongo cómo repartir la pauta. La diferencia con lo que planteaste no es cuánto gastamos sino cuándo entra la plata.
+
+Lo que no cambia: $225 por semana, dentro del tope de $1.000 por mes.
+
+Lo que propongo: que las primeras 48 horas sean orgánicas y que la pauta entre el lunes, sobre la pieza que el algoritmo ya haya elegido.
+
+Por qué:
+
+1. Si les ponemos $40 o $50 desde el minuto cero, todas van a tener vistas y ninguna nos va a decir cuál es buena. Gastamos la plata y además perdemos la información. Dicho sea de paso, $50 por pieza son $250 si es una vez por video, o $750 si es en las tres redes: en ese caso nos comemos el 75% del mes en un día.
+
+2. Esa plata repartida en quince posteos no mueve el amperímetro en ninguno. Es poco para que pase algo y poco para aprender.
+
+3. Las plataformas cobran más barato el alcance cuando la pieza ya tiene engagement propio. La misma plata rinde más sobre algo que ya funciona que empujando algo frío.
+
+4. Si gastamos todo hoy y el martes una pieza arranca sola, no nos queda con qué empujarla. Tener presupuesto sin usar los primeros días es lo que nos deja reaccionar.
+
+Y una razón práctica: las cuentas publicitarias de TikTok e Instagram todavía no están configuradas, el método de pago de TikTok es justamente lo que estoy resolviendo, y una campaña nueva tarda hasta 24 horas en aprobarse. Hoy el orgánico es la única opción disponible igual.
+
+El calendario:
+
+Viernes a domingo. $0. Salen las quince publicaciones. Medimos retención, guardados y visitas al perfil, no vistas.
+
+Lunes. $225 sobre la pieza ganadora: $75 TikTok, $75 Instagram, $75 YouTube Shorts. Misma pieza, misma plata, misma semana, así el número también nos dice qué red trae el seguidor más barato.
+
+Semana siguiente. Otros $225, sobre la segunda pieza o sobre la red que ganó.
+
+Si el lunes ninguna se despegó de las otras, hacemos tu versión: $25 en cada una de las cinco, en la red que haya mostrado más vida, para forzar una señal.
+
+Todo esto queda registrado en la página, en Seguimiento:
+https://santiagotereso.github.io/brain-syrup/seguimiento/
+
+Santiago"""
+
+url = (u"https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&su=%s&body=%s"
+       % (quote(SUBJECT.encode("utf-8"), safe=""), quote(BODY.encode("utf-8"), safe="")))
+
+io.open("_mail.txt", "w", encoding="utf-8").write(SUBJECT + u"\n\n" + BODY)
+print(len(url))
+subprocess.Popen(["cmd", "/c", "start", "", url])

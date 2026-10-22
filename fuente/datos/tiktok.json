@@ -1,0 +1,21 @@
+{
+  "_": "TikTok. Entra a mano desde screenshots. Ningun .bat lo toca.",
+  "leido": "22 de octubre de 2026",
+  "gastado": 14.15,
+  "visitas_perfil": 124,
+  "videos": [
+    {"id": "algo",         "titulo": "This is your boss. Thoughts?",                 "corto": "Who controls the Internet", "dur": "0:25", "vistas": 1681, "media": 1.18,  "full": 0.2,  "seg": 1, "inter": 2},
+    {"id": "iphone-1960",  "titulo": "How much space would an iPhone take in 1960?", "corto": "iPhone 1960",               "dur": "0:19", "vistas": 970,  "media": 1.22,  "full": 0.5,  "seg": 0, "inter": 1},
+    {"id": "seniors",      "titulo": "Which power would you pick?",                  "corto": "Super Seniors",             "dur": "0:23", "vistas": 11,   "media": 7.84,  "full": 0.0,  "seg": 0, "inter": 0},
+    {"id": "gravity",      "titulo": "Most will last under a minute.",               "corto": "Gravity undo",              "dur": "0:24", "vistas": 5,    "media": 21.47, "full": 14.3, "seg": 0, "inter": 0},
+    {"id": "gianni",       "titulo": "He'll multiply your followers. Call 1800-GIANNI", "corto": "1800-GIANNI",            "dur": "0:40", "vistas": 0,    "media": 0.0,   "full": 0.0,  "seg": 0, "inter": 0}
+  ],
+  "paises": [
+    {"nombre": "Estados Unidos", "pct": 70.0},
+    {"nombre": "M&eacute;xico",  "pct": 7.4},
+    {"nombre": "Indonesia",      "pct": 3.7},
+    {"nombre": "Colombia",       "pct": 2.2},
+    {"nombre": "Argentina",      "pct": 2.1},
+    {"nombre": "Otros",          "pct": 14.6}
+  ]
+}

@@ -1,0 +1,144 @@
+<title>Material de estudio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Lista de a quien mirar, por plataforma. */
+:root{color-scheme:dark;
+  --bg:#0F1418;--panel:#161D23;--panel2:#111920;--line:#242E36;--line2:#38454F;
+  --ink:#E7EDF2;--ink2:#AFBCC7;--dim:#7A8995;--teal:#2DD4BF;--teal-soft:#122E2C;
+  --blue:#93B4FD;--warn:#E9B949;
+  --ui:"Inter","Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:15px;line-height:1.55}
+.app{max-width:1600px;margin:0 auto;padding-block:20px 64px;padding-left:20px;padding-right:20px}
+header{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.logo{flex:none;width:88px;height:88px;border-radius:50%;display:block}
+header>.id{min-width:0}
+h1{margin:0;font-size:clamp(30px,4.2vw,46px);font-weight:800;letter-spacing:-.03em;line-height:1.02}
+.h1b{color:var(--teal)}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin:0 0 10px}
+.nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.tab{text-decoration:none;border:1px solid var(--line2);color:var(--dim);font-size:13.5px;font-weight:600;padding:8px 16px;border-radius:999px;white-space:nowrap}
+.tab:hover{color:var(--ink);border-color:var(--teal)}
+.tab.on{background:var(--teal);border-color:var(--teal);color:#06211E}
+h2{font-size:21px;letter-spacing:-.015em;font-weight:700;margin:46px 0 14px;display:flex;align-items:center;gap:14px}
+h3{font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:30px 0 12px}
+h2::after{content:"";flex:1;height:1px;background:var(--line)}
+.cols{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.ref{display:flex;flex-direction:column;gap:6px;background:var(--panel);border:1px solid var(--line);
+  border-radius:12px;padding:16px 18px;text-decoration:none;color:inherit}
+.ref:hover{border-color:var(--teal)}
+.ref .nm{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.ref .nm span{color:var(--teal)}
+.ref .h{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.ref p{margin:4px 0 0;font-size:14px;color:var(--ink2)}
+.nota{padding:22px 26px;border:1px solid var(--line);border-left:3px solid var(--warn);
+  border-radius:10px;background:var(--panel)}
+.nota p{margin:0;font-size:17px;line-height:1.5;color:var(--ink)}
+.nota p+p{margin-top:10px}
+.pie{font-size:14.5px;color:var(--dim);margin:12px 0 0}
+</style>
+
+<div class="app">
+<header>
+  <img class="logo" src="__LOGO__" alt="Logo de Brain Syrup">
+  <div class="id">
+    <p class="kicker">Material de estudio</p>
+    <h1>Brain Syrup <span class="h1b">YouTube Channel</span></h1>
+  </div>
+  <nav class="nav">
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/">Objetivo</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/seguimiento/">Seguimiento</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/videos/">Videos</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/picadora/">Picadora</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/cuentas/">Cuentas</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/cta/">Mejor call to action</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/posteos/">Posteos</a>
+    <a class="tab on" href="https://santiagotereso.github.io/brain-syrup/referencias/" aria-current="page">Material de estudio</a>
+  </nav>
+</header>
+
+<h2>Referencias</h2>
+<p class="pie" style="margin:0 0 20px">A quién mirar en cada plataforma. Diez canales verificados uno por uno.</p>
+
+<h3>Shorts y YouTube</h3>
+<div class="cols">
+  <a class="ref" href="https://www.youtube.com/@jennyhoyos" target="_blank" rel="noopener">
+    <span class="nm">Jenny Hoyos</span><span class="h">youtube.com/@jennyhoyos</span>
+    <p>La referencia real en Shorts. Explica la estructura que usa: gancho rápido, medio lento,
+      pico, bajada y cierre corto. Si vas a mirar uno solo, mirá este.</p>
+  </a>
+  <a class="ref" href="https://www.youtube.com/@filmbooth" target="_blank" rel="noopener">
+    <span class="nm">Film Booth</span><span class="h">youtube.com/@filmbooth</span>
+    <p>Ganchos, títulos y miniaturas. Es lo más aplicable a lo que hace Federico en el video largo.</p>
+  </a>
+  <a class="ref" href="https://www.youtube.com/@ColinandSamir" target="_blank" rel="noopener">
+    <span class="nm">Colin and Samir</span><span class="h">youtube.com/@ColinandSamir</span>
+    <p>La industria y los formatos. Menos táctico, más criterio: sirve para decidir qué tipo de
+      canal querés ser.</p>
+  </a>
+  <a class="ref" href="https://www.youtube.com/@nicknimmin" target="_blank" rel="noopener">
+    <span class="nm">Nick Nimmin</span><span class="h">youtube.com/@nicknimmin</span>
+    <p>Táctica de canal y lectura de analytics. Útil para lo operativo del día a día.</p>
+  </a>
+  <a class="ref" href="https://www.youtube.com/@ThinkMedia" target="_blank" rel="noopener">
+    <span class="nm">Think Media</span><span class="h">youtube.com/@ThinkMedia</span>
+    <p>Crecimiento de canal, equipo y herramientas. Más generalista que los otros.</p>
+  </a>
+</div>
+
+<h3>TikTok</h3>
+<div class="cols">
+  <a class="ref" href="https://www.youtube.com/@keenyakelly" target="_blank" rel="noopener">
+    <span class="nm">Keenya Kelly</span><span class="h">youtube.com/@keenyakelly</span>
+    <p>La más consistente en estrategia de TikTok para marcas y negocios, no para creadores sueltos.</p>
+  </a>
+  <a class="ref" href="https://www.youtube.com/@RachelPedersen" target="_blank" rel="noopener">
+    <span class="nm">Rachel Pedersen</span><span class="h">youtube.com/@RachelPedersen</span>
+    <p>Crecimiento y lectura de métricas. Buena para entender qué mirar en los primeros meses.</p>
+  </a>
+</div>
+
+<h3>Instagram y Reels</h3>
+<div class="cols">
+  <a class="ref" href="https://www.youtube.com/@thebrockjohnson" target="_blank" rel="noopener">
+    <span class="nm">Brock Johnson</span><span class="h">youtube.com/@thebrockjohnson</span>
+    <p>El que más específicamente trabaja Reels: formatos, ganchos y por qué un reel no despega.</p>
+  </a>
+  <a class="ref" href="https://www.youtube.com/@modernmillie" target="_blank" rel="noopener">
+    <span class="nm">Modern Millie</span><span class="h">youtube.com/@modernmillie</span>
+    <p>Crecimiento en Instagram, muy didáctica. Buena para arrancar una cuenta de cero.</p>
+  </a>
+  <a class="ref" href="https://www.youtube.com/@elisedarma" target="_blank" rel="noopener">
+    <span class="nm">Elise Darma</span><span class="h">youtube.com/@elisedarma</span>
+    <p>Perfil y conversión: cómo se ve la cuenta cuando alguien llega desde un reel.</p>
+  </a>
+</div>
+
+<h3>Páginas de carga</h3>
+<div class="cols">
+  <a class="ref" href="https://www.youtube.com/upload" target="_blank" rel="noopener">
+    <span class="nm">Subir a <span>YouTube</span></span><span class="h">youtube.com/upload</span>
+    <p>Cae directo en el diálogo de subida de Studio.</p>
+  </a>
+  <a class="ref" href="https://www.tiktok.com/tiktokstudio/upload" target="_blank" rel="noopener">
+    <span class="nm">Subir a <span>TikTok</span></span><span class="h">tiktok.com/tiktokstudio/upload</span>
+    <p>El uploader web. Desde acá también se programan publicaciones.</p>
+  </a>
+  <a class="ref" href="https://www.instagram.com/create/select/" target="_blank" rel="noopener">
+    <span class="nm">Subir a <span>Instagram</span></span><span class="h">instagram.com/create/select/</span>
+    <p>Abre el diálogo de crear en la web de escritorio.</p>
+  </a>
+</div>
+
+<h2>Una advertencia sobre lo que se lee por ahí</h2>
+<div class="nota">
+  <p>Casi todo lo que aparece buscando &laquo;estrategia de Shorts 2026&raquo; son blogs de empresas que venden
+    herramientas, con estadísticas sin método y números que se contradicen entre sí.</p>
+  <p>Los canales de esta página están verificados uno por uno. Las guías de blog, con pinzas.</p>
+</div>
+<p class="pie">Si encontrás a alguien que valga la pena sumar, decímelo y lo agrego acá.</p>
+
+</div>

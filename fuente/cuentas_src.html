@@ -1,0 +1,297 @@
+<meta name="robots" content="noindex">
+<title>Abrir las cuentas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Instructivo paso a paso: todo pasa en la computadora de la oficina de Estados Unidos. */
+:root{color-scheme:dark;
+  --bg:#0F1418;--panel:#161D23;--panel2:#111920;--line:#242E36;--line2:#38454F;
+  --ink:#E7EDF2;--ink2:#AFBCC7;--dim:#7A8995;--teal:#2DD4BF;--teal-soft:#122E2C;
+  --blue:#93B4FD;--blue-soft:#15203A;--warn:#E9B949;
+  --ui:"Inter","Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Consolas,monospace}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:15px;line-height:1.6}
+.app{max-width:1600px;margin:0 auto;padding-block:20px 64px;padding-left:20px;padding-right:20px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+header{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.logo{flex:none;width:88px;height:88px;border-radius:50%;display:block}
+header>.id{min-width:0}
+h1{margin:0;font-size:clamp(30px,4.2vw,46px);font-weight:800;letter-spacing:-.03em;line-height:1.02}
+.h1b{color:var(--teal)}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin:0 0 10px}
+.nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.tab{text-decoration:none;border:1px solid var(--line2);color:var(--dim);font-size:13.5px;font-weight:600;padding:8px 16px;border-radius:999px;white-space:nowrap}
+.tab:hover{color:var(--ink);border-color:var(--teal)}
+.tab.on{background:var(--teal);border-color:var(--teal);color:#06211E}
+h2{font-size:21px;letter-spacing:-.015em;font-weight:700;margin:46px 0 16px;display:flex;align-items:center;gap:14px}
+h2::after{content:"";flex:1;height:1px;background:var(--line)}
+.intro{font-size:17px;color:var(--ink2);margin:16px 0 0;max-width:86ch}
+
+.quien{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:16px}
+.q{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.q.us{border-left:3px solid var(--blue)}
+.q.ar{border-left:3px solid var(--teal)}
+.q .r{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+.q.ar .r{color:var(--teal)}
+.q h4{margin:4px 0 8px;font-size:18px;font-weight:700}
+.q p{margin:0;font-size:14.5px;color:var(--ink2)}
+
+ol.pasos{counter-reset:p;list-style:none;margin:0;padding:0}
+ol.pasos>li{counter-increment:p;position:relative;padding:0 0 0 52px;margin-bottom:22px}
+ol.pasos>li::before{content:counter(p);position:absolute;left:0;top:0;width:34px;height:34px;
+  border-radius:50%;display:grid;place-items:center;background:var(--teal);color:#06211E;
+  font-weight:800;font-size:15px}
+ol.pasos>li.us::before{background:var(--blue);color:#0C1830}
+ol.pasos>li h4{margin:4px 0 6px;font-size:17px;font-weight:700}
+ol.pasos>li p{margin:0 0 8px;color:var(--ink2);max-width:86ch}
+ol.pasos>li p:last-child{margin-bottom:0}
+.dato{display:inline-block;font-family:var(--mono);font-size:13px;background:var(--panel2);
+  border:1px solid var(--line2);border-radius:6px;padding:2px 8px;color:var(--teal);margin:2px 3px 2px 0}
+.ojo{display:block;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--warn);
+  border-radius:8px;padding:12px 14px;font-size:14px;color:var(--ink2);margin-top:10px;max-width:86ch}
+.ojo b{color:var(--warn);font-weight:700}
+a.lnk{color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line2)}
+a.lnk:hover{border-color:var(--teal)}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-top:14px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);background:var(--panel2)}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
+td.v{color:var(--ink2)}
+.no{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--blue);
+  border-radius:10px;padding:20px 24px;margin-top:16px}
+.no ul{margin:0;padding-left:20px}
+.no li{margin-bottom:10px;color:var(--ink2);max-width:86ch}
+.no li b{color:var(--ink)}
+.chk{list-style:none;margin:14px 0 0;padding:0}
+.chk li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--panel);
+  border:1px solid var(--line);border-radius:9px;margin-bottom:8px;color:var(--ink2);max-width:92ch}
+.chk li i{flex:none;width:20px;height:20px;border:2px solid var(--line2);border-radius:5px;margin-top:2px}
+.chk li b{color:var(--ink)}
+
+.gate{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.gate input{background:var(--panel2);border:1px solid var(--line2);border-radius:9px;
+  padding:11px 14px;color:var(--ink);font-family:var(--ui);font-size:15px;width:240px}
+.gate input:focus{outline:none;border-color:var(--teal)}
+.gate button{background:var(--teal);border:0;border-radius:9px;padding:11px 22px;
+  color:#06211E;font-family:var(--ui);font-size:14.5px;font-weight:700;cursor:pointer}
+.gate button:disabled{opacity:.5;cursor:default}
+#uerr{color:var(--warn);font-size:14px;font-weight:600}
+#ubox{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;margin-top:16px}
+.uc{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--teal);
+  border-radius:12px;padding:16px 18px}
+.uc.pink{border-left-color:#E1306C}.uc.red{border-left-color:#FF0033}.uc.ink{border-left-color:var(--ink2)}
+.uc h4{margin:0 0 12px;font-size:18px;font-weight:700}
+.ur{display:flex;align-items:baseline;gap:10px;margin-bottom:7px}
+.uk{flex:none;width:78px;font-size:11px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dim)}
+.uv{flex:1;min-width:0;text-align:left;background:var(--panel2);border:1px solid var(--line2);
+  border-radius:6px;padding:5px 9px;color:var(--ink);font-family:var(--mono);font-size:13px;
+  cursor:pointer;word-break:break-all}
+.uv:hover{border-color:var(--teal);color:var(--teal)}
+.uv.ok{border-color:var(--teal);background:var(--teal-soft);color:var(--teal)}
+</style>
+
+<div class="app">
+<header>
+  <img class="logo" src="__LOGO__" alt="Logo de Brain Syrup">
+  <div class="id">
+    <p class="kicker">Abrir las cuentas</p>
+    <h1>Brain Syrup <span class="h1b">YouTube Channel</span></h1>
+  </div>
+  <nav class="nav">
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/">Objetivo</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/seguimiento/">Seguimiento</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/videos/">Videos</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/picadora/">Picadora</a>
+    <a class="tab on" href="https://santiagotereso.github.io/brain-syrup/cuentas/" aria-current="page">Cuentas</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/cta/">Mejor call to action</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/posteos/">Posteos</a>
+    <a class="tab" href="https://santiagotereso.github.io/brain-syrup/referencias/">Material de estudio</a>
+  </nav>
+</header>
+
+<section id="users">
+<h2>Usuarios y contrase&ntilde;as</h2>
+<p class="intro">Esta secci&oacute;n est&aacute; cifrada. Sin la contrase&ntilde;a no hay forma de leerla,
+  ni siquiera mirando el c&oacute;digo de la p&aacute;gina.</p>
+<form id="ugate" class="gate" autocomplete="off">
+  <input id="upw" type="password" placeholder="Contrase&ntilde;a" autocomplete="new-password" spellcheck="false">
+  <button type="submit" id="ubtn">Abrir</button>
+  <label class="urem"><input type="checkbox" id="urem" checked> Recordar en esta computadora</label>
+  <span id="uerr" hidden>No es esa</span>
+</form>
+<div id="ubox" hidden></div>
+<script>
+(function(){
+  var D={s:"LVB+ujP14zvyu+eKE57rcg==",i:"OSiz94AeHovjA5E7",c:"hiFDwQYgHTmU1FOY8vcm510I1HmxVAL4re6OdLCF9Z6bIjivSc29wyw4xEx1gMExULme7IOu5sDkf9kiSqZimh/2hflQoWBu3t3WnimODOGz6P7LK41bK9bJWvHK4jJO/r0ZHkp8Pbzi2sQgCjz4tIX9d3k+Go7fm+mClNgW8WsiZv4Oku7q/ta9XxXBdbq14djsSHqz72rUzzRaszwmq2mEQtb/CR8Hrc4WHBuCVJzFYNods77gxO/2HaCxVmLEXs7xJ7ae+ThXr9awQDeoCvxEny0sw8q+kgTYY4/cSiRJaFphIcI5hnMf3+7lS5baXjc/M1MIeYOYMXYz2TUXFnY/gk9K8+I58PDG0jcLPWiHsf0+sgagv2VcVUoOaW/Ft7eVp7LIj8Umzcs17D6awZEJ0vjPPzIAfhI3imo7Jw8lYa0MWeOHcAjH06GgEdrkxGmBU/WVjbOsKpwFNZgx+utPlxyg5p6M4Kz2+E2VtzOsZ9Fur8PW5bnxIvbSk0zzXR9aRaNmxG0iUk7wE2RkAMBRxP3A4hZmOf4yDBAHAmpgMMEep/3LB9LjYWemqGRK8GsUEP14o2SjbxwGL3D98BxpuIKJtvUuGKEQo6Ug6Ij9DNXVPvPE0LoDdZq/qVqETppGLR8V2Oo0QzlT2QpWVkN1H4NJRVzu25voO9RQ53C+rTQJuJbOqArd6HEwC2CjIdj63MBt/wIqriahmtF+rC4GCy56lSU=",n:310000};
+  function b(x){var r=atob(x),a=new Uint8Array(r.length);for(var i=0;i<r.length;i++)a[i]=r.charCodeAt(i);return a.buffer}
+  var f=document.getElementById("ugate"),p=document.getElementById("upw"),
+      e=document.getElementById("uerr"),box=document.getElementById("ubox"),bt=document.getElementById("ubtn"),
+      rem=document.getElementById("urem"),KEY="brainsyrup:cuentas:pw";
+  function guardada(){try{return localStorage.getItem(KEY)}catch(x){return null}}
+  function olvidar(){try{localStorage.removeItem(KEY)}catch(x){}}
+  f.addEventListener("submit",function(ev){ev.preventDefault();abrir(p.value,rem.checked);});
+  function abrir(pw,recordar){
+    e.hidden=true; bt.disabled=true; bt.textContent="Abriendo\u2026";
+    crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"])
+      .then(function(k){return crypto.subtle.deriveKey(
+        {name:"PBKDF2",salt:b(D.s),iterations:D.n,hash:"SHA-256"},k,
+        {name:"AES-GCM",length:256},false,["decrypt"])})
+      .then(function(k){return crypto.subtle.decrypt({name:"AES-GCM",iv:b(D.i)},k,b(D.c))})
+      .then(function(t){
+        if(recordar){try{localStorage.setItem(KEY,pw)}catch(x){}}else olvidar();
+        pintar(JSON.parse(new TextDecoder().decode(t)));})
+      .catch(function(){olvidar();e.hidden=false;bt.disabled=false;bt.textContent="Abrir";p.value="";p.focus();});
+  }
+  function pintar(d){
+    var h="";
+    for(var i=0;i<d.length;i++){
+      var s=d[i],r="";
+      for(var j=0;j<s.rows.length;j++)
+        r+='<div class="ur"><span class="uk">'+s.rows[j][0]+'</span>'+
+           '<button class="uv" type="button" title="Copiar">'+esc(s.rows[j][1])+'</button></div>';
+      h+='<div class="uc '+s.c+'"><h4>'+s.n+'</h4>'+r+'</div>';
+    }
+    box.innerHTML=h+'<button class="uolv" type="button">Olvidar en esta computadora</button>';
+    box.hidden=false; f.hidden=true;
+    box.querySelector(".uolv").addEventListener("click",function(){olvidar();location.reload();});
+    box.addEventListener("click",function(ev){
+      var t=ev.target.closest(".uv"); if(!t)return;
+      navigator.clipboard.writeText(t.textContent).then(function(){
+        t.classList.add("ok"); setTimeout(function(){t.classList.remove("ok")},900);
+      });
+    });
+  }
+  function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+  var g=guardada(); if(g){bt.textContent="Abriendo…";abrir(g,true);}
+})();
+</script>
+</section>
+
+<div class="quien">
+  <div class="q us">
+    <p class="r">La computadora de la oficina</p>
+    <h4>Queda prendida en Estados Unidos</h4>
+    <p>Es lo &uacute;nico que hace falta de all&aacute;: una m&aacute;quina encendida, con AnyDesk instalado
+      y acceso sin que nadie tenga que aceptar del otro lado.</p>
+  </div>
+  <div class="q ar">
+    <p class="r">Santiago, desde Argentina</p>
+    <h4>Crea y maneja todo</h4>
+    <p>Se conecta por AnyDesk y trabaja como si estuviera sentado ah&iacute;. Crea las cuentas,
+      publica y administra. <b>Federico no participa.</b></p>
+  </div>
+</div>
+
+<h2>Antes de empezar: los tres datos</h2>
+<p class="intro">Santiago los prepara. <b>Sin estos tres no hay que arrancar.</b></p>
+<div class="tw">
+  <table>
+    <thead><tr><th style="width:26%">Dato</th><th>Qu&eacute; tiene que ser</th></tr></thead>
+    <tbody>
+      <tr><th>Un mail de la empresa</th><td class="v">Algo del estilo <span class="dato">brainsyrup@3dar.com</span>.
+        <b>Nunca el mail personal de nadie.</b></td></tr>
+      <tr><th>Una contrase&ntilde;a</th><td class="v">Guardada en el gestor de la empresa, no en un papel
+        ni en un chat.</td></tr>
+      <tr><th>El nombre de usuario</th><td class="v">El mismo en las dos redes. Por ejemplo
+        <span class="dato">@brainsyrup</span>. Chequear antes que est&eacute; libre en las dos.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Paso a paso</h2>
+<ol class="pasos">
+  <li class="us">
+    <h4>Dejar lista la computadora de la oficina</h4>
+    <p>Instalar <a class="lnk" href="https://anydesk.com/es/downloads" target="_blank" rel="noopener">AnyDesk</a>
+      y configurar el <b>acceso desatendido</b>: en <b>Configuraci&oacute;n</b> &rarr; <b>Seguridad</b>,
+      activar <i>Permitir acceso no vigilado</i> y poner una contrase&ntilde;a. Eso es lo que permite entrar
+      sin que nadie tenga que apretar &laquo;aceptar&raquo; del otro lado.</p>
+    <p>Pasarle a Santiago el <b>n&uacute;mero de AnyDesk</b> de esa computadora y la contrase&ntilde;a de acceso.</p>
+    <span class="ojo"><b>La computadora no se apaga ni se suspende.</b> En las opciones de energ&iacute;a de Windows,
+      poner suspensi&oacute;n en <i>Nunca</i>. Si se apaga, desde ac&aacute; no se puede entrar y no se puede publicar.</span>
+  </li>
+
+  <li>
+    <h4>Santiago se conecta y crea TikTok</h4>
+    <p>Desde AnyDesk, en el navegador de esa computadora, entra a
+      <a class="lnk" href="https://www.tiktok.com/signup" target="_blank" rel="noopener">tiktok.com/signup</a>.</p>
+    <p>Elige registrarse <b>con mail</b>, no con Google ni con Apple. Pone el mail de la empresa y la
+      contrase&ntilde;a. El c&oacute;digo de verificaci&oacute;n llega a esa misma casilla, que Santiago tiene abierta.</p>
+    <p>Nombre de usuario el acordado, idioma <b>English</b>, pa&iacute;s <b>United States</b>.</p>
+  </li>
+
+  <li>
+    <h4>Pasa TikTok a cuenta de empresa</h4>
+    <p><b>Perfil</b> &rarr; men&uacute; &rarr; <b>Settings and privacy</b> &rarr; <b>Account</b> &rarr;
+      <b>Switch to Business Account</b>. Categor&iacute;a <b>Media &amp; Entertainment</b>.</p>
+  </li>
+
+  <li>
+    <h4>Crea Instagram desde la misma computadora</h4>
+    <p>En <a class="lnk" href="https://www.instagram.com/accounts/emailsignup/" target="_blank" rel="noopener">instagram.com</a>,
+      con el mismo mail, la misma contrase&ntilde;a y el mismo nombre de usuario.</p>
+    <p>Despu&eacute;s: <b>Settings</b> &rarr; <b>Account type and tools</b> &rarr;
+      <b>Switch to professional account</b> &rarr; categor&iacute;a <b>Video Creator</b> &rarr; <b>Business</b>.</p>
+    <span class="ojo"><b>Tiene que ser Business, no Creator.</b> Es la &uacute;nica que despu&eacute;s deja
+      programar publicaciones desde la computadora.</span>
+  </li>
+
+  <li>
+    <h4>Vincula Instagram a una p&aacute;gina de Facebook</h4>
+    <p>Instagram le va a ofrecer conectar una p&aacute;gina. Que cree una nueva con el nombre
+      <b>Brain Syrup</b>. No hace falta que tenga contenido.</p>
+    <p>Si no se lo ofrece en el momento: <b>Settings</b> &rarr; <b>Sharing and remixing</b> &rarr;
+      <b>Connect to Facebook</b>.</p>
+  </li>
+
+  <li>
+    <h4>Pone el segundo factor en su tel&eacute;fono</h4>
+    <p>En las dos redes: <b>Settings</b> &rarr; <b>Security</b> &rarr; <b>Two-factor authentication</b> &rarr;
+      <b>aplicaci&oacute;n de autenticaci&oacute;n</b>, nunca mensaje de texto.</p>
+    <p>El c&oacute;digo lo genera el tel&eacute;fono de Santiago, que est&aacute; ac&aacute;, aunque la cuenta viva all&aacute;.</p>
+  </li>
+
+  <li>
+    <h4>A partir de ac&aacute;, siempre por AnyDesk</h4>
+    <p>Publicar, programar, contestar comentarios y mirar estad&iacute;sticas, todo desde esa computadora.
+      As&iacute; la conexi&oacute;n es siempre la misma y las plataformas no ven nada raro.</p>
+    <p>TikTok y Meta dejan programar con d&iacute;as de anticipaci&oacute;n, as&iacute; que una sesi&oacute;n por semana
+      alcanza para dejar toda la semana cargada.</p>
+    <span class="ojo"><b>Dejar todo programado.</b> Si la computadora de la oficina se cae un d&iacute;a,
+      las publicaciones ya cargadas salen igual.</span>
+  </li>
+</ol>
+
+<h2>Lo que no hay que hacer</h2>
+<div class="no">
+  <ul>
+    <li><b>No entrar desde Argentina directo.</b> Ni una vez. Si un d&iacute;a se publica por AnyDesk y
+      otro desde ac&aacute;, las plataformas ven dos pa&iacute;ses y ah&iacute; empiezan los problemas.</li>
+    <li><b>No usar VPN.</b> No hace falta: para eso est&aacute; la computadora de la oficina.</li>
+    <li><b>No usar el mail personal de nadie.</b> El d&iacute;a que esa persona se va, se va la cuenta.</li>
+    <li><b>No poner el segundo factor por mensaje de texto.</b> El c&oacute;digo quedar&iacute;a en el tel&eacute;fono
+      equivocado.</li>
+    <li><b>No registrarse con &laquo;Continuar con Google&raquo; ni con Apple.</b> Deja la cuenta atada
+      a algo que no controlamos.</li>
+    <li><b>No publicar nada todav&iacute;a.</b> La primera publicaci&oacute;n marca el arranque del calendario.</li>
+  </ul>
+</div>
+
+<h2>Lista de control</h2>
+<ul class="chk">
+  <li><i></i><span><b>Computadora de la oficina</b> prendida, sin suspensi&oacute;n, con AnyDesk y acceso desatendido.</span></li>
+  <li><i></i><span><b>N&uacute;mero y contrase&ntilde;a de AnyDesk</b> en manos de Santiago, y conexi&oacute;n probada.</span></li>
+  <li><i></i><span><b>Mail de la empresa</b> funcionando, con Santiago adentro.</span></li>
+  <li><i></i><span><b>Nombre de usuario</b> chequeado y libre en TikTok y en Instagram.</span></li>
+  <li><i></i><span><b>TikTok</b> creada desde esa computadora y convertida a cuenta de empresa.</span></li>
+  <li><i></i><span><b>Instagram</b> creada desde esa computadora, en <b>Business</b> y vinculada a una p&aacute;gina.</span></li>
+  <li><i></i><span><b>Segundo factor</b> por aplicaci&oacute;n, en el tel&eacute;fono de Santiago, en las dos.</span></li>
+  <li><i></i><span><b>Primera semana programada</b> desde la computadora de la oficina.</span></li>
+</ul>
+
+</div>
