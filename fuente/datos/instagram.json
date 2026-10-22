@@ -3,15 +3,76 @@
   "leido": "22 de octubre de 2026",
   "presupuesto_por_reel": 21.0,
   "reels": [
-    {"id": "seniors",     "titulo": "Which power would you pick?",                  "corto": "Super Seniors",             "dur": "0:23", "vistas": 2136, "pagas": 733, "gasto": 15.23, "perfil": 32, "seg": 7,  "inter": 51},
-    {"id": "iphone-1960", "titulo": "How much space would an iPhone take in 1960?", "corto": "iPhone 1960",               "dur": "0:19", "vistas": 1032, "pagas": 856, "gasto": 15.78, "perfil": 40, "seg": 8,  "inter": 13},
-    {"id": "gravity",     "titulo": "Most will last under a minute.",               "corto": "Gravity undo",              "dur": "0:24", "vistas": 805,  "pagas": 585, "gasto": 17.21, "perfil": 35, "seg": 14, "inter": 15},
-    {"id": "algo",        "titulo": "This is your boss. Thoughts?",                 "corto": "Who controls the Internet", "dur": "0:25", "vistas": 780,  "pagas": 600, "gasto": 16.79, "perfil": 37, "seg": 12, "inter": 21},
-    {"id": "gianni",      "titulo": "He'll multiply your followers. Call 1800-GIANNI", "corto": "1800-GIANNI",            "dur": "0:40", "vistas": 206,  "pagas": 0,   "gasto": 0.0,   "perfil": 0,  "seg": 0,  "inter": 2}
+    {
+      "id": "seniors",
+      "titulo": "Which power would you pick?",
+      "corto": "Super Seniors",
+      "dur": "0:23",
+      "vistas": 2178,
+      "pagas": 774,
+      "gasto": 16.0,
+      "perfil": 35,
+      "seg": 7,
+      "inter": 54
+    },
+    {
+      "id": "iphone-1960",
+      "titulo": "How much space would an iPhone take in 1960?",
+      "corto": "iPhone 1960",
+      "dur": "0:19",
+      "vistas": 1076,
+      "pagas": 892,
+      "gasto": 16.58,
+      "perfil": 44,
+      "seg": 8,
+      "inter": 14
+    },
+    {
+      "id": "gravity",
+      "titulo": "Most will last under a minute.",
+      "corto": "Gravity undo",
+      "dur": "0:24",
+      "vistas": 821,
+      "pagas": 596,
+      "gasto": 17.38,
+      "perfil": 36,
+      "seg": 16,
+      "inter": 15
+    },
+    {
+      "id": "algo",
+      "titulo": "This is your boss. Thoughts?",
+      "corto": "Who controls the Internet",
+      "dur": "0:25",
+      "vistas": 808,
+      "pagas": 622,
+      "gasto": 17.34,
+      "perfil": 38,
+      "seg": 13,
+      "inter": 23
+    },
+    {
+      "id": "gianni",
+      "titulo": "He'll multiply your followers. Call 1800-GIANNI",
+      "corto": "1800-GIANNI",
+      "dur": "0:40",
+      "vistas": 206,
+      "pagas": 0,
+      "gasto": 0.0,
+      "perfil": 0,
+      "seg": 0,
+      "inter": 2
+    }
   ],
   "ubicacion": "Los &Aacute;ngeles",
   "paises": [
-    {"nombre": "California",      "pct": 100.0},
-    {"nombre": "Resto del mundo", "pct": 0.0}
+    {
+      "nombre": "California",
+      "pct": 100.0
+    },
+    {
+      "nombre": "Resto del mundo",
+      "pct": 0.0
+    }
   ]
 }
